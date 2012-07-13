@@ -1,0 +1,27 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="DashboardButton">
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:drawablePadding">2dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:background">@null</item>
+    </style>
+
+    <style name="InfoPrimary">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@android:color/primary_text_light</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+    <style name="InfoSecondary">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@android:color/secondary_text_light</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+    </style>
+    
+</resources>

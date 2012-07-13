@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Hello cfadmin!</string>
+    <string name="app_name">cfadmin</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="connect">Connect</string>
+    <string name="target">Choose target&#8230;</string>
+    <string name="logout">Logout</string>
+    <string name="refresh">Refresh</string>
+    <string name="db_apps_text">Apps</string>
+    <string name="db_services_text">Services</string>
+    <string name="db_info_text">Info</string>
+    <string name="db_other_text">Other</string>
+    <string name="cloud_info_name">Name</string>
+    <string name="cloud_info_version">Version</string>
+    <string name="cloud_info_build">Build</string>
+    <string name="cloud_info_description">Description</string>
+    <string name="cloud_info_quota_apps">Apps</string>
+    <string name="cloud_info_quota_mem">Memory</string>
+    <string name="cloud_info_quota_uris">URIs per app</string>
+    <string name="cloud_info_quota_services">Services</string><string name="cloud_info_user">Logged in as</string>
+    <string name="manage">&lt;u&gt;manage&lt;/u&gt;</string>
+    <string name="ci_basic_title">Info</string>
+    <string name="ci_info_frameworks">Frameworks</string>
+    <string name="ci_info_runtimes">Runtimes</string>
+    <string name="services">Services</string>
+    <string name="delete">Delete</string>
+    <string name="add">Add</string>
+    
+</resources>

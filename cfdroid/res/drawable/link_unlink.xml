@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_checked="true" state_pressed="true" android:drawable="@drawable/ic_link_closed_icon"/> 
+    <item state_pressed="true" android:drawable="@drawable/ic_link_broken_icon" />
+    <item state_checked="true" android:drawable="@drawable/ic_link_closed_icon"/>
+    <item android:drawable="@drawable/ic_link_broken_icon"  />
+    
+</selector>

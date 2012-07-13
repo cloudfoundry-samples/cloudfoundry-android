@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical|center_horizontal"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp" >
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/cf_logo" />
+
+    <EditText
+        android:id="@+id/login"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_below="@id/logo"
+        android:layout_marginBottom="16dp"
+        android:hint="@string/login"
+        android:singleLine="true" />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_below="@id/login"
+        android:layout_marginBottom="16dp"
+        android:hint="@string/password"
+        android:inputType="textPassword" />
+
+    <Spinner
+        android:id="@+id/target"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/password"
+        android:layout_toLeftOf="@+id/manage"
+        android:layout_marginBottom="16dp"
+        android:prompt="@string/target" />
+ 
+    <ImageView
+        android:id="@id/manage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/password"
+        android:layout_marginLeft="8dp"
+        android:layout_alignBottom="@id/target"
+        android:src="@drawable/ic_menu_edit"
+        android:background="@drawable/abs__item_background_holo_light"
+        />
+
+    <Button
+        android:id="@+id/connect"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_below="@id/target"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/connect"
+        android:textStyle="bold" />
+
+</RelativeLayout>
