@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="hello">Hello cfadmin!</string>
-    <string name="app_name">cfadmin</string>
+    <string name="app_name">CF Droid</string>
     <string name="login">Login</string>
     <string name="password">Password</string>
     <string name="connect">Connect</string>
