@@ -1,0 +1,5 @@
+<account-authenticator xmlns:android="http://schemas.android.com/apk/res/android"
+    android:accountType="org.cloudfoundry"
+    android:icon="@drawable/cf_logo"
+    android:label="@string/cloudfoundry"
+    android:smallIcon="@drawable/cf_logo" />

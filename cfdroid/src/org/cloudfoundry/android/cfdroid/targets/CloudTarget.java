@@ -1,11 +1,20 @@
-package org.cloudfoundry.android.cfdroid.model;
+package org.cloudfoundry.android.cfdroid.targets;
 
 
 public class CloudTarget {
 	
-	private String label;
+	private CloudTarget() {
+	}
+
+	public CloudTarget(String label, String uRL) {
+		super();
+		this.label = label;
+		URL = uRL;
+	}
+
+	/*default*/ String label;
 	
-	private String URL;
+	/*default*/ String URL;
 	
 	public String getLabel() {
 		return label;

@@ -1,10 +1,11 @@
-package org.cloudfoundry.android.cfdroid;
+package org.cloudfoundry.android.cfdroid.targets;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.cloudfoundry.android.cfdroid.R;
-import org.cloudfoundry.android.cfdroid.model.CloudTarget;
+import org.cloudfoundry.android.cfdroid.R.id;
+import org.cloudfoundry.android.cfdroid.R.layout;
 
 
 import com.googlecode.androidannotations.annotations.EBean;

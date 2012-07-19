@@ -1,4 +1,4 @@
-package org.cloudfoundry.android.cfdroid;
+package org.cloudfoundry.android.cfdroid.targets;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -7,9 +7,10 @@ import java.util.Set;
 
 import org.cloudfoundry.android.cfdroid.Preferences_;
 import org.cloudfoundry.android.cfdroid.R;
-import org.cloudfoundry.android.cfdroid.model.CloudTarget;
+import org.cloudfoundry.android.cfdroid.R.id;
+import org.cloudfoundry.android.cfdroid.R.menu;
 
-import android.app.Activity;
+import android.app.Activity; 
 import android.os.Bundle;
 import android.test.suitebuilder.annotation.MediumTest;
 import android.util.Log;
@@ -29,7 +30,7 @@ import com.googlecode.androidannotations.annotations.OptionsItem;
 import com.googlecode.androidannotations.annotations.OptionsMenu;
 import com.googlecode.androidannotations.annotations.ViewById;
 import com.googlecode.androidannotations.annotations.sharedpreferences.Pref;
-
+ 
 @EActivity(android.R.layout.list_content)
 @OptionsMenu(R.menu.add)
 public class TargetsActivity extends SherlockActivity {
@@ -51,14 +52,16 @@ public class TargetsActivity extends SherlockActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		String[] raw = preferences.targets().get().split("\\|\\|");
-		for (String r : raw) {
-			targets.add(CloudTarget.parse(r));
-		}
-
+		Log.d("cf", "wtf");
+		targets = TargetUtils.fromPrefs(preferences);
 	}
-
+	
+	@Override
+	protected void onStop() {
+		super.onStop();
+		TargetUtils.toPrefs(targets, preferences);
+	}
+	
 	@AfterViews
 	void setup() {
 		adapter.init(targets, selection);

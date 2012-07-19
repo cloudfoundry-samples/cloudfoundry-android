@@ -1,53 +1,49 @@
 package org.cloudfoundry.android.cfdroid;
 
-import org.cloudfoundry.android.cfdroid.AppListActivity_;
-import org.cloudfoundry.android.cfdroid.ServiceListActivity_;
-import org.cloudfoundry.android.cfdroid.menu.AbstractLoggedInActivity_;
-import org.cloudfoundry.android.cfdroid.R;
+import org.cloudfoundry.android.cfdroid.account.CloudFoundryAccountConstants;
+import org.cloudfoundry.android.cfdroid.menu.AbstractLoggedInActivity;
 
-import org.cloudfoundry.android.cfdroid.CloudInfoActivity_;
-import org.cloudfoundry.android.cfdroid.LoginActivity_;
-import com.googlecode.androidannotations.annotations.AfterInject;
-import com.googlecode.androidannotations.annotations.Bean;
-import com.googlecode.androidannotations.annotations.Click;
-import com.googlecode.androidannotations.annotations.EActivity;
-import com.googlecode.androidannotations.annotations.Extra;
-import com.googlecode.androidannotations.annotations.OptionsMenu;
+import roboguice.inject.ContentView;
+import roboguice.inject.InjectExtra;
+import android.accounts.Account;
+import android.accounts.AccountManager;
+import android.content.Intent;
 
-@EActivity(R.layout.dashboard)
-public class DashboardActivity extends AbstractLoggedInActivity_ {
-	
-	@Bean
+import com.google.inject.Inject;
+
+@ContentView(R.layout.dashboard)
+public class DashboardActivity extends AbstractLoggedInActivity {
+
+	@Inject
 	Clients clients;
-	
-	@Extra
+
+	@InjectExtra(value = "doLogout", optional = true)
 	boolean doLogout;
+
+	@Inject
+	private AccountManager accountManager;
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		if(doLogout) {
+		if (doLogout) {
 			clients.logout();
 		}
-		
+
 		if (!clients.isLoggedIn()) {
-			LoginActivity_.intent(this).start();
+			startActivity(new Intent(this, LoginActivity.class));
 		}
 	}
-	
-	@Click(R.id.db_apps_btn)
-	void launchApps() {
-		AppListActivity_.intent(this).start();
-	}
-	
-	@Click(R.id.db_services_btn)
-	void launchServices() {
-		ServiceListActivity_.intent(this).start();
-	}
-	
-	@Click(R.id.db_info_btn)
-	void launchInfo() {
-		CloudInfoActivity_.intent(this).start();
-	}
-	
+
+	/*
+	 * 
+	 * @Click(R.id.db_apps_btn) void launchApps() {
+	 * AppListActivity_.intent(this).start(); }
+	 * 
+	 * @Click(R.id.db_services_btn) void launchServices() {
+	 * ServiceListActivity_.intent(this).start(); }
+	 * 
+	 * @Click(R.id.db_info_btn) void launchInfo() {
+	 * CloudInfoActivity_.intent(this).start(); }
+	 */
 }

@@ -27,5 +27,10 @@
     <string name="services">Services</string>
     <string name="delete">Delete</string>
     <string name="add">Add</string>
+    <string name="edit_target_dialog_title">Specify target</string>
+    <string name="label_hint">Enter a label here</string>
+    <string name="url_hint">Controller URL</string>
+    <string name="done">Done</string>
+    <string name="cloudfoundry">CloudFoundry</string>
     
 </resources>

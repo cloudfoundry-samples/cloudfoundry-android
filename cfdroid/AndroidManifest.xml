@@ -5,23 +5,41 @@
     android:versionName="0.0.1-SNAPSHOT" >
 
     <uses-sdk
-        android:minSdkVersion="8"
+        android:minSdkVersion="11"
         android:targetSdkVersion="11" />
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
 
     <application
         android:icon="@drawable/cf_logo"
         android:label="@string/app_name"
         android:theme="@style/Theme.Sherlock.Light" >
-        <activity android:name=".DashboardActivity_" >
+        <activity android:name=".DashboardActivity" >
+            <!-- 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+             -->
+        </activity>
+        <activity android:name=".LoginActivity" >
+        </activity>
+        <activity android:name=".targets.TargetsActivity" >
+        </activity>
+        <activity android:name=".applications.ApplicationsActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity_" >
-        </activity>
+
+        <!--
         <activity android:name=".AppListActivity_" >
         </activity>
         <activity android:name=".ServiceListActivity_" >
@@ -32,8 +50,21 @@
         </activity>
         <activity android:name=".CloudInfoActivity_" >
         </activity>
-        <activity android:name=".TargetsActivity_" >
+        <activity android:name=".targets.TargetEditionActivity_" >
         </activity>
+        -->
+
+        <service android:name=".account.AccountAuthenticatorService" >
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator" >
+                </action>
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator" >
+            </meta-data>
+        </service>
     </application>
 
 </manifest>

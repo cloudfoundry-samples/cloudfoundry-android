@@ -2,29 +2,47 @@ package org.cloudfoundry.android.cfdroid.menu;
 
 
 import org.cloudfoundry.android.cfdroid.R;
+import org.cloudfoundry.android.cfdroid.R.id;
 
 import android.content.Intent;
 
-import com.actionbarsherlock.app.SherlockActivity;
-import org.cloudfoundry.android.cfdroid.DashboardActivity_;
-import org.cloudfoundry.android.cfdroid.LoginActivity_;
-import com.googlecode.androidannotations.annotations.EActivity;
-import com.googlecode.androidannotations.annotations.OptionsItem;
-import com.googlecode.androidannotations.annotations.OptionsMenu;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+import com.github.rtyley.android.sherlock.roboguice.activity.RoboSherlockActivity;
 
 /**
  * Base class for activities which appear after login (and hence allow logout).
  * 
  * @author ebottard
  */
-@EActivity
-@OptionsMenu(R.menu.logout)
-public abstract class AbstractLoggedInActivity extends SherlockActivity {
+public abstract class AbstractLoggedInActivity extends RoboSherlockActivity {
 
-	@OptionsItem(R.id.logout)
 	protected void logout() {
-		DashboardActivity_.intent(this).doLogout(true)
-				.flags(Intent.FLAG_ACTIVITY_CLEAR_TOP).start();
+//		DashboardActivity_.intent(this).doLogout(true)
+//				.flags(Intent.FLAG_ACTIVITY_CLEAR_TOP).start();
 	}
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getSupportMenuInflater();
+        menuInflater.inflate(R.menu.logout, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        boolean handled = super.onOptionsItemSelected(item);
+        if (handled) {
+            return true;
+        }
+        switch (item.getItemId()) {
+            case id.logout:
+                logout();
+                return true;
+            default:
+                return false;
+        }
+    }
 
 }

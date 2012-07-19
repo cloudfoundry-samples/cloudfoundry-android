@@ -31,7 +31,7 @@ public class ServiceActivity extends AbstractFragmentNotRootActivity_ {
 
 	@Extra
 	String serviceName;
-
+ 
 	@Bean
 	Clients clients;
 

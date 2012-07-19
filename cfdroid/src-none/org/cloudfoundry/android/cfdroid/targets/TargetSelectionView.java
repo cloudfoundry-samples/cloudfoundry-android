@@ -1,8 +1,9 @@
-package org.cloudfoundry.android.cfdroid;
+package org.cloudfoundry.android.cfdroid.targets;
 
 
 import org.cloudfoundry.android.cfdroid.R;
-import org.cloudfoundry.android.cfdroid.model.CloudTarget;
+import org.cloudfoundry.android.cfdroid.R.id;
+import org.cloudfoundry.android.cfdroid.R.layout;
 
 import android.content.Context;
 import android.widget.CheckBox;

@@ -33,7 +33,7 @@ public class ServiceListActivity extends AbstractNotRootActivity_ {
 	List<CloudService> services;
 
 	private final class ServiceListAdapter extends BaseAdapter {
-
+ 
 		@Override
 		public View getView(int position, View convertView, ViewGroup root) {
 

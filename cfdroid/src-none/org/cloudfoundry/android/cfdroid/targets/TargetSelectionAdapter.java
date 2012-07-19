@@ -1,4 +1,4 @@
-package org.cloudfoundry.android.cfdroid;
+package org.cloudfoundry.android.cfdroid.targets;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.cloudfoundry.android.cfdroid.R;
-import org.cloudfoundry.android.cfdroid.model.CloudTarget;
 
 
 import com.googlecode.androidannotations.annotations.EBean;
@@ -20,7 +19,6 @@ import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import org.cloudfoundry.android.cfdroid.TargetSelectionView_;
 
 /**
  * Used in the targets listing view. Maintains a list of selected targets and
