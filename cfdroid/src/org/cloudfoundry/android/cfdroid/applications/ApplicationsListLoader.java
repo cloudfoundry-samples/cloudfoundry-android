@@ -10,12 +10,12 @@ import android.app.Activity;
 
 import com.google.inject.Inject;
 
-public class ApplicationListLoader extends AsyncLoader<List<CloudApplication>>{
+public class ApplicationsListLoader extends AsyncLoader<List<CloudApplication>>{
 
 	private Clients clients;
 	
 	@Inject
-	public ApplicationListLoader(Activity activity, Clients clients) {
+	public ApplicationsListLoader(Activity activity, Clients clients) {
 		super(activity);
 		this.clients = clients;
 	}

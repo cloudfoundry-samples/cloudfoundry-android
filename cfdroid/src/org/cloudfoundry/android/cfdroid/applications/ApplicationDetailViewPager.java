@@ -1,8 +1,7 @@
 package org.cloudfoundry.android.cfdroid.applications;
 
 import org.cloudfoundry.android.cfdroid.R;
-
-import roboguice.inject.InjectExtra;
+import org.cloudfoundry.android.cfdroid.applications.ApplicationsListFragment.Listener;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,9 +13,9 @@ import com.github.rtyley.android.sherlock.roboguice.fragment.RoboSherlockFragmen
 
 public class ApplicationDetailViewPager extends RoboSherlockFragment {
 
-	public static final String ARG_APPLICATION_INDEX = "index";
+	public static final String ARG_APPLICATION = "application";
 	
-	private int applicationIndex;
+	private int position = -1;
 
 	private TextView child;
 	
@@ -27,24 +26,36 @@ public class ApplicationDetailViewPager extends RoboSherlockFragment {
 		
 		child = new TextView(getActivity());
 		((ViewGroup)view).addView(child);
-		
+		if (savedInstanceState != null) {
+			position = savedInstanceState.getInt(ARG_APPLICATION);
+		}
 		
 		return view;
 	}
 	
 	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
-		Bundle arguments = (getArguments() != null) ? getArguments() : new Bundle();
-		int idx = arguments.getInt(ARG_APPLICATION_INDEX, -1);
-		
-		if(idx>0) {
-			applicationIndex = idx;
-		}
-		displayApplication(applicationIndex);
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putInt(ARG_APPLICATION, position);
 	}
 	
-	public void displayApplication(int index) {
-		child.setText("idx " + index);
+	@Override
+	public void onStart() {
+		super.onStart();
+		Bundle args = getArguments();
+		if (args != null) {
+			updateApplication(args.getInt(ARG_APPLICATION));
+		} else if (position != -1) {
+			updateApplication(position);
+		}
+	}
+	
+	private Listener getListener() {
+		return (Listener) getActivity();
+	}
+	
+	public void updateApplication(int position) {
+		this.position = position;
+		child.setText(getListener().getApplication(position).getName());
 	}
 }

@@ -1,8 +1,11 @@
 package org.cloudfoundry.android.cfdroid.applications;
 
+import java.util.List;
+
 import javax.annotation.Nullable;
 
 import org.cloudfoundry.android.cfdroid.R;
+import org.cloudfoundry.client.lib.CloudApplication;
 
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectFragment;
@@ -15,7 +18,7 @@ import com.github.rtyley.android.sherlock.roboguice.activity.RoboSherlockFragmen
 
 @ContentView(R.layout.applications)
 public class ApplicationsActivity extends RoboSherlockFragmentActivity
-		implements ApplicationsListFragment.OnApplicationSelectedListener {
+		implements ApplicationsListFragment.Listener {
 
 	@Nullable
 	@InjectFragment(R.id.applications_list)
@@ -28,6 +31,8 @@ public class ApplicationsActivity extends RoboSherlockFragmentActivity
 	@Nullable
 	@InjectView(R.id.fragment_container)
 	FrameLayout fragmentContainer;
+	
+	private List<CloudApplication> applications;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,16 +55,26 @@ public class ApplicationsActivity extends RoboSherlockFragmentActivity
 	public void onApplicationSelected(int position) {
 		if (viewPagerFragment != null) {
 			// two-pane layout, direct update
-			viewPagerFragment.displayApplication(position);
+			viewPagerFragment.updateApplication(position);
 		} else {
 			ApplicationDetailViewPager rightFragment = new ApplicationDetailViewPager();
 			Bundle args = new Bundle();
-			args.putInt(ApplicationDetailViewPager.ARG_APPLICATION_INDEX, position);
+			args.putInt(ApplicationDetailViewPager.ARG_APPLICATION, position);
 			rightFragment.setArguments(args);
 			FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 			transaction.replace(R.id.fragment_container, rightFragment);
 			transaction.addToBackStack(null);
 			transaction.commit();
 		}
+	}
+
+	@Override
+	public void onApplicationsLoaded(List<CloudApplication> applications) {
+		this.applications = applications;
+	}
+	
+	@Override
+	public CloudApplication getApplication(int position) {
+		return applications.get(position);
 	}
 }

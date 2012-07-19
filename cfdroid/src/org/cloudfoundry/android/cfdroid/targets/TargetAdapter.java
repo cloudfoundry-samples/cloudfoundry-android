@@ -15,11 +15,6 @@ public class TargetAdapter extends ItemListAdapter<CloudTarget, TargetView>{
 	}
 
 	@Override
-	protected void update(int position, TargetView view, CloudTarget item) {
-		view.bind(item);
-	}
-
-	@Override
 	protected TargetView createView(View view) {
 		return new TargetView(view);
 	}

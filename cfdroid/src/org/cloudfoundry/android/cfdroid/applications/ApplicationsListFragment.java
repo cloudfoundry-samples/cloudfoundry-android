@@ -10,9 +10,7 @@ import org.cloudfoundry.client.lib.CloudApplication;
 
 import android.os.Bundle;
 import android.support.v4.content.Loader;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.google.inject.Inject;
@@ -23,18 +21,41 @@ public class ApplicationsListFragment extends
 	@Inject
 	private Clients clients;
 
-	public static interface OnApplicationSelectedListener {
+	public static interface Listener {
 		void onApplicationSelected(int position);
+		
+		void onApplicationsLoaded(List<CloudApplication> applications);
+		
+		CloudApplication getApplication(int position);
 	}
 
 	@Override
 	public Loader<List<CloudApplication>> onCreateLoader(int arg0, Bundle arg1) {
-		return new ApplicationListLoader(getActivity(), clients);
+		return new ApplicationsListLoader(getActivity(), clients);
 	}
 
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
-		((OnApplicationSelectedListener)getActivity()).onApplicationSelected(position);
+		getListener()
+				.onApplicationSelected(position);
+		getListView().setItemChecked(position, true);
+	}
+	
+	@Override
+	public void onStart() {
+		super.onStart();
+		getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+	}
+	
+	@Override
+	public void onLoadFinished(Loader<List<CloudApplication>> loader,
+			List<CloudApplication> items) {
+		super.onLoadFinished(loader, items);
+		getListener().onApplicationsLoaded(items);
+	}
+	
+	private Listener getListener() {
+		return (Listener) getActivity();
 	}
 	
 	
@@ -44,17 +65,10 @@ public class ApplicationsListFragment extends
 		return new ItemListAdapter<CloudApplication, ApplicationView>(
 				R.layout.application_list_item, getActivity()
 						.getLayoutInflater(), items) {
-
-							@Override
-							protected void update(int position,
-									ApplicationView view, CloudApplication item) {
-								view.name.setText(item.getName());
-							}
-
-							@Override
-							protected ApplicationView createView(View view) {
-								return new ApplicationView(view);
-							}
+			@Override
+			protected ApplicationView createView(View view) {
+				return new ApplicationView(view);
+			}
 		};
 	}
 }
