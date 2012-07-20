@@ -2,7 +2,7 @@ package org.cloudfoundry.android.cfdroid.applications;
 
 import org.cloudfoundry.android.cfdroid.R;
 import org.cloudfoundry.android.cfdroid.support.StaticFragmentPagerAdapter;
-import org.cloudfoundry.android.cfdroid.support.masterdetail.AbstractRightPane;
+import org.cloudfoundry.android.cfdroid.support.masterdetail.AbstractDetailPane;
 import org.cloudfoundry.client.lib.CloudApplication;
 
 import roboguice.inject.InjectView;
@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 import com.viewpagerindicator.TitlePageIndicator;
 
-public class ApplicationDetailViewPager extends AbstractRightPane<CloudApplication> {
+public class ApplicationDetailViewPager extends AbstractDetailPane<CloudApplication> {
 
 	@Deprecated
 	private TextView child;
@@ -74,7 +74,10 @@ public class ApplicationDetailViewPager extends AbstractRightPane<CloudApplicati
 			Fragment f = adapter.getItem(viewPager.getCurrentItem());
 		}
 		
-		child.setText(getSelectedItem().getName());
+		CloudApplication selectedItem = getSelectedItem();
+		if (selectedItem != null) {
+			child.setText(selectedItem.getName());
+		}
 		
 	}
 }

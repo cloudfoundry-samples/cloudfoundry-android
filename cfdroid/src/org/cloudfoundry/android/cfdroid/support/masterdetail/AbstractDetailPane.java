@@ -16,7 +16,7 @@ import com.github.rtyley.android.sherlock.roboguice.fragment.RoboSherlockFragmen
  * 
  * @param <I> the kind of domain object we're dealing with
  */
-public abstract class AbstractRightPane<I> extends RoboSherlockFragment
+public abstract class AbstractDetailPane<I> extends RoboSherlockFragment
 		implements DetailPaneEventsCallback {
 
 	private int position = -1;
