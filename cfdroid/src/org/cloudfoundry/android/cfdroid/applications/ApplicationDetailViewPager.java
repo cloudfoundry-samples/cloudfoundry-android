@@ -1,61 +1,80 @@
 package org.cloudfoundry.android.cfdroid.applications;
 
 import org.cloudfoundry.android.cfdroid.R;
-import org.cloudfoundry.android.cfdroid.applications.ApplicationsListFragment.Listener;
+import org.cloudfoundry.android.cfdroid.support.StaticFragmentPagerAdapter;
+import org.cloudfoundry.android.cfdroid.support.masterdetail.AbstractRightPane;
+import org.cloudfoundry.client.lib.CloudApplication;
 
+import roboguice.inject.InjectView;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.github.rtyley.android.sherlock.roboguice.fragment.RoboSherlockFragment;
+import com.viewpagerindicator.TitlePageIndicator;
 
-public class ApplicationDetailViewPager extends RoboSherlockFragment {
+public class ApplicationDetailViewPager extends AbstractRightPane<CloudApplication> {
 
-	public static final String ARG_APPLICATION = "application";
-	
-	private int position = -1;
-
+	@Deprecated
 	private TextView child;
+
+	@InjectView(R.id.pager)
+	private ViewPager viewPager;
+
+	@InjectView(R.id.indicator)
+	private TitlePageIndicator indicator;
 	
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.application_tabs, container, false);
+	protected View onCreateViewInternal(LayoutInflater inflater,
+			ViewGroup container, Bundle savedInstanceState) {
+		View view = inflater.inflate(R.layout.pager_with_title_indicator,
+				container, false);
 		
 		child = new TextView(getActivity());
-		((ViewGroup)view).addView(child);
-		if (savedInstanceState != null) {
-			position = savedInstanceState.getInt(ARG_APPLICATION);
-		}
+		((ViewGroup) view).addView(child);
 		
 		return view;
 	}
-	
-	@Override
-	public void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-		outState.putInt(ARG_APPLICATION, position);
-	}
-	
+
 	@Override
 	public void onStart() {
 		super.onStart();
-		Bundle args = getArguments();
-		if (args != null) {
-			updateApplication(args.getInt(ARG_APPLICATION));
-		} else if (position != -1) {
-			updateApplication(position);
+		// see
+		// http://stackoverflow.com/questions/7700226/display-fragment-viewpager-within-a-fragment
+		new AsyncTask<Void, Void, Void>() {
+			@Override
+			protected Void doInBackground(Void... params) {
+				return null;
+			}
+
+			protected void onPostExecute(Void result) {
+				StaticFragmentPagerAdapter adapter = new StaticFragmentPagerAdapter(
+						getFragmentManager(), new ApplicationControlFragment(),
+						new ApplicationControlFragment(),
+						new ApplicationControlFragment(),
+						new ApplicationControlFragment());
+				viewPager.setAdapter(adapter);
+				indicator.setViewPager(viewPager);
+			};
+		}.execute();
+
+	}
+
+	@Override
+	public void itemSelectedInternal(int position) {
+		
+		FragmentPagerAdapter adapter = (FragmentPagerAdapter) viewPager
+				.getAdapter();
+		if (adapter != null) {
+			Fragment f = adapter.getItem(viewPager.getCurrentItem());
 		}
-	}
-	
-	private Listener getListener() {
-		return (Listener) getActivity();
-	}
-	
-	public void updateApplication(int position) {
-		this.position = position;
-		child.setText(getListener().getApplication(position).getName());
+		
+		child.setText(getSelectedItem().getName());
+		
 	}
 }
