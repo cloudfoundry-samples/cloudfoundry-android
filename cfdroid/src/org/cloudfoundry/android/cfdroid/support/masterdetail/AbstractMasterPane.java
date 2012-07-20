@@ -2,6 +2,7 @@ package org.cloudfoundry.android.cfdroid.support.masterdetail;
 
 import org.cloudfoundry.android.cfdroid.support.ListLoadingFragment;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 
@@ -13,6 +14,30 @@ import android.widget.ListView;
  * @param <I> the kind of domain object this fragment deals with
  */
 public abstract class AbstractMasterPane<I> extends ListLoadingFragment<I> {
+	
+	private int position;
+	
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putInt(DetailPaneEventsCallback.KEY_SELECTION, position);
+	};
+	
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		if (savedInstanceState != null && savedInstanceState.containsKey(DetailPaneEventsCallback.KEY_SELECTION)) {
+			position = savedInstanceState.getInt(DetailPaneEventsCallback.KEY_SELECTION);
+		}
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		if (position > -1) {
+			communicationChannel().onLeftPaneSelection(position);
+		}
+	}
 	
 	protected MasterDetailEventsCallback<I> communicationChannel() {
 		return (MasterDetailEventsCallback<I>) getActivity();

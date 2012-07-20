@@ -1,5 +1,7 @@
 package org.cloudfoundry.android.cfdroid.support.masterdetail;
 
+import java.util.List;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,7 +55,8 @@ public abstract class AbstractDetailPane<I> extends RoboSherlockFragment
 	@SuppressWarnings("unchecked")
 	protected I getSelectedItem() {
 		if (position > -1) {
-			return ((DataHolder<I>) getActivity()).getData().get(position);
+			List<I> data = ((DataHolder<I>) getActivity()).getData();
+			return data != null ? data.get(position) : null;
 		} else {
 			return null;
 		}
