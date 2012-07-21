@@ -37,7 +37,6 @@ public class ApplicationDetailViewPager extends AbstractDetailPane<CloudApplicat
 		
 		child = new TextView(getActivity());
 		((ViewGroup) view).addView(child);
-		
 		return view;
 	}
 
@@ -62,11 +61,12 @@ public class ApplicationDetailViewPager extends AbstractDetailPane<CloudApplicat
 				indicator.setViewPager(viewPager);
 			};
 		}.execute();
+		selectionChanged();
 
 	}
 
 	@Override
-	public void itemSelectedInternal(int position) {
+	public void selectionChanged() {
 		
 		FragmentPagerAdapter adapter = (FragmentPagerAdapter) viewPager
 				.getAdapter();

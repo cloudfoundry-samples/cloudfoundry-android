@@ -46,12 +46,17 @@ public abstract class MasterDetailActivity<I, M extends Fragment, D extends Frag
 	FrameLayout fragmentContainer;
 	
 	private List<I> data;
+	
+	private int position = -1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
 		data = (List<I>) getLastCustomNonConfigurationInstance();
+		if (savedInstanceState != null) {
+			position = savedInstanceState.getInt(DetailPaneEventsCallback.KEY_SELECTION, -1);
+		}
 
 		// If not null, we're in the single pane layout
 		if (fragmentContainer != null) {
@@ -72,15 +77,19 @@ public abstract class MasterDetailActivity<I, M extends Fragment, D extends Frag
 	}
 	
 	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putInt(DetailPaneEventsCallback.KEY_SELECTION, position);
+	}
+	
+	@Override
 	public void onLeftPaneSelection(int position) {
+		this.position = position; 
 		if (rightPane != null) {
 			// two-pane layout, direct update
-			rightPane.itemSelected(position);
+			rightPane.selectionChanged();
 		} else {
 			Fragment rightFragment = makeRightFragment();
-			Bundle args = new Bundle();
-			args.putInt(DetailPaneEventsCallback.KEY_SELECTION, position);
-			rightFragment.setArguments(args);
 			FragmentTransaction transaction = getSupportFragmentManager()
 					.beginTransaction();
 			transaction.replace(R.id.fragment_container, rightFragment);
@@ -92,13 +101,23 @@ public abstract class MasterDetailActivity<I, M extends Fragment, D extends Frag
 	@Override
 	public void onNewData(List<I> data) {
 		this.data = data;
+		// onLeftPaneSelection(this.position); // fire update ?
 	}
 	
 	@Override
-	public List<I> getData() {
-		return data;
+	public I getSelectedItem() {
+		if (data != null && position != -1) {
+			return data.get(position);
+		} else {
+			return null;
+		}
 	}
 
+	@Override
+	public int getSelectedPosition() {
+		return position;
+	}
+	
 	protected abstract M makeLeftFragment();
 
 	protected abstract D makeRightFragment();

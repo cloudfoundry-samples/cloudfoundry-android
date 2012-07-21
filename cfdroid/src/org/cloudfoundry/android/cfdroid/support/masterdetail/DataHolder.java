@@ -1,6 +1,5 @@
 package org.cloudfoundry.android.cfdroid.support.masterdetail;
 
-import java.util.List;
 
 /**
  * Used by {@link MasterDetailActivity} to make state available to the detail fragment.
@@ -11,6 +10,8 @@ import java.util.List;
  */
 public interface DataHolder<I> {
 	
-	List<I> getData();
+	I getSelectedItem();
+	
+	int getSelectedPosition();
 
 }

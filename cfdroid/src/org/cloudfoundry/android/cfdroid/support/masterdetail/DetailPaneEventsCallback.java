@@ -10,6 +10,6 @@ public interface DetailPaneEventsCallback {
 	
 	public static final String KEY_SELECTION = "selection";
 	
-	void itemSelected(int position);
+	void selectionChanged();
 
 }
