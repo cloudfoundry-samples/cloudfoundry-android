@@ -7,15 +7,15 @@
         android:id="@+id/label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" 
-        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+        android:textSize="@dimen/large"
+        android:textColor="@color/icsblue"
         />
 
     <TextView
         android:id="@+id/url"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" 
-        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+         android:textSize="@dimen/medium"
         android:layout_below="@id/label"
         />
-
 </RelativeLayout>

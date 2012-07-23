@@ -140,13 +140,11 @@ public class LoginActivity extends RoboSherlockAccountAuthenticatorActivity {
 	}
 
 	private void handleLogin() {
-		// final String sLogin = login.getText().toString().trim();
-		// final String sPassword = password.getText().toString().trim();
+		final String sLogin = login.getText().toString().trim();
+		final String sPassword = password.getText().toString().trim();
 		final String sTarget = ((CloudTarget) targetSpinner.getSelectedItem())
 				.getURL();
 
-		final String sLogin = "presidentielles.dataviz@gmail.com";
-		final String sPassword = "2hX9AEKA";
 
 		RoboAsyncTask<String> task = new RoboAsyncTask<String>(this) {
 			@Override
