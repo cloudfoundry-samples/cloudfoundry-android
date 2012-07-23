@@ -1,11 +1,12 @@
 package org.cloudfoundry.android.cfdroid.targets;
 
 import org.cloudfoundry.android.cfdroid.R;
+import org.cloudfoundry.android.cfdroid.support.BaseViewHolder;
 
 import android.view.View;
 import android.widget.TextView;
 
-public class TargetView {
+public class TargetView extends BaseViewHolder<CloudTarget>{
 
 	protected TextView label;
 	protected TextView url;

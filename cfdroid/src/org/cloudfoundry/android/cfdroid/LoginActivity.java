@@ -57,7 +57,7 @@ public class LoginActivity extends RoboSherlockAccountAuthenticatorActivity {
 
 	@Inject
 	TargetsPreferences targetsPreferences;
-	
+
 	@Inject
 	AccountManager accountManager;
 
@@ -145,27 +145,33 @@ public class LoginActivity extends RoboSherlockAccountAuthenticatorActivity {
 		final String sTarget = ((CloudTarget) targetSpinner.getSelectedItem())
 				.getURL();
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 85f6811dcb1202e11e9cf16e479d2c7173c076ec
 		RoboAsyncTask<String> task = new RoboAsyncTask<String>(this) {
 			@Override
 			public String call() throws Exception {
 				CloudFoundryClient client = new CloudFoundryClient(sLogin,
 						sPassword, sTarget);
 				String result = client.login();
-				
-				Bundle bundle = new Bundle();
-				bundle.putString("target", sTarget);
-				Account account = new Account(sLogin+"|"+sTarget, "org.cloudfoundry");
-				accountManager.addAccountExplicitly(account, sPassword, bundle);
-				clients.store(sLogin, sTarget, client);
-				finish();
+
 				return result;
+			}
+
+			@Override
+			protected void onSuccess(String token) throws Exception {
+				Account account = new Account(sLogin + "|" + sTarget,
+						"org.cloudfoundry");
+				accountManager.addAccountExplicitly(account, sPassword, null);
+				finish();
 			}
 
 			@Override
 			protected void onException(Exception e) throws RuntimeException {
 				Ln.e(e);
-				Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+				Toast.makeText(LoginActivity.this, e.getMessage(),
+						Toast.LENGTH_LONG).show();
 			}
 		};
 		task.execute();

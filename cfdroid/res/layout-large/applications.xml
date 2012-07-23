@@ -4,13 +4,13 @@
     android:layout_height="fill_parent">
 
     <fragment android:name="org.cloudfoundry.android.cfdroid.applications.ApplicationsListFragment"
-              android:id="@+id/applications_list"
+              android:id="@+id/left_pane"
               android:layout_weight="1"
               android:layout_width="0dp"
               android:layout_height="match_parent" />
 
-    <fragment android:name="org.cloudfoundry.android.cfdroid.applications.ApplicationDetailViewPager"
-              android:id="@+id/application_tabs"
+    <fragment android:name="org.cloudfoundry.android.cfdroid.applications.ApplicationDetailTabs"
+              android:id="@+id/right_pane"
               android:layout_weight="2"
               android:layout_width="0dp"
               android:layout_height="match_parent" />

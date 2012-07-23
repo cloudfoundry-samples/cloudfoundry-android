@@ -16,6 +16,7 @@
         <item name="android:textColor">@android:color/primary_text_light</item>
         <item name="android:textSize">18sp</item>
     </style>
+
     <style name="InfoSecondary">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -23,5 +24,12 @@
         <item name="android:textSize">14sp</item>
         <item name="android:layout_marginBottom">8dp</item>
     </style>
+
+    <color name="cf_primary">#0096d1</color>
+    <color name="cf_secondary">#0d3d66</color>
+    <color name="cf_text">#0b3a66</color>
+    <color name="cf_link">#00a8d6</color>
+    <color name="cf_callout">#f77343</color>
+    <color name="cf_background">#e8e8e8</color>
     
 </resources>

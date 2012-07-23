@@ -1,0 +1,9 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item
+        android:id="@+id/cloud_apply"
+        android:icon="@drawable/ic_cloud_update_icon"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/cloud_apply">
+    </item>
+
+</menu>
