@@ -1,5 +1,6 @@
 package org.cloudfoundry.android.cfdroid.support;
 
+
 /**
  * Base class for views that can populate themselves from an item of kind I.
  * 

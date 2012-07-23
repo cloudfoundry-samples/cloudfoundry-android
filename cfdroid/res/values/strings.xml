@@ -32,5 +32,6 @@
     <string name="done">Done</string>
     <string name="cloudfoundry">CloudFoundry</string>
     <string name="control">Control</string>
+    <string name="cloud_apply">Save changes</string>
     
 </resources>

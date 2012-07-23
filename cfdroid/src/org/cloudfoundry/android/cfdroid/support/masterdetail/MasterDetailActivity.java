@@ -55,7 +55,7 @@ public abstract class MasterDetailActivity<I, M extends Fragment, D extends Frag
 		
 		data = (List<I>) getLastCustomNonConfigurationInstance();
 		if (savedInstanceState != null) {
-			position = savedInstanceState.getInt(DetailPaneEventsCallback.KEY_SELECTION, -1);
+			position = savedInstanceState.getInt(MasterDetailEventsCallback.KEY_SELECTION, -1);
 		}
 
 		// If not null, we're in the single pane layout
@@ -79,7 +79,7 @@ public abstract class MasterDetailActivity<I, M extends Fragment, D extends Frag
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		outState.putInt(DetailPaneEventsCallback.KEY_SELECTION, position);
+		outState.putInt(MasterDetailEventsCallback.KEY_SELECTION, position);
 	}
 	
 	@Override

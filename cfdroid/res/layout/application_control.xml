@@ -119,6 +119,7 @@
             android:secondaryProgress="1536"/>
         
         <!-- U P D A T E -->
+        <!-- 
         <ImageButton android:id="@+id/update_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -126,6 +127,7 @@
             android:layout_below="@id/overall_memory_progressbar"
             android:layout_alignParentRight="true"
             />
+         -->
     </RelativeLayout>
     
     

@@ -8,8 +8,6 @@ package org.cloudfoundry.android.cfdroid.support.masterdetail;
  */
 public interface DetailPaneEventsCallback {
 	
-	public static final String KEY_SELECTION = "selection";
-	
 	void selectionChanged();
 
 }

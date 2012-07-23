@@ -13,6 +13,8 @@ import java.util.List;
  */
 public interface MasterDetailEventsCallback<I> extends DataHolder<I> {
 	
+	public static final String KEY_SELECTION = "selection";
+
 	void onLeftPaneSelection(int position);
 	
 	void onNewData(List<I> data);

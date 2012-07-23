@@ -9,7 +9,7 @@ import roboguice.inject.ContentView;
 @ContentView(R.layout.applications)
 public class ApplicationsActivity
 		extends
-		MasterDetailActivity<CloudApplication, ApplicationsListFragment, ApplicationDetailViewPager> {
+		MasterDetailActivity<CloudApplication, ApplicationsListFragment, ApplicationDetailTabs> {
 
 	@Override
 	protected ApplicationsListFragment makeLeftFragment() {
@@ -17,8 +17,9 @@ public class ApplicationsActivity
 	}
 
 	@Override
-	protected ApplicationDetailViewPager makeRightFragment() {
-		return new ApplicationDetailViewPager();
+	protected ApplicationDetailTabs makeRightFragment() {
+		//return new ApplicationDetailViewPager();
+		return new ApplicationDetailTabs();
 	}
 
 	

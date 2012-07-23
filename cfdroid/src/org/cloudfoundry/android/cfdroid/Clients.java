@@ -77,6 +77,9 @@ public class Clients {
 			String token = bundle.getString(AccountManager.KEY_AUTHTOKEN);
 
 			client = new CloudFoundryClient(token, parts[1]);
+			
+			// TODO hack for no network on main for now
+			client.getCloudInfo();
 		} catch (Exception e) {
 			Ln.e(e);
 		}
