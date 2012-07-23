@@ -31,11 +31,9 @@
     <string name="url_hint">Controller URL</string>
     <string name="done">Done</string>
     <string name="cloudfoundry">CloudFoundry</string>
-<<<<<<< HEAD
 
-=======
     <string name="control">Control</string>
     <string name="cloud_apply">Save changes</string>
->>>>>>> 85f6811dcb1202e11e9cf16e479d2c7173c076ec
+
     
 </resources>

@@ -19,6 +19,7 @@ import roboguice.util.Ln;
 import roboguice.util.RoboAsyncTask;
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -139,16 +140,13 @@ public class LoginActivity extends RoboSherlockAccountAuthenticatorActivity {
 		startActivity(new Intent(this, TargetsActivity.class));
 	}
 
+	@SuppressLint("ParserError")
 	private void handleLogin() {
 		final String sLogin = login.getText().toString().trim();
 		final String sPassword = password.getText().toString().trim();
-		final String sTarget = ((CloudTarget) targetSpinner.getSelectedItem())
-				.getURL();
+		final String sTarget = ((CloudTarget) targetSpinner.getSelectedItem()).getURL();
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 85f6811dcb1202e11e9cf16e479d2c7173c076ec
 		RoboAsyncTask<String> task = new RoboAsyncTask<String>(this) {
 			@Override
 			public String call() throws Exception {
