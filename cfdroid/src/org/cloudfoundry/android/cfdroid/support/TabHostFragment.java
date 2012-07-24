@@ -26,13 +26,15 @@ import com.github.rtyley.android.sherlock.roboguice.fragment.RoboSherlockFragmen
  * @author ebottard
  * 
  */
-public class TabHostFragment extends RoboSherlockFragment implements TabHost.OnTabChangeListener{
+//TODO http://stackoverflow.com/questions/4149953/androidorientation-vertical-does-not-work-for-tabwidget
+public abstract class TabHostFragment extends RoboSherlockFragment implements TabHost.OnTabChangeListener{
+
+	private static final String TAB = "tab";
 
 	@InjectView(android.R.id.tabhost)
 	private TabHost tabHost;
 	
 	private TabContentFactory dummy = new TabContentFactory() {
-		
 		@Override
 		public View createTabContent(String tag) {
 			View view = new View(getActivity());
@@ -65,12 +67,24 @@ public class TabHostFragment extends RoboSherlockFragment implements TabHost.OnT
 		super.onViewCreated(view, savedInstanceState);
 		tabHost.setup();
 		tabHost.setOnTabChangedListener(this);
+		setupTabs();
+		if (savedInstanceState != null) {
+			tabHost.setCurrentTabByTag(savedInstanceState.getString(TAB));
+		}
 	}
 	
-	public <F extends Fragment> void addTab(String tag, Class<F> klass) {
+	protected abstract void setupTabs();
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putString(TAB, tabHost.getCurrentTabTag());
+	}
+	
+	public <F extends Fragment> void addTab(String tag, String label, Class<F> klass) {
 		TabSpec tabSpec = tabHost.newTabSpec(tag);
 		tabSpec.setContent(dummy);
-		tabSpec.setIndicator(tag);
+		tabSpec.setIndicator(label);
 		TabInfo<F> info = new TabInfo<F>(klass);
 		infos.put(tag, info);
 		tabHost.addTab(tabSpec);

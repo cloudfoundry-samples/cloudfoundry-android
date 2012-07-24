@@ -31,6 +31,10 @@ public class Clients {
 
 	private CloudFoundryClient client;
 
+	public CloudFoundryClient getClient() {
+		return client;
+	}
+
 	private Map<String, CloudApplication> applications = new HashMap<String, CloudApplication>();
 
 	private Map<String, CloudService> services = new HashMap<String, CloudService>();
