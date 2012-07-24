@@ -32,6 +32,7 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
+import com.actionbarsherlock.app.ActionBar;
 import com.github.rtyley.android.sherlock.roboguice.activity.RoboSherlockAccountAuthenticatorActivity;
 import com.google.inject.Inject;
 
@@ -80,6 +81,10 @@ public class LoginActivity extends RoboSherlockAccountAuthenticatorActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		getSupportActionBar().setDisplayShowTitleEnabled(false); getSupportActionBar().setDisplayShowHomeEnabled(false);
+		//ActionBar ab = getActionBar(); 
+		//ab.setDisplayShowTitleEnabled(false); 
+		//ab.setDisplayShowHomeEnabled(false);
 
 		UpdateUiTextWatcher watcher = new UpdateUiTextWatcher();
 		login.addTextChangedListener(watcher);
