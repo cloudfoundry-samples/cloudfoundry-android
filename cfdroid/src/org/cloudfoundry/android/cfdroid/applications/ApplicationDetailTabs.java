@@ -27,7 +27,8 @@ public class ApplicationDetailTabs extends TabHostFragment implements
 
 	@Override
 	public void selectionChanged() {
-
+		clearAll();
+		setupTabs();
 	}
 
 }

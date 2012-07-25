@@ -159,7 +159,7 @@ public class LoginActivity extends RoboSherlockAccountAuthenticatorActivity {
 
 			@Override
 			protected void onSuccess(String token) throws Exception {
-				Account account = new Account(sLogin + "|" + sTarget,
+				Account account = new Account(sLogin + "\n" + sTarget,
 						"org.cloudfoundry");
 				accountManager.addAccountExplicitly(account, sPassword, null);
 				finish();

@@ -77,7 +77,7 @@ public class Clients {
 					currentActivity, null, null, null, null).getResult();
 
 			String[] parts = bundle.getString(AccountManager.KEY_ACCOUNT_NAME)
-					.split("\\|");
+					.split("\n");
 			String token = bundle.getString(AccountManager.KEY_AUTHTOKEN);
 
 			client = new CloudFoundryClient(token, parts[1]);

@@ -1,11 +1,14 @@
 package org.cloudfoundry.android.cfdroid.account;
 
-import org.cloudfoundry.android.cfdroid.LoginActivity;
-import org.cloudfoundry.client.lib.CloudFoundryClient;
-
 import static android.accounts.AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE;
+import static android.accounts.AccountManager.KEY_ACCOUNT_NAME;
+import static android.accounts.AccountManager.KEY_ACCOUNT_TYPE;
+import static android.accounts.AccountManager.KEY_AUTHTOKEN;
 import static android.accounts.AccountManager.KEY_BOOLEAN_RESULT;
 import static android.accounts.AccountManager.KEY_INTENT;
+
+import org.cloudfoundry.android.cfdroid.LoginActivity;
+import org.cloudfoundry.client.lib.CloudFoundryClient;
 
 import android.accounts.AbstractAccountAuthenticator;
 import android.accounts.Account;
@@ -15,11 +18,6 @@ import android.accounts.NetworkErrorException;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import static android.accounts.AccountManager.KEY_ACCOUNT_NAME;
-import static android.accounts.AccountManager.KEY_ACCOUNT_TYPE;
-import static android.accounts.AccountManager.KEY_AUTHTOKEN;
-import static android.accounts.AccountManager.KEY_BOOLEAN_RESULT;
-import static android.accounts.AccountManager.KEY_INTENT;
 
 public class CloudFoundryAccountAuthenticator extends
 		AbstractAccountAuthenticator {
@@ -34,8 +32,7 @@ public class CloudFoundryAccountAuthenticator extends
 	@Override
 	public Bundle editProperties(AccountAuthenticatorResponse response,
 			String accountType) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -54,7 +51,6 @@ public class CloudFoundryAccountAuthenticator extends
 	@Override
 	public Bundle confirmCredentials(AccountAuthenticatorResponse response,
 			Account account, Bundle options) throws NetworkErrorException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -63,7 +59,7 @@ public class CloudFoundryAccountAuthenticator extends
 			Account account, String authTokenType, Bundle options)
 			throws NetworkErrorException {
 		String password = AccountManager.get(context).getPassword(account);
-		String[] parts = account.name.split("\\|");
+		String[] parts = account.name.split("\n");
 		try {
 			CloudFoundryClient client = new CloudFoundryClient(parts[0], password, parts[1]);
 			String token = client.login();
@@ -79,15 +75,13 @@ public class CloudFoundryAccountAuthenticator extends
 
 	@Override
 	public String getAuthTokenLabel(String authTokenType) {
-		// TODO Auto-generated method stub
-		return "WTF is that";
+		return null;
 	}
 
 	@Override
 	public Bundle updateCredentials(AccountAuthenticatorResponse response,
 			Account account, String authTokenType, Bundle options)
 			throws NetworkErrorException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

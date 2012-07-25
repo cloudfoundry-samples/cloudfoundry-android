@@ -13,6 +13,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TabHost;
 import android.widget.TabHost.TabContentFactory;
 import android.widget.TabHost.TabSpec;
@@ -32,7 +33,7 @@ public abstract class TabHostFragment extends RoboSherlockFragment implements Ta
 	private static final String TAB = "tab";
 
 	@InjectView(android.R.id.tabhost)
-	private TabHost tabHost;
+	protected TabHost tabHost;
 	
 	private TabContentFactory dummy = new TabContentFactory() {
 		@Override
@@ -88,6 +89,19 @@ public abstract class TabHostFragment extends RoboSherlockFragment implements Ta
 		TabInfo<F> info = new TabInfo<F>(klass);
 		infos.put(tag, info);
 		tabHost.addTab(tabSpec);
+	}
+	
+	public void clearAll() {
+		if (currentTabInfo != null && currentTabInfo.fragment != null) {
+			FragmentTransaction tx = getActivity().getSupportFragmentManager().beginTransaction();
+			tx.detach(currentTabInfo.fragment);
+		}
+		tabHost.clearAllTabs();
+		currentTabInfo = null;
+		infos.clear();
+		FrameLayout realtabcontent = new FrameLayout(getActivity());
+		realtabcontent.setId(R.id.realtabcontent);
+		tabHost.getTabContentView().addView(realtabcontent);
 	}
 
 	@Override

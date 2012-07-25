@@ -2,7 +2,7 @@
     <item
         android:id="@+id/cloud_apply"
         android:icon="@drawable/stateful_ic_cloud_update_icon"
-        android:showAsAction="ifRoom|withText"
+        android:showAsAction="withText|always"
         android:title="@string/cloud_apply">
     </item>
 
