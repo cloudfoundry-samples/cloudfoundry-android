@@ -2,27 +2,24 @@ package org.cloudfoundry.android.cfdroid.applications;
 
 import java.util.List;
 
-import org.cloudfoundry.android.cfdroid.Clients;
+import org.cloudfoundry.android.cfdroid.CloudFoundry;
 import org.cloudfoundry.android.cfdroid.support.AsyncLoader;
 import org.cloudfoundry.client.lib.CloudApplication;
 
 import android.app.Activity;
 
-import com.google.inject.Inject;
-
 public class ApplicationsListLoader extends AsyncLoader<List<CloudApplication>>{
 
-	private Clients clients;
+	private CloudFoundry client;
 	
-	@Inject
-	public ApplicationsListLoader(Activity activity, Clients clients) {
+	public ApplicationsListLoader(Activity activity, CloudFoundry client) {
 		super(activity);
-		this.clients = clients;
+		this.client = client;
 	}
 
 	@Override
 	public List<CloudApplication> loadInBackground() {
-		return clients.getApplications();
+		return client.getApplications();
 	}
 
 }

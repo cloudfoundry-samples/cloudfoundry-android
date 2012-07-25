@@ -1,8 +1,8 @@
 package org.cloudfoundry.android.cfdroid.account;
 
-public class AccountUtils {
+public class Accounts {
 	
-	private AccountUtils() {
+	private Accounts() {
 		
 	}
 	

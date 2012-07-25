@@ -32,7 +32,6 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.ActionBar;
 import com.github.rtyley.android.sherlock.roboguice.activity.RoboSherlockAccountAuthenticatorActivity;
 import com.google.inject.Inject;
 
@@ -53,9 +52,6 @@ public class LoginActivity extends RoboSherlockAccountAuthenticatorActivity {
 
 	@InjectView(R.id.manage)
 	View manageTargets;
-
-	@Inject
-	Clients clients;
 
 	@Inject
 	TargetsPreferences targetsPreferences;
@@ -145,7 +141,6 @@ public class LoginActivity extends RoboSherlockAccountAuthenticatorActivity {
 		startActivity(new Intent(this, TargetsActivity.class));
 	}
 
-	@SuppressLint("ParserError")
 	private void handleLogin() {
 		final String sLogin = login.getText().toString().trim();
 		final String sPassword = password.getText().toString().trim();

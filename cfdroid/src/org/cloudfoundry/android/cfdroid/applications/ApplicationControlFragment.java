@@ -1,6 +1,6 @@
 package org.cloudfoundry.android.cfdroid.applications;
 
-import org.cloudfoundry.android.cfdroid.Clients;
+import org.cloudfoundry.android.cfdroid.CloudFoundry;
 import org.cloudfoundry.android.cfdroid.R;
 import org.cloudfoundry.android.cfdroid.support.masterdetail.DataHolder;
 import org.cloudfoundry.client.lib.CloudApplication;
@@ -24,7 +24,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.github.rtyley.android.sherlock.roboguice.fragment.RoboSherlockFragment;
 import com.google.inject.Inject;
 
-public class ApplicationControlFragment extends RoboSherlockFragment  {
+public class ApplicationControlFragment extends RoboSherlockFragment {
 
 	private static int log2(int n) {
 		if (n <= 0)
@@ -35,7 +35,7 @@ public class ApplicationControlFragment extends RoboSherlockFragment  {
 	private int baseMemoryUnit;
 
 	@Inject
-	private Clients clients;
+	private CloudFoundry clients;
 
 	private int initialInstances, initialMemory;
 
@@ -66,28 +66,37 @@ public class ApplicationControlFragment extends RoboSherlockFragment  {
 		public void onStopTrackingTouch(SeekBar seekBar) {
 		}
 	};
-	
+
+	/**
+	 * Prevents the user from sliding the primary progress ahead of the
+	 * secondary progress.
+	 */
 	private void constrainBars() {
-		if (instancesSeekBar.getProgress() > instancesSeekBar.getSecondaryProgress()) {
-			instancesSeekBar.setProgress(instancesSeekBar.getSecondaryProgress());
+		if (instancesSeekBar.getProgress() > instancesSeekBar
+				.getSecondaryProgress()) {
+			instancesSeekBar.setProgress(instancesSeekBar
+					.getSecondaryProgress());
 		}
 		if (memorySeekBar.getProgress() > memorySeekBar.getSecondaryProgress()) {
 			memorySeekBar.setProgress(memorySeekBar.getSecondaryProgress());
 		}
 	}
-	
+
+	/**
+	 * Updates widgets (notably limits conveyed by seekbars secondary progress) to reflect new data.
+	 */
 	private void updateData() {
 		memorySeekBar.setSecondaryProgress(memR2P(maxWithoutOthers
 				/ instances()));
 		instancestv.setText("" + instances());
-		
+
 		instancesSeekBar.setSecondaryProgress(instancesR2P(maxWithoutOthers
 				/ memory()));
-		overallMemoryPb.setSecondaryProgress(usedByOtherApps()
-				+ memory() * instances());
+		overallMemoryPb.setSecondaryProgress(usedByOtherApps() + memory()
+				* instances());
 		memorytv.setText("" + memory());
 		getActivity().invalidateOptionsMenu();
-		
+
 	}
 
 	@InjectView(R.id.memory_seekbar)
@@ -164,9 +173,9 @@ public class ApplicationControlFragment extends RoboSherlockFragment  {
 	@Override
 	public void onPrepareOptionsMenu(Menu menu) {
 		super.onPrepareOptionsMenu(menu);
-		menu.findItem(R.id.cloud_apply).setEnabled(userChangedSettings()); 
+		menu.findItem(R.id.cloud_apply).setEnabled(userChangedSettings());
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (R.id.cloud_apply == item.getItemId()) {
@@ -176,33 +185,34 @@ public class ApplicationControlFragment extends RoboSherlockFragment  {
 			return super.onOptionsItemSelected(item);
 		}
 	}
-	
-	
 
 	private void saveChanges() {
 		new RoboAsyncTask<Void>(getActivity()) {
 			@Override
 			public Void call() throws Exception {
-				if( instances() != initialInstances) {
-					clients.getClient().updateApplicationInstances(getCloudApplication().getName(), instances());
+				if (instances() != initialInstances) {
+					clients.updateApplicationInstances(
+							getCloudApplication().getName(), instances());
 				}
 				if (memory() != initialMemory) {
-					clients.getClient().updateApplicationMemory(getCloudApplication().getName(), memory());
+					clients.updateApplicationMemory(
+							getCloudApplication().getName(), memory());
 				}
 				return null;
 			}
+
 			protected void onFinally() throws RuntimeException {
 				fullyRedrawWidgets();
 				getActivity().invalidateOptionsMenu();
 			}
 		}.execute();
-		
+
 	}
 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		fullyRedrawWidgets(); 
+		fullyRedrawWidgets();
 		setHasOptionsMenu(true);
 
 	}
@@ -221,7 +231,7 @@ public class ApplicationControlFragment extends RoboSherlockFragment  {
 		int usedByOtherApps = info.getUsage().getTotalMemory()
 				- initialInstances * initialMemory;
 		maxWithoutOthers = maxTotalMemory - usedByOtherApps;
-		baseMemoryUnit = clients.getClient().getApplicationMemoryChoices()[0];
+		baseMemoryUnit = clients.getApplicationMemoryChoices()[0];
 
 		instancesSeekBar.setMax(instancesR2P(maxTotalMemory / baseMemoryUnit));
 		instancesSeekBar.setProgress(instancesR2P(cloudApplication
@@ -242,8 +252,7 @@ public class ApplicationControlFragment extends RoboSherlockFragment  {
 	}
 
 	private boolean userChangedSettings() {
-		return instances() != initialInstances
-				|| memory() != initialMemory;
+		return instances() != initialInstances || memory() != initialMemory;
 	}
 
 }

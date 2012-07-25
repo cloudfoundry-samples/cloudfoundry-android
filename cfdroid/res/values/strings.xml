@@ -34,6 +34,7 @@
 
     <string name="control">Control</string>
     <string name="cloud_apply">Save changes</string>
+    <string name="start">Start</string>
 
     
 </resources>

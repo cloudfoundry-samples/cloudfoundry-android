@@ -2,7 +2,7 @@ package org.cloudfoundry.android.cfdroid.applications;
 
 import java.util.List;
 
-import org.cloudfoundry.android.cfdroid.Clients;
+import org.cloudfoundry.android.cfdroid.CloudFoundry;
 import org.cloudfoundry.android.cfdroid.R;
 import org.cloudfoundry.android.cfdroid.services.ServicesListLoader;
 import org.cloudfoundry.android.cfdroid.support.ItemListAdapter;
@@ -31,7 +31,7 @@ public class ApplicationServicesFragment extends
 		ListLoadingFragment<CloudService> {
 
 	@Inject
-	private Clients clients;
+	private CloudFoundry clients;
 
 	@Override
 	public Loader<List<CloudService>> onCreateLoader(int arg0, Bundle arg1) {

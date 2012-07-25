@@ -2,7 +2,7 @@ package org.cloudfoundry.android.cfdroid.applications;
 
 import java.util.List;
 
-import org.cloudfoundry.android.cfdroid.Clients;
+import org.cloudfoundry.android.cfdroid.CloudFoundry;
 import org.cloudfoundry.android.cfdroid.R;
 import org.cloudfoundry.android.cfdroid.support.ItemListAdapter;
 import org.cloudfoundry.android.cfdroid.support.masterdetail.AbstractMasterPane;
@@ -18,11 +18,11 @@ public class ApplicationsListFragment extends
 		AbstractMasterPane<CloudApplication> {
 
 	@Inject
-	private Clients clients;
+	private CloudFoundry client;
 
 	@Override
 	public Loader<List<CloudApplication>> onCreateLoader(int arg0, Bundle arg1) {
-		return new ApplicationsListLoader(getActivity(), clients);
+		return new ApplicationsListLoader(getActivity(), client);
 	}
 
 	

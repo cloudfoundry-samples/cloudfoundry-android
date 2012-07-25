@@ -18,7 +18,6 @@ public class ApplicationsActivity
 
 	@Override
 	protected ApplicationDetailTabs makeRightFragment() {
-		//return new ApplicationDetailViewPager();
 		return new ApplicationDetailTabs();
 	}
 

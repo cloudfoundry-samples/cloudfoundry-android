@@ -95,6 +95,7 @@ public abstract class TabHostFragment extends RoboSherlockFragment implements Ta
 		if (currentTabInfo != null && currentTabInfo.fragment != null) {
 			FragmentTransaction tx = getActivity().getSupportFragmentManager().beginTransaction();
 			tx.detach(currentTabInfo.fragment);
+			tx.commit();
 		}
 		tabHost.clearAllTabs();
 		currentTabInfo = null;
