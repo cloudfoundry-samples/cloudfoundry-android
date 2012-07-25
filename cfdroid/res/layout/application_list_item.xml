@@ -10,7 +10,8 @@
         android:layout_height="48dp"
         android:layout_marginLeft="16dp"
         android:gravity="center_vertical"
-        android:textSize="16sp" />
+        android:textSize="12sp"
+        android:textColor="@color/icsblue" />
 
     <TextView
         android:id="@+id/instances"
