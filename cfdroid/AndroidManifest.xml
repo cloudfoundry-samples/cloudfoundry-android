@@ -27,7 +27,7 @@
             </intent-filter>
              -->
         </activity>
-        <activity android:name=".LoginActivity" >
+        <activity android:name=".account.LoginActivity" >
         </activity>
         <activity android:name=".targets.TargetsActivity" >
         </activity>

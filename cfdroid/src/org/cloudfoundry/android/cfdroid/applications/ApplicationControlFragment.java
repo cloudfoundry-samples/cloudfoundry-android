@@ -2,14 +2,20 @@ package org.cloudfoundry.android.cfdroid.applications;
 
 import org.cloudfoundry.android.cfdroid.CloudFoundry;
 import org.cloudfoundry.android.cfdroid.R;
+import org.cloudfoundry.android.cfdroid.support.AsyncLoader;
+import org.cloudfoundry.android.cfdroid.support.DeferredContentFragment;
 import org.cloudfoundry.android.cfdroid.support.masterdetail.DataHolder;
 import org.cloudfoundry.client.lib.CloudApplication;
 import org.cloudfoundry.client.lib.CloudApplication.AppState;
 import org.cloudfoundry.client.lib.CloudInfo;
 
 import roboguice.inject.InjectView;
+import roboguice.util.Ln;
 import roboguice.util.RoboAsyncTask;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,10 +27,9 @@ import android.widget.TextView;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.github.rtyley.android.sherlock.roboguice.fragment.RoboSherlockFragment;
 import com.google.inject.Inject;
 
-public class ApplicationControlFragment extends RoboSherlockFragment {
+public class ApplicationControlFragment extends DeferredContentFragment<ApplicationControlFragment.AsyncResult> {
 
 	private static int log2(int n) {
 		if (n <= 0)
@@ -32,10 +37,16 @@ public class ApplicationControlFragment extends RoboSherlockFragment {
 		return 31 - Integer.numberOfLeadingZeros(n);
 	}
 
+	/*default*/ static class AsyncResult {
+		private CloudInfo cloudInfo;
+		
+		private int[] memoryOptions;
+	}
+	
 	private int baseMemoryUnit;
 
 	@Inject
-	private CloudFoundry clients;
+	private CloudFoundry client;
 
 	private int initialInstances, initialMemory;
 
@@ -108,9 +119,6 @@ public class ApplicationControlFragment extends RoboSherlockFragment {
 	@InjectView(R.id.overall_memory_progressbar)
 	private ProgressBar overallMemoryPb;
 
-	@InjectView(R.id.restart)
-	private View restartBtn;
-
 	@InjectView(R.id.start)
 	private View startBtn;
 
@@ -175,6 +183,60 @@ public class ApplicationControlFragment extends RoboSherlockFragment {
 		super.onPrepareOptionsMenu(menu);
 		menu.findItem(R.id.cloud_apply).setEnabled(userChangedSettings());
 	}
+	
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		startBtn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				start();
+			}
+
+		});
+		stopBtn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				stop();
+			}
+		});
+	}
+
+	private void start() {
+		final Dialog dialog = showDialog(R.string.working);
+		new RoboAsyncTask<AsyncResult>(getActivity()) {
+			@Override
+			public AsyncResult call() throws Exception {
+				client.startApplication(getCloudApplication().getName());
+				return latestRemoteState();
+			}
+			protected void onSuccess(AsyncResult t) throws Exception {
+				fullyRedrawWidgets(t);
+				getActivity().invalidateOptionsMenu();
+			}
+			protected void onFinally() throws RuntimeException {
+				dialog.dismiss();
+			}
+		}.execute();
+	}
+	
+	private void stop() {
+		final Dialog dialog = showDialog(R.string.working);
+		new RoboAsyncTask<AsyncResult>(getActivity()) {
+			@Override
+			public AsyncResult call() throws Exception {
+				client.stopApplication(getCloudApplication().getName());
+				return latestRemoteState();
+			}
+			protected void onSuccess(AsyncResult t) throws Exception {
+				fullyRedrawWidgets(t);
+				getActivity().invalidateOptionsMenu();
+			}
+			protected void onFinally() throws RuntimeException {
+				dialog.dismiss();
+			}
+		}.execute();
+	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -185,39 +247,51 @@ public class ApplicationControlFragment extends RoboSherlockFragment {
 			return super.onOptionsItemSelected(item);
 		}
 	}
+	
+	private Dialog showDialog(int message) {
+		ProgressDialog dialog = new ProgressDialog(getActivity());
+		dialog.setMessage(getActivity().getText(message));
+        dialog.setIndeterminate(true);
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        dialog.show();
+        return dialog;
+	}
 
 	private void saveChanges() {
-		new RoboAsyncTask<Void>(getActivity()) {
+		final Dialog dialog = showDialog(R.string.working);
+		new RoboAsyncTask<AsyncResult>(getActivity()) {
 			@Override
-			public Void call() throws Exception {
+			public AsyncResult call() throws Exception {
 				if (instances() != initialInstances) {
-					clients.updateApplicationInstances(
+					client.updateApplicationInstances(
 							getCloudApplication().getName(), instances());
 				}
 				if (memory() != initialMemory) {
-					clients.updateApplicationMemory(
+					client.updateApplicationMemory(
 							getCloudApplication().getName(), memory());
 				}
-				return null;
+				return latestRemoteState();
 			}
-
-			protected void onFinally() throws RuntimeException {
-				fullyRedrawWidgets();
+			
+			protected void onSuccess(AsyncResult t) throws Exception {
+				fullyRedrawWidgets(t);
 				getActivity().invalidateOptionsMenu();
 			}
+			protected void onFinally() throws RuntimeException {
+				dialog.dismiss();
+			}
+
 		}.execute();
 
 	}
 
 	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
-		fullyRedrawWidgets();
+	public void onDataAvailable(AsyncResult data) {
+		fullyRedrawWidgets(data);
 		setHasOptionsMenu(true);
-
 	}
-
-	private void fullyRedrawWidgets() {
+	
+	private void fullyRedrawWidgets(AsyncResult data) {
 		CloudApplication cloudApplication = getCloudApplication();
 		initialInstances = cloudApplication.getInstances();
 		initialMemory = cloudApplication.getMemory();
@@ -226,12 +300,12 @@ public class ApplicationControlFragment extends RoboSherlockFragment {
 		startBtn.setEnabled(state == AppState.STOPPED);
 		stopBtn.setEnabled(state == AppState.STARTED);
 
-		CloudInfo info = clients.getCloudInfo();
+		CloudInfo info = data.cloudInfo;
 		int maxTotalMemory = info.getLimits().getMaxTotalMemory();
 		int usedByOtherApps = info.getUsage().getTotalMemory()
 				- initialInstances * initialMemory;
 		maxWithoutOthers = maxTotalMemory - usedByOtherApps;
-		baseMemoryUnit = clients.getApplicationMemoryChoices()[0];
+		baseMemoryUnit = data.memoryOptions[0];
 
 		instancesSeekBar.setMax(instancesR2P(maxTotalMemory / baseMemoryUnit));
 		instancesSeekBar.setProgress(instancesR2P(cloudApplication
@@ -253,6 +327,24 @@ public class ApplicationControlFragment extends RoboSherlockFragment {
 
 	private boolean userChangedSettings() {
 		return instances() != initialInstances || memory() != initialMemory;
+	}
+
+	@Override
+	public Loader<AsyncResult> onCreateLoader(int arg0, Bundle arg1) {
+		return new AsyncLoader<AsyncResult>(getActivity()) {
+			@Override
+			public AsyncResult loadInBackground() {
+				return latestRemoteState();
+			}
+			
+		};
+	}
+
+	private AsyncResult latestRemoteState() {
+		AsyncResult result = new AsyncResult();
+		result.cloudInfo = client.getCloudInfo();
+		result.memoryOptions = client.getApplicationMemoryChoices();
+		return result;
 	}
 
 }

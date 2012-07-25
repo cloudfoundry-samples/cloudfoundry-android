@@ -25,7 +25,7 @@ public abstract class ListLoadingFragment<E> extends RoboSherlockListFragment im
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setListShown(false);
-        getLoaderManager().initLoader(0, null, this);
+        getLoaderManager().initLoader(R.id.list_loading_fragment_loader, null, this);
     }
 
     @Override
@@ -55,7 +55,7 @@ public abstract class ListLoadingFragment<E> extends RoboSherlockListFragment im
      */
     public void refresh() {
         if (getActivity() != null)
-            getLoaderManager().restartLoader(0, null, this);
+            getLoaderManager().restartLoader(R.id.list_loading_fragment_loader, null, this);
     }
 
     public void onLoadFinished(Loader<List<E>> loader, List<E> items) {

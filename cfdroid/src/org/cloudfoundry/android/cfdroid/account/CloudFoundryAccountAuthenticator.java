@@ -7,7 +7,6 @@ import static android.accounts.AccountManager.KEY_AUTHTOKEN;
 import static android.accounts.AccountManager.KEY_BOOLEAN_RESULT;
 import static android.accounts.AccountManager.KEY_INTENT;
 
-import org.cloudfoundry.android.cfdroid.LoginActivity;
 import org.cloudfoundry.client.lib.CloudFoundryClient;
 
 import android.accounts.AbstractAccountAuthenticator;

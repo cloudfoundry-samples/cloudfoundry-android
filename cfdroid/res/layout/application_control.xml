@@ -1,113 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="16dp" >
+    android:layout_height="match_parent" >
 
-    <!-- C O N T R O L -->
-
-    <Button
-        android:id="@+id/start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/ic_play_icon"
-        android:text="@string/start" />
-
-    <ImageButton
-        android:id="@+id/stop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/start"
-        android:src="@drawable/ic_stop_icon" />
-
-    <ImageButton
-        android:id="@+id/restart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_toRightOf="@id/stop"
-        android:src="@drawable/ic_reload_icon" />
-
-    <!-- R E S O U R C E S -->
-
-    <TextView
-        android:id="@+id/resources"
+    <LinearLayout
+        android:id="@+id/progressContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/start"
-        android:layout_marginTop="16dp"
-        android:text="App resources"
-        android:textSize="22sp" />
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical" >
 
-    <!-- Instances -->
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-    <TextView
-        android:id="@+id/instances_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/resources"
-        android:text="Instances" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="4dip"
+            android:singleLine="true"
+            android:text="@string/loading"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/instances"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@id/instances_label"
-        android:layout_alignParentRight="true" />
-
-    <SeekBar
-        android:id="@+id/instances_seekbar"
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/actual_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/instances_label"
-        android:max="12"
-        android:progress="5"
-        android:secondaryProgress="8" />
+        android:layout_height="match_parent"
+        android:layout_margin="16dp"
+        android:visibility="gone" >
 
-    <!-- Memory -->
+        <!-- C O N T R O L -->
 
-    <TextView
-        android:id="@+id/memory_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/instances_seekbar"
-        android:text="Memory (per instance)" />
+        <Button
+            android:id="@+id/start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_play_icon"
+            android:text="@string/start" />
 
-    <TextView
-        android:id="@+id/memory"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@id/memory_label"
-        android:layout_alignParentRight="true" />
+        <Button
+            android:id="@+id/stop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/start"
+            android:text="@string/stop"
+            android:drawableLeft="@drawable/ic_stop_icon" />
 
-    <SeekBar
-        android:id="@+id/memory_seekbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/memory_label"
-        android:max="2048"
-        android:progress="64"
-        android:secondaryProgress="832" />
+        <!-- R E S O U R C E S -->
 
-    <!-- Overall Memory -->
+        <TextView
+            android:id="@+id/resources"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/start"
+            android:layout_marginTop="16dp"
+            android:text="App resources"
+            android:textSize="22sp" />
 
-    <TextView
-        android:id="@+id/overall_memory_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/memory_seekbar"
-        android:layout_marginTop="16dp"
-        android:text="Global memory"
-        android:textSize="22sp" />
+        <!-- Instances -->
 
-    <ProgressBar
-        android:id="@+id/overall_memory_progressbar"
-        style="@android:style/Widget.ProgressBar.Horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/overall_memory_label"
-        android:max="2048"
-        android:progress="1216"
-        android:secondaryProgress="1536" />
+        <TextView
+            android:id="@+id/instances_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/resources"
+            android:text="Instances" />
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/instances"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/instances_label"
+            android:layout_alignParentRight="true" />
+
+        <SeekBar
+            android:id="@+id/instances_seekbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/instances_label"
+            android:max="12"
+            android:progress="5"
+            android:secondaryProgress="8" />
+
+        <!-- Memory -->
+
+        <TextView
+            android:id="@+id/memory_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/instances_seekbar"
+            android:text="Memory (per instance)" />
+
+        <TextView
+            android:id="@+id/memory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/memory_label"
+            android:layout_alignParentRight="true" />
+
+        <SeekBar
+            android:id="@+id/memory_seekbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/memory_label"
+            android:max="2048"
+            android:progress="64"
+            android:secondaryProgress="832" />
+
+        <!-- Overall Memory -->
+
+        <TextView
+            android:id="@+id/overall_memory_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/memory_seekbar"
+            android:layout_marginTop="16dp"
+            android:text="Global memory"
+            android:textSize="22sp" />
+
+        <ProgressBar
+            android:id="@+id/overall_memory_progressbar"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/overall_memory_label"
+            android:max="2048"
+            android:progress="1216"
+            android:secondaryProgress="1536" />
+    </RelativeLayout>
+
+</FrameLayout>

@@ -1,4 +1,4 @@
-package org.cloudfoundry.android.cfdroid;
+package org.cloudfoundry.android.cfdroid.account;
 
 import static android.view.KeyEvent.ACTION_DOWN;
 import static android.view.KeyEvent.KEYCODE_ENTER;
@@ -6,6 +6,9 @@ import static android.view.inputmethod.EditorInfo.IME_ACTION_DONE;
 
 import java.util.List;
 
+import org.cloudfoundry.android.cfdroid.R;
+import org.cloudfoundry.android.cfdroid.R.id;
+import org.cloudfoundry.android.cfdroid.R.layout;
 import org.cloudfoundry.android.cfdroid.support.BaseTextWatcher;
 import org.cloudfoundry.android.cfdroid.targets.CloudTarget;
 import org.cloudfoundry.android.cfdroid.targets.TargetAdapter;

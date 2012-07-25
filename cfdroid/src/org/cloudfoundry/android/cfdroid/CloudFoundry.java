@@ -1,5 +1,6 @@
 package org.cloudfoundry.android.cfdroid;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -71,8 +72,27 @@ public class CloudFoundry {
 	}
 	
 	public CloudInfo getCloudInfo() {
-		// TODO reflectively clear cached data inside cache.client
-		return cache.client.getCloudInfo();
+		CloudInfo cloudInfo = cache.client.getCloudInfo();
+		clearCloudInfoField();
+		return cloudInfo;
+	}
+
+	private void clearCloudInfoField() {
+		// CFC.getCloudInfo() currently caches its result, while
+		// some parts of it could actually change (mem usage).
+		// We forcibly clear it here... dirty
+		Field f;
+		try {
+			f = CloudFoundryClient.class.getDeclaredField("info");
+			f.setAccessible(true);
+			f.set(cache.client, null);
+		} catch (NoSuchFieldException e) {
+			throw new RuntimeException(e);
+		} catch (IllegalArgumentException e) {
+			throw new RuntimeException(e);
+		} catch (IllegalAccessException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	public CloudApplication updateApplicationInstances(String appName, int instances) {
@@ -107,10 +127,22 @@ public class CloudFoundry {
 		cache.client.updateApplicationMemory(name, memory);
 		return cache.client.getApplication(name);
 	}
+	
+	public CloudApplication startApplication(String name) {
+		cache.client.startApplication(name);
+		return cache.client.getApplication(name);
+	}
+
+	public CloudApplication stopApplication(String name) {
+		cache.client.stopApplication(name);
+		return cache.client.getApplication(name);
+	}
 
 	public int[] getApplicationMemoryChoices() {
-		// TODO clear cloudInfo after, as it is populated by side effect
-		return cache.client.getApplicationMemoryChoices();
+		// Clear cloudInfo after, as it is populated by side effect
+		int[] result = cache.client.getApplicationMemoryChoices();
+		clearCloudInfoField();
+		return result;
 	}
 
 }
