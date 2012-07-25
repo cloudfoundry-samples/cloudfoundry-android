@@ -7,8 +7,6 @@ import static android.view.inputmethod.EditorInfo.IME_ACTION_DONE;
 import java.util.List;
 
 import org.cloudfoundry.android.cfdroid.R;
-import org.cloudfoundry.android.cfdroid.R.id;
-import org.cloudfoundry.android.cfdroid.R.layout;
 import org.cloudfoundry.android.cfdroid.support.BaseTextWatcher;
 import org.cloudfoundry.android.cfdroid.targets.CloudTarget;
 import org.cloudfoundry.android.cfdroid.targets.TargetAdapter;
@@ -22,7 +20,6 @@ import roboguice.util.Ln;
 import roboguice.util.RoboAsyncTask;
 import android.accounts.Account;
 import android.accounts.AccountManager;
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -80,10 +77,11 @@ public class LoginActivity extends RoboSherlockAccountAuthenticatorActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		getSupportActionBar().setDisplayShowTitleEnabled(false); getSupportActionBar().setDisplayShowHomeEnabled(false);
-		//ActionBar ab = getActionBar(); 
-		//ab.setDisplayShowTitleEnabled(false); 
-		//ab.setDisplayShowHomeEnabled(false);
+		getSupportActionBar().setDisplayShowTitleEnabled(false);
+		getSupportActionBar().setDisplayShowHomeEnabled(false);
+		// ActionBar ab = getActionBar();
+		// ab.setDisplayShowTitleEnabled(false);
+		// ab.setDisplayShowHomeEnabled(false);
 
 		UpdateUiTextWatcher watcher = new UpdateUiTextWatcher();
 		login.addTextChangedListener(watcher);
@@ -147,8 +145,8 @@ public class LoginActivity extends RoboSherlockAccountAuthenticatorActivity {
 	private void handleLogin() {
 		final String sLogin = login.getText().toString().trim();
 		final String sPassword = password.getText().toString().trim();
-		final String sTarget = ((CloudTarget) targetSpinner.getSelectedItem()).getURL();
-
+		final String sTarget = ((CloudTarget) targetSpinner.getSelectedItem())
+				.getURL();
 
 		RoboAsyncTask<String> task = new RoboAsyncTask<String>(this) {
 			@Override
@@ -162,8 +160,8 @@ public class LoginActivity extends RoboSherlockAccountAuthenticatorActivity {
 
 			@Override
 			protected void onSuccess(String token) throws Exception {
-				Account account = new Account(sLogin + "\n" + sTarget,
-						"org.cloudfoundry");
+				Account account = new Account(Accounts.toStoredForm(sLogin,
+						sTarget), Accounts.ACCOUNT_TYPE);
 				accountManager.addAccountExplicitly(account, sPassword, null);
 				finish();
 			}

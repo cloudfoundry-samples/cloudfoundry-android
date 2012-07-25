@@ -2,6 +2,11 @@ package org.cloudfoundry.android.cfdroid.account;
 
 public class Accounts {
 	
+	/**
+	 * Also seen in res/xml/authenticator.xml.
+	 */
+	public static final String ACCOUNT_TYPE = "org.cloudfoundry";
+	
 	private Accounts() {
 		
 	}
