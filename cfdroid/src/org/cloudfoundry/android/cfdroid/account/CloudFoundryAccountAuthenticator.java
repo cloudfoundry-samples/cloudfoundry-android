@@ -9,6 +9,8 @@ import static android.accounts.AccountManager.KEY_INTENT;
 
 import org.cloudfoundry.client.lib.CloudFoundryClient;
 
+import roboguice.util.Ln;
+
 import android.accounts.AbstractAccountAuthenticator;
 import android.accounts.Account;
 import android.accounts.AccountAuthenticatorResponse;
@@ -57,10 +59,12 @@ public class CloudFoundryAccountAuthenticator extends
 	public Bundle getAuthToken(AccountAuthenticatorResponse response,
 			Account account, String authTokenType, Bundle options)
 			throws NetworkErrorException {
+		Ln.d("This is %s", Thread.currentThread());
 		String password = AccountManager.get(context).getPassword(account);
-		String[] parts = account.name.split("\n");
+		String login = Accounts.extractName(account.name);
+		String target = Accounts.extractTarget(account.name);
 		try {
-			CloudFoundryClient client = new CloudFoundryClient(parts[0], password, parts[1]);
+			CloudFoundryClient client = new CloudFoundryClient(login, password, target);
 			String token = client.login();
 			Bundle bundle = new Bundle();
 			bundle.putString(KEY_ACCOUNT_NAME, account.name);

@@ -17,6 +17,7 @@ import org.cloudfoundry.client.lib.CloudService;
 import roboguice.util.Ln;
 
 import android.accounts.AccountManager;
+import android.accounts.AccountManagerFuture;
 import android.app.Activity;
 import android.os.Bundle;
 
@@ -105,19 +106,18 @@ public class CloudFoundry {
 			return;
 		}
 		try {
-			Bundle bundle = accountManager.getAuthTokenByFeatures(
+			AccountManagerFuture<Bundle> future = accountManager.getAuthTokenByFeatures(
 					CloudFoundryAccountConstants.ACCOUNT_TYPE,
 					CloudFoundryAccountConstants.ACCOUNT_TYPE, new String[0],
-					activity, null, null, null, null).getResult();
+					activity, null, null, null, null);
+			Bundle bundle = future.getResult();
+			Ln.i("Do I ever get there? %s", bundle);
 
 			String targetURL = Accounts.extractTarget(bundle
 					.getString(AccountManager.KEY_ACCOUNT_NAME));
 			String token = bundle.getString(AccountManager.KEY_AUTHTOKEN);
 
 			cache.client = new CloudFoundryClient(token, targetURL);
-
-			// TODO hack for no network on main for now
-			cache.client.getCloudInfo();
 		} catch (Exception e) {
 			Ln.e(e, "Logged from here");
 		}

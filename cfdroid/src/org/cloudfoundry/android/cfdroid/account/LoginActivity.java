@@ -19,6 +19,7 @@ import roboguice.inject.InjectView;
 import roboguice.util.Ln;
 import roboguice.util.RoboAsyncTask;
 import android.accounts.Account;
+import android.accounts.AccountAuthenticatorResponse;
 import android.accounts.AccountManager;
 import android.content.Intent;
 import android.os.Bundle;
@@ -162,7 +163,20 @@ public class LoginActivity extends RoboSherlockAccountAuthenticatorActivity {
 			protected void onSuccess(String token) throws Exception {
 				Account account = new Account(Accounts.toStoredForm(sLogin,
 						sTarget), Accounts.ACCOUNT_TYPE);
-				accountManager.addAccountExplicitly(account, sPassword, null);
+				if (accountManager.addAccountExplicitly(account, sPassword,
+						null)) {
+					Bundle result = new Bundle();
+					result.putString(AccountManager.KEY_ACCOUNT_NAME,
+							account.name);
+					result.putString(AccountManager.KEY_ACCOUNT_TYPE,
+							account.type);
+					AccountAuthenticatorResponse response = getIntent()
+							.getParcelableExtra(
+									AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE);
+					response.onResult(result);
+				} else {
+					throw new RuntimeException("Failed to add account");
+				}
 				finish();
 			}
 
@@ -175,5 +189,4 @@ public class LoginActivity extends RoboSherlockAccountAuthenticatorActivity {
 		};
 		task.execute();
 	}
-
 }

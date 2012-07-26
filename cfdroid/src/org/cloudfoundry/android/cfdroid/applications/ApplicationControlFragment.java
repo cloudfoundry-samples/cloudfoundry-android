@@ -297,7 +297,7 @@ public class ApplicationControlFragment extends DeferredContentFragment<Applicat
 		initialMemory = cloudApplication.getMemory();
 
 		AppState state = cloudApplication.getState();
-		startBtn.setEnabled(state == AppState.STOPPED);
+		startBtn.setEnabled(state != AppState.STARTED);
 		stopBtn.setEnabled(state == AppState.STARTED);
 
 		CloudInfo info = data.cloudInfo;
