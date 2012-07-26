@@ -8,7 +8,6 @@ import java.util.Map;
 import javax.inject.Singleton;
 
 import org.cloudfoundry.android.cfdroid.account.Accounts;
-import org.cloudfoundry.android.cfdroid.account.CloudFoundryAccountConstants;
 import org.cloudfoundry.client.lib.CloudApplication;
 import org.cloudfoundry.client.lib.CloudFoundryClient;
 import org.cloudfoundry.client.lib.CloudInfo;
@@ -107,8 +106,8 @@ public class CloudFoundry {
 		}
 		try {
 			AccountManagerFuture<Bundle> future = accountManager.getAuthTokenByFeatures(
-					CloudFoundryAccountConstants.ACCOUNT_TYPE,
-					CloudFoundryAccountConstants.ACCOUNT_TYPE, new String[0],
+					Accounts.ACCOUNT_TYPE,
+					Accounts.ACCOUNT_TYPE, new String[0],
 					activity, null, null, null, null);
 			Bundle bundle = future.getResult();
 			Ln.i("Do I ever get there? %s", bundle);

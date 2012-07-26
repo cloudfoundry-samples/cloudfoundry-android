@@ -68,7 +68,7 @@ public class CloudFoundryAccountAuthenticator extends
 			String token = client.login();
 			Bundle bundle = new Bundle();
 			bundle.putString(KEY_ACCOUNT_NAME, account.name);
-			bundle.putString(KEY_ACCOUNT_TYPE, CloudFoundryAccountConstants.ACCOUNT_TYPE);
+			bundle.putString(KEY_ACCOUNT_TYPE, Accounts.ACCOUNT_TYPE);
 			bundle.putString(KEY_AUTHTOKEN, token);
 			return bundle;
 		} catch (Exception e) {
