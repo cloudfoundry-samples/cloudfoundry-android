@@ -31,11 +31,11 @@ public class ApplicationServicesFragment extends
 		ListLoadingFragment<CloudService> {
 
 	@Inject
-	private CloudFoundry clients;
+	private CloudFoundry client;
 
 	@Override
 	public Loader<List<CloudService>> onCreateLoader(int arg0, Bundle arg1) {
-		return new ServicesListLoader(getActivity(), clients);
+		return new ServicesListLoader(getActivity(), client);
 	}
 
 	@Override
@@ -63,5 +63,6 @@ public class ApplicationServicesFragment extends
 	@Override
 	public void onCreateOptionsMenu(Menu optionsMenu, MenuInflater inflater) {
 	}
+	
 
 }

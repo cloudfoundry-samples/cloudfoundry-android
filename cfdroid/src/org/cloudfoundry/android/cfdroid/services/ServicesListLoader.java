@@ -7,19 +7,39 @@ import org.cloudfoundry.android.cfdroid.support.AsyncLoader;
 import org.cloudfoundry.client.lib.CloudService;
 
 import android.app.Activity;
+import android.database.ContentObserver;
 
 public class ServicesListLoader extends AsyncLoader<List<CloudService>>{
 
-	private CloudFoundry clients;
+	private CloudFoundry client;
 	
-	public ServicesListLoader(Activity activity, CloudFoundry clients) {
+	private ContentObserver contentObserver = this.new ForceLoadContentObserver();
+	
+	private boolean force = true;
+	
+	public ServicesListLoader(Activity activity, CloudFoundry client) {
 		super(activity);
-		this.clients = clients;
+		this.client = client;
+	}
+	
+	@Override
+	protected void onStartLoading() {
+		super.onStartLoading();
+		client.listenForServicesUpdates(contentObserver);
+	}
+	
+	@Override
+	protected void onStopLoading() {
+		client.stopListeningForServicesUpdates(contentObserver);
+		super.onStopLoading();
 	}
 	
 	@Override
 	public List<CloudService> loadInBackground() {
-		return clients.getServices();
+		List<CloudService> services = client.getServices(force);
+		force = false;
+		return services;
 	}
+	
 
 }

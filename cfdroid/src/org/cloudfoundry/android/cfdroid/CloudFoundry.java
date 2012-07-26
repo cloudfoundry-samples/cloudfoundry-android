@@ -1,7 +1,9 @@
 package org.cloudfoundry.android.cfdroid;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,11 +15,14 @@ import org.cloudfoundry.client.lib.CloudFoundryClient;
 import org.cloudfoundry.client.lib.CloudInfo;
 import org.cloudfoundry.client.lib.CloudService;
 
+import roboguice.event.ObservesTypeListener.ContextObserverMethodInjector;
 import roboguice.util.Ln;
 
 import android.accounts.AccountManager;
 import android.accounts.AccountManagerFuture;
 import android.app.Activity;
+import android.database.ContentObservable;
+import android.database.ContentObserver;
 import android.os.Bundle;
 
 import com.google.inject.Inject;
@@ -47,9 +52,34 @@ public class CloudFoundry {
 	private static class Cache {
 		private CloudFoundryClient client;
 
-		private Map<String, CloudApplication> applications = new HashMap<String, CloudApplication>();
+		private Map<String, CloudApplication> applications = new LinkedHashMap<String, CloudApplication>();
 
-		private Map<String, CloudService> services = new HashMap<String, CloudService>();
+		private Map<String, CloudService> services = new LinkedHashMap<String, CloudService>();
+
+		private ContentObservable applicationsObservable = new ContentObservable();
+
+		private ContentObservable servicesObservavle = new ContentObservable();
+
+		private void updateApp(CloudApplication app) {
+			applications.put(app.getName(), app);
+			applicationsObservable.notifyChange(false);
+		}
+
+		private void fetchApps() {
+			applications.clear();
+			for (CloudApplication app : client.getApplications()) {
+				applications.put(app.getName(), app);
+			}
+			applicationsObservable.notifyChange(false);
+		}
+
+		private void fetchServices() {
+			services.clear();
+			for (CloudService service : client.getServices()) {
+				services.put(service.getName(), service);
+			}
+			servicesObservavle.notifyChange(false);
+		}
 
 	}
 
@@ -60,17 +90,23 @@ public class CloudFoundry {
 		this.cache = cache;
 		this.accountManager = accountManager;
 	}
-	
-	public List<CloudApplication> getApplications() {
+
+	public List<CloudApplication> getApplications(boolean force) {
 		ensureClient();
-		return cache.client.getApplications();
+		if (force) {
+			cache.fetchApps();
+		}
+		return new ArrayList<CloudApplication>(cache.applications.values());
 	}
-	
-	public List<CloudService> getServices() {
+
+	public List<CloudService> getServices(boolean force) {
 		ensureClient();
-		return cache.client.getServices();
+		if (force) {
+			cache.fetchServices();
+		}
+		return new ArrayList<CloudService>(cache.services.values());
 	}
-	
+
 	public CloudInfo getCloudInfo() {
 		CloudInfo cloudInfo = cache.client.getCloudInfo();
 		clearCloudInfoField();
@@ -95,20 +131,21 @@ public class CloudFoundry {
 		}
 	}
 
-	public CloudApplication updateApplicationInstances(String appName, int instances) {
+	public void updateApplicationInstances(String appName,
+			int instances) {
 		cache.client.updateApplicationInstances(appName, instances);
-		return cache.client.getApplication(appName);
+		cache.updateApp(cache.client.getApplication(appName));
 	}
-	
+
 	private void ensureClient() {
 		if (cache.client != null) {
 			return;
 		}
 		try {
-			AccountManagerFuture<Bundle> future = accountManager.getAuthTokenByFeatures(
-					Accounts.ACCOUNT_TYPE,
-					Accounts.ACCOUNT_TYPE, new String[0],
-					activity, null, null, null, null);
+			AccountManagerFuture<Bundle> future = accountManager
+					.getAuthTokenByFeatures(Accounts.ACCOUNT_TYPE,
+							Accounts.ACCOUNT_TYPE, new String[0], activity,
+							null, null, null, null);
 			Bundle bundle = future.getResult();
 			Ln.i("Do I ever get there? %s", bundle);
 
@@ -122,19 +159,19 @@ public class CloudFoundry {
 		}
 	}
 
-	public CloudApplication updateApplicationMemory(String name, int memory) {
+	public void updateApplicationMemory(String name, int memory) {
 		cache.client.updateApplicationMemory(name, memory);
-		return cache.client.getApplication(name);
-	}
-	
-	public CloudApplication startApplication(String name) {
-		cache.client.startApplication(name);
-		return cache.client.getApplication(name);
+		cache.updateApp(cache.client.getApplication(name));
 	}
 
-	public CloudApplication stopApplication(String name) {
+	public void startApplication(String name) {
+		cache.client.startApplication(name);
+		cache.updateApp(cache.client.getApplication(name));
+	}
+
+	public void stopApplication(String name) {
 		cache.client.stopApplication(name);
-		return cache.client.getApplication(name);
+		cache.updateApp(cache.client.getApplication(name));
 	}
 
 	public int[] getApplicationMemoryChoices() {
@@ -142,6 +179,22 @@ public class CloudFoundry {
 		int[] result = cache.client.getApplicationMemoryChoices();
 		clearCloudInfoField();
 		return result;
+	}
+
+	public void listenForApplicationsUpdates(ContentObserver observer) {
+		cache.applicationsObservable.registerObserver(observer);
+	}
+
+	public void stopListeningForApplicationUpdates(ContentObserver observer) {
+		cache.applicationsObservable.unregisterObserver(observer);
+	}
+
+	public void listenForServicesUpdates(ContentObserver observer) {
+		cache.servicesObservavle.registerObserver(observer);
+	}
+
+	public void stopListeningForServicesUpdates(ContentObserver observer) {
+		cache.servicesObservavle.unregisterObserver(observer);
 	}
 
 }
