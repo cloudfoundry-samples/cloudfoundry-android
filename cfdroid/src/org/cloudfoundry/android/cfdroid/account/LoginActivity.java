@@ -80,9 +80,6 @@ public class LoginActivity extends RoboSherlockAccountAuthenticatorActivity {
 		super.onCreate(savedInstanceState);
 		getSupportActionBar().setDisplayShowTitleEnabled(false);
 		getSupportActionBar().setDisplayShowHomeEnabled(false);
-		// ActionBar ab = getActionBar();
-		// ab.setDisplayShowTitleEnabled(false);
-		// ab.setDisplayShowHomeEnabled(false);
 
 		UpdateUiTextWatcher watcher = new UpdateUiTextWatcher();
 		login.addTextChangedListener(watcher);
