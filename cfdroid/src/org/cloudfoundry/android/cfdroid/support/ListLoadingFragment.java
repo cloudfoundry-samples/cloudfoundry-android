@@ -36,7 +36,11 @@ public abstract class ListLoadingFragment<E> extends RoboSherlockListFragment im
 
     @Override
     public void onCreateOptionsMenu(Menu optionsMenu, MenuInflater inflater) {
-        inflater.inflate(R.menu.refresh, optionsMenu);
+    	if (optionsMenu.findItem(R.id.refresh) == null) {
+    		// Prevent double addition of a refresh button
+    		// as this could be added by multiple fragments
+    		inflater.inflate(R.menu.refresh, optionsMenu);
+    	}
     }
 
     @Override
@@ -44,7 +48,9 @@ public abstract class ListLoadingFragment<E> extends RoboSherlockListFragment im
         switch (item.getItemId()) {
         case R.id.refresh:
             refresh();
-            return true;
+            // allow others who could have a refresh action
+            // to do their work
+            return false;
         default:
             return super.onOptionsItemSelected(item);
         }

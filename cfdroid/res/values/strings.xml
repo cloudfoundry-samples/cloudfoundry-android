@@ -38,6 +38,12 @@
     <string name="loading">Loading...</string>
     <string name="stop">Stop</string>
     <string name="working">Working...</string>
+    <string name="instances">Instances</string>
+    <string name="not_available_abbr">NA</string>
+    <string name="header_cpu">CPU (Cores)</string>
+    <string name="header_memory">Memory (limit)</string>
+    <string name="header_disk">Disk (limit)</string>
+    <string name="header_uptime">Uptime</string>
 
     
 </resources>

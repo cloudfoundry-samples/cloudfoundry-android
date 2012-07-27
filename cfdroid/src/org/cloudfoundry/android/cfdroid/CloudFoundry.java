@@ -14,6 +14,7 @@ import org.cloudfoundry.client.lib.CloudApplication;
 import org.cloudfoundry.client.lib.CloudFoundryClient;
 import org.cloudfoundry.client.lib.CloudInfo;
 import org.cloudfoundry.client.lib.CloudService;
+import org.cloudfoundry.client.lib.InstanceStats;
 
 import roboguice.event.ObservesTypeListener.ContextObserverMethodInjector;
 import roboguice.util.Ln;
@@ -172,6 +173,10 @@ public class CloudFoundry {
 	public void stopApplication(String name) {
 		cache.client.stopApplication(name);
 		cache.updateApp(cache.client.getApplication(name));
+	}
+	
+	public List<InstanceStats> getApplicationStats(String appName) {
+		return cache.client.getApplicationStats(appName).getRecords();
 	}
 
 	public int[] getApplicationMemoryChoices() {

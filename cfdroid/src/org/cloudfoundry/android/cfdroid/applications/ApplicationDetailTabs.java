@@ -17,11 +17,15 @@ public class ApplicationDetailTabs extends TabHostFragment implements
 	@InjectResource(R.string.services)
 	private String servicesLabel;
 
+	@InjectResource(R.string.instances)
+	private String instancesLabel;
+
 	@Override
 	protected void setupTabs() {
 		if (((DataHolder<CloudApplication>) getActivity()).getSelectedItem() != null) {
 			addTab("control", controlLabel, ApplicationControlFragment.class);
 			addTab("services", servicesLabel, ApplicationServicesFragment.class);
+			addTab("stats", instancesLabel, ApplicationInstanceStatsFragment.class);
 		}
 	}
 

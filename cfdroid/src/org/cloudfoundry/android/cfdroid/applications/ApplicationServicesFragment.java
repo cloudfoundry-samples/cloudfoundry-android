@@ -56,13 +56,6 @@ public class ApplicationServicesFragment extends
 		};
 	}
 
-	/*
-	 * Don't create an options menu (in particular not one with refresh from
-	 * superclass, which confuses user since left pane already has refresh).
-	 */
-	@Override
-	public void onCreateOptionsMenu(Menu optionsMenu, MenuInflater inflater) {
-	}
 	
 
 }

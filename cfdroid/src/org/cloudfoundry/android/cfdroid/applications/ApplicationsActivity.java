@@ -15,7 +15,7 @@ public class ApplicationsActivity
 	@Override
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
-		getActionBar().setDisplayShowTitleEnabled(false);
+		getSupportActionBar().setDisplayShowTitleEnabled(false);
 	}
 
 	@Override

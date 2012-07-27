@@ -27,14 +27,16 @@ import com.github.rtyley.android.sherlock.roboguice.fragment.RoboSherlockFragmen
  * @author ebottard
  * 
  */
-//TODO http://stackoverflow.com/questions/4149953/androidorientation-vertical-does-not-work-for-tabwidget
-public abstract class TabHostFragment extends RoboSherlockFragment implements TabHost.OnTabChangeListener{
+// TODO
+// http://stackoverflow.com/questions/4149953/androidorientation-vertical-does-not-work-for-tabwidget
+public abstract class TabHostFragment extends RoboSherlockFragment implements
+		TabHost.OnTabChangeListener {
 
 	private static final String TAB = "tab";
 
 	@InjectView(android.R.id.tabhost)
 	protected TabHost tabHost;
-	
+
 	private TabContentFactory dummy = new TabContentFactory() {
 		@Override
 		public View createTabContent(String tag) {
@@ -44,19 +46,20 @@ public abstract class TabHostFragment extends RoboSherlockFragment implements Ta
 			return view;
 		}
 	};
-	
+
 	private static class TabInfo<F extends Fragment> {
 		public TabInfo(Class<F> klass) {
 			this.klass = klass;
 		}
-		private Class<? > klass;
+
+		private Class<?> klass;
 		private F fragment;
 	}
-	
+
 	private Map<String, TabInfo<?>> infos = new HashMap<String, TabHostFragment.TabInfo<?>>();
-	
+
 	private TabInfo<?> currentTabInfo;
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -73,7 +76,7 @@ public abstract class TabHostFragment extends RoboSherlockFragment implements Ta
 			tabHost.setCurrentTabByTag(savedInstanceState.getString(TAB));
 		}
 	}
-	
+
 	protected abstract void setupTabs();
 
 	@Override
@@ -81,8 +84,9 @@ public abstract class TabHostFragment extends RoboSherlockFragment implements Ta
 		super.onSaveInstanceState(outState);
 		outState.putString(TAB, tabHost.getCurrentTabTag());
 	}
-	
-	public <F extends Fragment> void addTab(String tag, String label, Class<F> klass) {
+
+	public <F extends Fragment> void addTab(String tag, String label,
+			Class<F> klass) {
 		TabSpec tabSpec = tabHost.newTabSpec(tag);
 		tabSpec.setContent(dummy);
 		tabSpec.setIndicator(label);
@@ -90,13 +94,16 @@ public abstract class TabHostFragment extends RoboSherlockFragment implements Ta
 		infos.put(tag, info);
 		tabHost.addTab(tabSpec);
 	}
-	
+
 	public void clearAll() {
-		if (currentTabInfo != null && currentTabInfo.fragment != null) {
-			FragmentTransaction tx = getActivity().getSupportFragmentManager().beginTransaction();
-			tx.detach(currentTabInfo.fragment);
-			tx.commit();
+		FragmentTransaction tx = getActivity().getSupportFragmentManager()
+				.beginTransaction();
+		for (TabInfo<?> info : infos.values()) {
+			if (info.fragment != null) {
+				tx.remove(info.fragment);
+			}
 		}
+		tx.commit();
 		tabHost.clearAllTabs();
 		currentTabInfo = null;
 		infos.clear();
@@ -109,13 +116,15 @@ public abstract class TabHostFragment extends RoboSherlockFragment implements Ta
 	public void onTabChanged(String tabId) {
 		TabInfo info = infos.get(tabId);
 		if (info != currentTabInfo) {
-			FragmentTransaction tx = getActivity().getSupportFragmentManager().beginTransaction();
+			FragmentTransaction tx = getActivity().getSupportFragmentManager()
+					.beginTransaction();
 			if (currentTabInfo != null && currentTabInfo.fragment != null) {
 				tx.detach(currentTabInfo.fragment);
 			}
 
 			if (info.fragment == null) {
-				info.fragment = Fragment.instantiate(getActivity(), info.klass.getName());
+				info.fragment = Fragment.instantiate(getActivity(),
+						info.klass.getName());
 				tx.add(R.id.realtabcontent, info.fragment, tabId);
 			} else {
 				tx.attach(info.fragment);
@@ -123,7 +132,7 @@ public abstract class TabHostFragment extends RoboSherlockFragment implements Ta
 
 			currentTabInfo = info;
 			tx.commit();
-			//getActivity().getSupportFragmentManager().executePendingTransactions();
+			// getActivity().getSupportFragmentManager().executePendingTransactions();
 		}
 	}
 

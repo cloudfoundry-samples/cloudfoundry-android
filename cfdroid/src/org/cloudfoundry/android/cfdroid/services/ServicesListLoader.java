@@ -20,18 +20,13 @@ public class ServicesListLoader extends AsyncLoader<List<CloudService>>{
 	public ServicesListLoader(Activity activity, CloudFoundry client) {
 		super(activity);
 		this.client = client;
-	}
-	
-	@Override
-	protected void onStartLoading() {
-		super.onStartLoading();
 		client.listenForServicesUpdates(contentObserver);
 	}
 	
 	@Override
-	protected void onStopLoading() {
+	protected void onAbandon() {
 		client.stopListeningForServicesUpdates(contentObserver);
-		super.onStopLoading();
+		super.onAbandon();
 	}
 	
 	@Override
