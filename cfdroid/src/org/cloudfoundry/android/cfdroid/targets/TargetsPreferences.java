@@ -17,7 +17,7 @@ public class TargetsPreferences {
 	static {
 		DEFAULT_TARGETS = new HashSet<String>();
 		DEFAULT_TARGETS.add("https://api.cloudfoundry.com|CloudFoundry");
-		DEFAULT_TARGETS.add("http://api.eu01.aws.af.cm|AppFog AWS EU");
+		//DEFAULT_TARGETS.add("http://api.eu01.aws.af.cm|AppFog AWS EU");
 	}
 	private final SharedPreferences sharedPreferences;
 	
