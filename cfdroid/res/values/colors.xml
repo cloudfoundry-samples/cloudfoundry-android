@@ -2,4 +2,6 @@
 <resources>
     <color name="icsblue">#33b5e5</color>
     <color name="icsdarkblue">#0099CC</color>
+    <color name="red">#B22222</color>
+    <color name="green">#008000</color>
 </resources>
