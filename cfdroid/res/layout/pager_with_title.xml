@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/org.cloudfoundry.android.cfdroid"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+    <com.viewpagerindicator.TitlePageIndicator
+        android:id="@+id/title_page_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/cf_secondary"
+        android:textColor="@color/cf_background"
+        app:clipPadding="10dp"
+        app:footerColor="@android:color/white"
+        app:footerIndicatorHeight="5dp"
+        app:footerIndicatorStyle="triangle"
+        app:footerLineHeight="0dp"
+        app:selectedBold="true"
+        app:selectedColor="@android:color/white"
+        app:titlePadding="10dp" />
+
+    <org.cloudfoundry.android.cfdroid.support.NoSwippingViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

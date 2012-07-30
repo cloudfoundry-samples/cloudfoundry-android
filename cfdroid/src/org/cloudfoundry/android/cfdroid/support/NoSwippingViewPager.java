@@ -20,7 +20,7 @@ public class NoSwippingViewPager extends ViewPager {
 		super(context);
 	}
 
-	private NoSwippingViewPager(Context context, AttributeSet attrs) {
+	public NoSwippingViewPager(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}
 

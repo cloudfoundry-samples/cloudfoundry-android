@@ -4,14 +4,13 @@ import org.cloudfoundry.android.cfdroid.R;
 import org.cloudfoundry.android.cfdroid.support.masterdetail.MasterDetailActivity;
 import org.cloudfoundry.client.lib.CloudApplication;
 
-import android.os.Bundle;
-
 import roboguice.inject.ContentView;
+import android.os.Bundle;
 
 @ContentView(R.layout.applications)
 public class ApplicationsActivity
 		extends
-		MasterDetailActivity<CloudApplication, ApplicationsListFragment, ApplicationDetailTabs> {
+		MasterDetailActivity<CloudApplication, ApplicationsListFragment, ApplicationDetailPager> {
 	@Override
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
@@ -24,9 +23,9 @@ public class ApplicationsActivity
 	}
 
 	@Override
-	protected ApplicationDetailTabs makeRightFragment() {
-		//return new ApplicationDetailViewPager();
-		return new ApplicationDetailTabs();
+	protected ApplicationDetailPager makeRightFragment() {
+		return new ApplicationDetailPager();
+//		return new ApplicationDetailTabs();
 	}   
 
 	
