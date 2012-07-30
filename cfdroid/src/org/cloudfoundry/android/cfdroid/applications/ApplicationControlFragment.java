@@ -192,7 +192,6 @@ public class ApplicationControlFragment extends
 
 	private CloudApplication getCloudApplication() {
 		return client.getApplication(appName);
-//		return ((DataHolder<CloudApplication>) getActivity()).getSelectedItem();
 	}
 
 	private int instances() {
@@ -264,6 +263,20 @@ public class ApplicationControlFragment extends
 			Bundle savedInstanceState) {
 		appName = ((DataHolder<CloudApplication>)getActivity()).getSelectedItem().getName();
 		return inflater.inflate(R.layout.application_control, container, false);
+	}
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		if (savedInstanceState != null) {
+			appName = savedInstanceState.getString("appName");
+		}
+	}
+	
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putString("appName", appName);
 	}
 
 	@Override

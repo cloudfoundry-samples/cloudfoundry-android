@@ -85,9 +85,20 @@ public class ApplicationServicesFragment extends
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		appName = ((DataHolder<CloudApplication>) getActivity())
-				.getSelectedItem().getName();
+		if (savedInstanceState != null) {
+			appName = savedInstanceState.getString("appName");
+		} else {
+			appName = ((DataHolder<CloudApplication>) getActivity())
+					.getSelectedItem().getName();
+		}
 	}
+	
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putString("appName", appName);
+	}
+
 
 	private CloudApplication getCloudApplication() {
 		return client.getApplication(appName);
