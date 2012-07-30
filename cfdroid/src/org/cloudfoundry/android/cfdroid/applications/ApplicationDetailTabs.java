@@ -7,6 +7,7 @@ import org.cloudfoundry.android.cfdroid.support.masterdetail.DetailPaneEventsCal
 import org.cloudfoundry.client.lib.CloudApplication;
 
 import roboguice.inject.InjectResource;
+import roboguice.util.Ln;
 
 public class ApplicationDetailTabs extends TabHostFragment implements
 		DetailPaneEventsCallback {
@@ -20,12 +21,16 @@ public class ApplicationDetailTabs extends TabHostFragment implements
 	@InjectResource(R.string.instances)
 	private String instancesLabel;
 
+	@InjectResource(R.string.application_info)
+	private String infoLabel;
+	
 	@Override
 	protected void setupTabs() {
 		if (((DataHolder<CloudApplication>) getActivity()).getSelectedItem() != null) {
 			addTab("control", controlLabel, ApplicationControlFragment.class);
 			addTab("services", servicesLabel, ApplicationServicesFragment.class);
 			addTab("stats", instancesLabel, ApplicationInstanceStatsFragment.class);
+//			addTab("info", infoLabel, ApplicationInfoFragment.class);
 		}
 	}
 

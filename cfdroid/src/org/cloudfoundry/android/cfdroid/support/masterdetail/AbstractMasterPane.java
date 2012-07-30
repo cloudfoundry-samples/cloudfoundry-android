@@ -32,7 +32,5 @@ public abstract class AbstractMasterPane<I> extends ListLoadingFragment<I> {
 		// TODO: two pane only, but dot not seem to work
 		getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 	}
-
-
-
+	
 }

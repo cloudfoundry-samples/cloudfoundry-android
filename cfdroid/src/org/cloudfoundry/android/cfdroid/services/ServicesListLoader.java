@@ -20,7 +20,6 @@ public class ServicesListLoader extends AsyncLoader<List<CloudService>>{
 	public ServicesListLoader(Activity activity, CloudFoundry client) {
 		super(activity);
 		this.client = client;
-		client.listenForServicesUpdates(contentObserver);
 	}
 	
 	@Override
@@ -32,7 +31,10 @@ public class ServicesListLoader extends AsyncLoader<List<CloudService>>{
 	@Override
 	public List<CloudService> loadInBackground() {
 		List<CloudService> services = client.getServices(force);
-		force = false;
+		if (force) {
+			force = false;
+			client.listenForServicesUpdates(contentObserver);
+		}
 		return services;
 	}
 	

@@ -23,16 +23,17 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_marginRight="16dp"
-        android:gravity="center_vertical|right" >
+        android:layout_marginRight="8dp"
+        android:gravity="center_vertical|right">
 
-        <ToggleButton
+        <ImageView
             android:id="@+id/link_unlink"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:background="@drawable/link_unlink"
-            android:textOff=""
-            android:textOn="" />
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/abs__item_background_holo_light"
+            android:padding="8dp"
+            android:src="@drawable/link_unlink"
+            />
     </LinearLayout>
 
 </LinearLayout>

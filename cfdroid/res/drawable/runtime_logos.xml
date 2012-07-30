@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:drawable="@drawable/ic_unknown"
+        android:maxLevel="0"/>
+    <item
+        android:drawable="@drawable/ic_mongodb"
+        android:maxLevel="1"/>
+    <item
+        android:drawable="@drawable/ic_mysql"
+        android:maxLevel="2"/>
+    <item
+        android:drawable="@drawable/ic_postgresql"
+        android:maxLevel="3"/>
+    <item
+        android:drawable="@drawable/ic_redis"
+        android:maxLevel="4"/>
+    <item
+        android:drawable="@drawable/ic_rabbitmq"
+        android:maxLevel="5"/>
+    
+</level-list>

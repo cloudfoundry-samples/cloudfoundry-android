@@ -26,21 +26,14 @@ public abstract class ItemListAdapter<I, V extends BaseViewHolder<I>> extends
 	private List<I> elements;
 
 	/**
-	 * Create empty adapter
-	 * 
-	 * @param viewId
-	 * @param inflater
+	 * Create empty adapter.
 	 */
 	public ItemListAdapter(final int viewId, final LayoutInflater inflater) {
 		this(viewId, inflater, new ArrayList<I>());
 	}
 
 	/**
-	 * Create adapter
-	 * 
-	 * @param viewId
-	 * @param inflater
-	 * @param elements
+	 * Create adapter with the given underlying data.
 	 */
 	public ItemListAdapter(final int viewId, final LayoutInflater inflater,
 			final List<I> elements) {
@@ -67,10 +60,7 @@ public abstract class ItemListAdapter<I, V extends BaseViewHolder<I>> extends
 	}
 
 	/**
-	 * Set items
-	 * 
-	 * @param items
-	 * @return items
+	 * Set underlying data.
 	 */
 	public ItemListAdapter<I, V> setItems(List<I> items) {
 		elements = items;
@@ -91,10 +81,7 @@ public abstract class ItemListAdapter<I, V extends BaseViewHolder<I>> extends
 	}
 
 	/**
-	 * Create empty item view
-	 * 
-	 * @param view
-	 * @return item
+	 * Create empty item view.
 	 */
 	protected abstract V createView(View view);
 

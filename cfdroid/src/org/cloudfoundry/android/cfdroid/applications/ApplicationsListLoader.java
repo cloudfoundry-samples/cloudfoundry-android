@@ -18,7 +18,6 @@ public class ApplicationsListLoader extends AsyncLoader<List<CloudApplication>>{
 	public ApplicationsListLoader(Activity activity, CloudFoundry client) {
 		super(activity);
 		this.client = client;
-		client.listenForApplicationsUpdates(observer);
 	}
 	
 	@Override
@@ -26,11 +25,19 @@ public class ApplicationsListLoader extends AsyncLoader<List<CloudApplication>>{
 		client.stopListeningForApplicationUpdates(observer);
 		super.onAbandon();
 	}
+	
+	@Override
+	public void onContentChanged() {
+		forceLoad();
+	}
 
 	@Override
 	public List<CloudApplication> loadInBackground() {
 		List<CloudApplication> applications = client.getApplications(force);
-		force = false;
+		if( force) {
+			force = false;
+			client.listenForApplicationsUpdates(observer);
+		}
 		return applications;
 	}
 	

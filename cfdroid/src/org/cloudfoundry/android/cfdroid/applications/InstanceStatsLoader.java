@@ -13,7 +13,7 @@ public class InstanceStatsLoader extends AsyncLoader<List<InstanceStats>>{
 
 	private CloudFoundry client;
 	private ContentObserver observer = this.new ForceLoadContentObserver();
-	private boolean force = true;
+	private boolean firstTime = true;
 	
 	private String appName;
 	
@@ -21,7 +21,6 @@ public class InstanceStatsLoader extends AsyncLoader<List<InstanceStats>>{
 		super(activity);
 		this.client = client;
 		this.appName = appName;
-		client.listenForApplicationsUpdates(observer);
 	}
 
 	@Override
@@ -32,7 +31,12 @@ public class InstanceStatsLoader extends AsyncLoader<List<InstanceStats>>{
 
 	@Override
 	public List<InstanceStats> loadInBackground() {
-		return client.getApplicationStats(appName);
+		List<InstanceStats> applicationStats = client.getApplicationStats(appName);
+		if (firstTime) {
+			firstTime = false;
+			client.listenForApplicationsUpdates(observer);
+		}
+		return applicationStats;
 	}
 
 }

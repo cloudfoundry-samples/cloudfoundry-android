@@ -4,15 +4,18 @@ import org.cloudfoundry.android.cfdroid.CloudFoundry;
 import org.cloudfoundry.android.cfdroid.R;
 import org.cloudfoundry.android.cfdroid.support.AsyncLoader;
 import org.cloudfoundry.android.cfdroid.support.DeferredContentFragment;
+import org.cloudfoundry.android.cfdroid.support.TaskWithDialog;
 import org.cloudfoundry.android.cfdroid.support.masterdetail.DataHolder;
 import org.cloudfoundry.client.lib.CloudApplication;
 import org.cloudfoundry.client.lib.CloudApplication.AppState;
 import org.cloudfoundry.client.lib.CloudInfo;
 
 import roboguice.inject.InjectView;
+import roboguice.util.Ln;
 import roboguice.util.RoboAsyncTask;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.database.ContentObserver;
 import android.os.Bundle;
 import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
@@ -92,6 +95,8 @@ public class ApplicationControlFragment extends
 	 */
 	private int maxWithoutOthers;
 
+	private CloudInfo cloudInfo;
+	
 	@InjectView(R.id.instances_seekbar)
 	private SeekBar instancesSeekBar;
 
@@ -112,6 +117,35 @@ public class ApplicationControlFragment extends
 
 	@InjectView(R.id.stop)
 	private View stopBtn;
+	
+	private String appName;
+
+	/**
+	 * Used to react to changes to application(s), eg after start/stop.
+	 */
+	private ContentObserver contentObserver = new ContentObserver(null) {
+		@Override
+		public void onChange(boolean selfChange) {
+			getActivity().runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					Ln.d("ControlFragment received new data");
+					fullyRedrawWidgets();
+				}
+			});
+		}
+	};
+	
+	public void onStart() {
+		super.onStart();
+		client.listenForApplicationsUpdates(contentObserver);
+	}
+	
+	@Override
+	public void onStop() {
+		client.stopListeningForApplicationUpdates(contentObserver);
+		super.onStop();
+	}
 
 	/**
 	 * Prevents the user from sliding the primary progress ahead of the
@@ -128,7 +162,7 @@ public class ApplicationControlFragment extends
 		}
 	}
 
-	private void fullyRedrawWidgets(AsyncResult data) {
+	private void fullyRedrawWidgets() {
 		CloudApplication cloudApplication = getCloudApplication();
 		initialInstances = cloudApplication.getInstances();
 		initialMemory = cloudApplication.getMemory();
@@ -137,12 +171,10 @@ public class ApplicationControlFragment extends
 		startBtn.setEnabled(state != AppState.STARTED);
 		stopBtn.setEnabled(state == AppState.STARTED);
 
-		CloudInfo info = data.cloudInfo;
-		int maxTotalMemory = info.getLimits().getMaxTotalMemory();
-		int usedByOtherApps = info.getUsage().getTotalMemory()
+		int maxTotalMemory = cloudInfo.getLimits().getMaxTotalMemory();
+		int usedByOtherApps = cloudInfo.getUsage().getTotalMemory()
 				- initialInstances * initialMemory;
 		maxWithoutOthers = maxTotalMemory - usedByOtherApps;
-		baseMemoryUnit = data.memoryOptions[0];
 
 		instancesSeekBar.setMax(instancesR2P(maxTotalMemory / baseMemoryUnit));
 		instancesSeekBar.setProgress(instancesR2P(cloudApplication
@@ -159,7 +191,8 @@ public class ApplicationControlFragment extends
 	}
 
 	private CloudApplication getCloudApplication() {
-		return ((DataHolder<CloudApplication>) getActivity()).getSelectedItem();
+		return client.getApplication(appName);
+//		return ((DataHolder<CloudApplication>) getActivity()).getSelectedItem();
 	}
 
 	private int instances() {
@@ -180,6 +213,9 @@ public class ApplicationControlFragment extends
 		return i - 1;
 	}
 
+	/*
+	 * To be run on a background thread.
+	 */
 	private AsyncResult latestRemoteState() {
 		AsyncResult result = new AsyncResult();
 		result.cloudInfo = client.getCloudInfo();
@@ -226,13 +262,17 @@ public class ApplicationControlFragment extends
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		appName = ((DataHolder<CloudApplication>)getActivity()).getSelectedItem().getName();
 		return inflater.inflate(R.layout.application_control, container, false);
 	}
 
 	@Override
 	public void onDataAvailable(AsyncResult data) {
-		fullyRedrawWidgets(data);
-		setHasOptionsMenu(true);
+		baseMemoryUnit = data.memoryOptions[0];
+		cloudInfo = data.cloudInfo;
+		fullyRedrawWidgets();
+		setHasOptionsMenu(true); // first time
+		getActivity().invalidateOptionsMenu(); // subsequent calls
 	}
 
 	@Override
@@ -270,8 +310,7 @@ public class ApplicationControlFragment extends
 	}
 
 	private void saveChanges() {
-		final Dialog dialog = showDialog(R.string.working);
-		new RoboAsyncTask<AsyncResult>(getActivity()) {
+		new TaskWithDialog<AsyncResult>(getActivity(), R.string.working) {
 			@Override
 			public AsyncResult call() throws Exception {
 				if (memory() != initialMemory) {
@@ -287,67 +326,32 @@ public class ApplicationControlFragment extends
 					client.updateApplicationInstances(getCloudApplication()
 							.getName(), instances());
 				}
+				// Need to re-query eg max maxWithoutOthers
 				return latestRemoteState();
 			}
-
-			protected void onFinally() throws RuntimeException {
-				dialog.dismiss();
-			}
-
 			protected void onSuccess(AsyncResult t) throws Exception {
-				fullyRedrawWidgets(t);
-				getActivity().invalidateOptionsMenu();
-			}
-
+				onDataAvailable(t);
+			};
+			
 		}.execute();
-
-	}
-
-	private Dialog showDialog(int message) {
-		ProgressDialog dialog = new ProgressDialog(getActivity());
-		dialog.setMessage(getActivity().getText(message));
-		dialog.setIndeterminate(true);
-		dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-		dialog.show();
-		return dialog;
 	}
 
 	private void start() {
-		final Dialog dialog = showDialog(R.string.working);
-		new RoboAsyncTask<AsyncResult>(getActivity()) {
+		new TaskWithDialog<Void>(getActivity(), R.string.working) {
 			@Override
-			public AsyncResult call() throws Exception {
+			public Void call() throws Exception {
 				client.startApplication(getCloudApplication().getName());
-				return latestRemoteState();
-			}
-
-			protected void onFinally() throws RuntimeException {
-				dialog.dismiss();
-			}
-
-			protected void onSuccess(AsyncResult t) throws Exception {
-				fullyRedrawWidgets(t);
-				getActivity().invalidateOptionsMenu();
+				return null;
 			}
 		}.execute();
 	}
 
 	private void stop() {
-		final Dialog dialog = showDialog(R.string.working);
-		new RoboAsyncTask<AsyncResult>(getActivity()) {
+		new TaskWithDialog<Void>(getActivity(), R.string.working) {
 			@Override
-			public AsyncResult call() throws Exception {
+			public Void call() throws Exception {
 				client.stopApplication(getCloudApplication().getName());
-				return latestRemoteState();
-			}
-
-			protected void onFinally() throws RuntimeException {
-				dialog.dismiss();
-			}
-
-			protected void onSuccess(AsyncResult t) throws Exception {
-				fullyRedrawWidgets(t);
-				getActivity().invalidateOptionsMenu();
+				return null;
 			}
 		}.execute();
 	}

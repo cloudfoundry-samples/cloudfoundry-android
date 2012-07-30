@@ -99,6 +99,10 @@ public class CloudFoundry {
 		}
 		return new ArrayList<CloudApplication>(cache.applications.values());
 	}
+	
+	public CloudApplication getApplication(String name) {
+		return cache.applications.get(name);
+	}
 
 	public List<CloudService> getServices(boolean force) {
 		ensureClient();
@@ -148,8 +152,6 @@ public class CloudFoundry {
 							Accounts.ACCOUNT_TYPE, new String[0], activity,
 							null, null, null, null);
 			Bundle bundle = future.getResult();
-			Ln.i("Do I ever get there? %s", bundle);
-
 			String targetURL = Accounts.extractTarget(bundle
 					.getString(AccountManager.KEY_ACCOUNT_NAME));
 			String token = bundle.getString(AccountManager.KEY_AUTHTOKEN);
@@ -184,6 +186,24 @@ public class CloudFoundry {
 		int[] result = cache.client.getApplicationMemoryChoices();
 		clearCloudInfoField();
 		return result;
+	}
+	
+	public CloudApplication bindService(String application, String service) {
+		cache.client.bindService(application, service);
+		// Force a reload of that CloudApplication object
+		// to reflect the change.
+		CloudApplication app = cache.client.getApplication(application);
+		cache.updateApp(app);
+		return app;
+	}
+
+	public CloudApplication unbindService(String application, String service) {
+		cache.client.unbindService(application, service);
+		// Force a reload of that CloudApplication object
+		// to reflect the change.
+		CloudApplication app = cache.client.getApplication(application);
+		cache.updateApp(app);
+		return app;
 	}
 
 	public void listenForApplicationsUpdates(ContentObserver observer) {
