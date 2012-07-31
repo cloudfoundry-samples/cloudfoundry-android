@@ -6,6 +6,7 @@ import org.cloudfoundry.client.lib.CloudApplication;
 
 import roboguice.inject.ContentView;
 import android.os.Bundle;
+import android.os.Debug;
 
 @ContentView(R.layout.applications)
 public class ApplicationsActivity
@@ -16,7 +17,7 @@ public class ApplicationsActivity
 		super.onCreate(bundle);
 		getSupportActionBar().setDisplayShowTitleEnabled(false);
 	}
-
+	
 	@Override
 	protected ApplicationsListFragment makeLeftFragment() {
 		return new ApplicationsListFragment();
@@ -25,7 +26,6 @@ public class ApplicationsActivity
 	@Override
 	protected ApplicationDetailPager makeRightFragment() {
 		return new ApplicationDetailPager();
-//		return new ApplicationDetailTabs();
 	}   
 
 	

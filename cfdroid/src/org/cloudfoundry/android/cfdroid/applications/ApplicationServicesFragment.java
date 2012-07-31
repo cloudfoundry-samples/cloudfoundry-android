@@ -50,13 +50,21 @@ public class ApplicationServicesFragment extends
 		}
 	};
 
+	public View onCreateView(android.view.LayoutInflater inflater,
+			android.view.ViewGroup container, Bundle savedInstanceState) {
+		Ln.d("F onCreateView %s", this);
+		return super.onCreateView(inflater, container, savedInstanceState);
+	}
+
 	public void onStart() {
+		Ln.d("F onStart %s", this);
 		super.onStart();
 		client.listenForApplicationsUpdates(contentObserver);
 	}
-	
+
 	@Override
 	public void onStop() {
+		Ln.d("F onStop %s", this);
 		client.stopListeningForApplicationUpdates(contentObserver);
 		super.onStop();
 	}
@@ -84,6 +92,7 @@ public class ApplicationServicesFragment extends
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		Ln.d("F onCreate %s", this);
 		super.onCreate(savedInstanceState);
 		if (savedInstanceState != null) {
 			appName = savedInstanceState.getString("appName");
@@ -92,13 +101,12 @@ public class ApplicationServicesFragment extends
 					.getSelectedItem().getName();
 		}
 	}
-	
+
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		outState.putString("appName", appName);
 	}
-
 
 	private CloudApplication getCloudApplication() {
 		return client.getApplication(appName);

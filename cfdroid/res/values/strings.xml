@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">CF Droid</string>
+
+    <!-- Space between Cloud and Foundry is needed to have 
+    Cloud/Foundry instead of CloudFoundr/y on launch screen-->
+    <string name="app_name">Cloud Foundry</string>
     <string name="login">Login</string>
     <string name="password">Password</string>
     <string name="connect">Connect</string>
@@ -18,7 +21,8 @@
     <string name="cloud_info_quota_apps">Apps</string>
     <string name="cloud_info_quota_mem">Memory</string>
     <string name="cloud_info_quota_uris">URIs per app</string>
-    <string name="cloud_info_quota_services">Services</string><string name="cloud_info_user">Logged in as</string>
+    <string name="cloud_info_quota_services">Services</string>
+    <string name="cloud_info_user">Logged in as</string>
     <string name="manage">&lt;u&gt;manage&lt;/u&gt;</string>
     <string name="ci_basic_title">Info</string>
     <string name="ci_info_frameworks">Frameworks</string>
@@ -31,7 +35,6 @@
     <string name="url_hint">Controller URL</string>
     <string name="done">Done</string>
     <string name="cloudfoundry">CloudFoundry</string>
-
     <string name="control">Control</string>
     <string name="cloud_apply">Save changes</string>
     <string name="start">Start</string>
@@ -46,5 +49,4 @@
     <string name="header_uptime">Uptime</string>
     <string name="application_info">Details</string>
 
-    
 </resources>

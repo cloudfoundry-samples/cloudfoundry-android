@@ -4,6 +4,7 @@ import org.cloudfoundry.android.cfdroid.R;
 import org.cloudfoundry.android.cfdroid.support.masterdetail.DetailPaneEventsCallback;
 
 import roboguice.inject.InjectView;
+import roboguice.util.Ln;
 import roboguice.util.RoboAsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -28,26 +29,43 @@ public class ApplicationDetailPager extends RoboSherlockFragment implements
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		Ln.i("Pager onCreateView %s", this);
 		return inflater.inflate(R.layout.pager_with_title, container, false);
 	}
 
-		
-    @Override
-    public void onStart() {
-    	super.onStart();
-    	// see http://stackoverflow.com/questions/7700226/display-fragment-viewpager-within-a-fragment
-    	new RoboAsyncTask<Void>(getActivity()) {
-			@Override
-			public Void call() throws Exception {
-				return null;
-			}
-			protected void onFinally() throws RuntimeException {
-				pager.setAdapter(new ApplicationPagerAdapter());
-				pageIndicator.setViewPager(pager);
-			}
-			
-    	}.execute();
-    }
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		Ln.i("Pager onCreate %s", this);
+		super.onCreate(savedInstanceState);
+	}
+
+	@Override
+	public void onDestroy() {
+		Ln.i("Pager onDestroy %s", this);
+		super.onDestroy();
+	}
+
+	@Override
+	public void onStart() {
+		Ln.i("Pager onStart %s", this);
+		super.onStart();
+		// see
+		// http://stackoverflow.com/questions/7700226/display-fragment-viewpager-within-a-fragment
+		if (pager.getAdapter() == null) {
+			new RoboAsyncTask<Void>(getActivity()) {
+				@Override
+				public Void call() throws Exception {
+					return null;
+				}
+
+				protected void onFinally() throws RuntimeException {
+					pager.setAdapter(new ApplicationPagerAdapter());
+					pageIndicator.setViewPager(pager);
+				}
+
+			}.execute();
+		}
+	}
 
 	@Override
 	public void selectionChanged() {

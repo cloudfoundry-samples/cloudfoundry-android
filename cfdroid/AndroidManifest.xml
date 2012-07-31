@@ -15,21 +15,24 @@
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
 
     <application
-        android:icon="@drawable/cf_logo_1"
+        android:icon="@drawable/cf_logo"
         android:label="@string/app_name"
         android:theme="@style/Theme.Sherlock.Light" >
         <activity android:name=".DashboardActivity" >
-            <!-- 
+
+            <!--
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-             -->
+            -->
         </activity>
         <activity android:name=".account.LoginActivity" >
         </activity>
         <activity android:name=".targets.TargetsActivity" >
+        </activity>
+        <activity android:name=".targets.TargetEditionActivity_" >
         </activity>
         <activity android:name=".applications.ApplicationsActivity" >
             <intent-filter>
@@ -39,22 +42,9 @@
             </intent-filter>
         </activity>
 
-        <!--
-        <activity android:name=".AppListActivity_" >
-        </activity>
-        <activity android:name=".ServiceListActivity_" >
-        </activity>
-        <activity android:name=".ApplicationActivity_" >
-        </activity>
-        <activity android:name=".ServiceActivity_" >
-        </activity>
-        <activity android:name=".CloudInfoActivity_" >
-        </activity>
-        <activity android:name=".targets.TargetEditionActivity_" >
-        </activity>
-        -->
-
-        <service android:name=".account.AccountAuthenticatorService" >
+        <service
+            android:name=".account.AccountAuthenticatorService"
+            android:exported="false" >
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator" >
                 </action>

@@ -104,9 +104,6 @@ public abstract class MasterDetailActivity<I, M extends Fragment, D extends Frag
 			Fragment rightFragment = makeRightFragment();
 			FragmentTransaction transaction = getSupportFragmentManager()
 					.beginTransaction();
-//			Fragment left = getSupportFragmentManager().findFragmentByTag("left");
-//			transaction.detach(left);
-//			transaction.add(R.id.fragment_container, rightFragment);
 			transaction.replace(R.id.fragment_container, rightFragment);
 			transaction.addToBackStack(null);
 			transaction.commit();
