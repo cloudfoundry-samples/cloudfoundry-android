@@ -1,4 +1,4 @@
-package org.cloudfoundry.android.cfdroid.applications;
+package org.cloudfoundry.android.cfdroid.cloud;
 
 /**
  * See res/drawable/runtime_logos.xml.
@@ -10,7 +10,7 @@ public enum RuntimeLogos {
 
 	unknown(0), erlang(1), python(2), ruby(3), php(4), node(5), java(6);
 
-	public int level;
+	public final int level;
 
 	private RuntimeLogos(int level) {
 		this.level = level;
@@ -18,13 +18,13 @@ public enum RuntimeLogos {
 
 	/**
 	 * Simple heuristic for getting the best fit. Different cloud vendors use
-	 * different strings here, get the longest prefi that matches.
+	 * different strings here, get the longest prefix that matches.
 	 */
-	public static RuntimeLogos match(String raw) {
-		RuntimeLogos best = null;
+	public static RuntimeLogos bestMatch(String raw) {
+		RuntimeLogos best = unknown;
 		int bestLength = 0;
 		for (RuntimeLogos r : RuntimeLogos.values()) {
-			if(r.name().startsWith(raw) && r.name().length() > bestLength) {
+			if(raw.startsWith(r.name()) && r.name().length() > bestLength) {
 				best = r;
 				bestLength = r.name().length();
 			}

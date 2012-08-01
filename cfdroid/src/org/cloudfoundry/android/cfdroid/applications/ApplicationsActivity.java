@@ -6,7 +6,6 @@ import org.cloudfoundry.client.lib.CloudApplication;
 
 import roboguice.inject.ContentView;
 import android.os.Bundle;
-import android.os.Debug;
 
 @ContentView(R.layout.applications)
 public class ApplicationsActivity

@@ -113,6 +113,7 @@ public class CloudFoundry {
 	}
 
 	public CloudInfo getCloudInfo() {
+		ensureClient();
 		CloudInfo cloudInfo = cache.client.getCloudInfo();
 		clearCloudInfoField();
 		return cloudInfo;

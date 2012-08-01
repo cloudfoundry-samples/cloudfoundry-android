@@ -13,7 +13,7 @@
     <string name="db_apps_text">Apps</string>
     <string name="db_services_text">Services</string>
     <string name="db_info_text">Info</string>
-    <string name="db_other_text">Other</string>
+    <string name="db_about_text">About</string>
     <string name="cloud_info_name">Name</string>
     <string name="cloud_info_version">Version</string>
     <string name="cloud_info_build">Build</string>
@@ -48,5 +48,7 @@
     <string name="header_disk">Disk (limit)</string>
     <string name="header_uptime">Uptime</string>
     <string name="application_info">Details</string>
+    <string name="frameworks">Frameworks</string>
+    <string name="runtimes">Runtimes</string>
 
 </resources>

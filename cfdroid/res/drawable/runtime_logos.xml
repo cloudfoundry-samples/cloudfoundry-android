@@ -4,20 +4,23 @@
     <item
         android:drawable="@drawable/ic_unknown"
         android:maxLevel="0"/>
-    <item
-        android:drawable="@drawable/ic_mongodb"
+    <item 
+        android:drawable="@drawable/ic_erlang"
         android:maxLevel="1"/>
     <item
-        android:drawable="@drawable/ic_mysql"
+        android:drawable="@drawable/ic_python"
         android:maxLevel="2"/>
     <item
-        android:drawable="@drawable/ic_postgresql"
+        android:drawable="@drawable/ic_ruby"
         android:maxLevel="3"/>
     <item
-        android:drawable="@drawable/ic_redis"
+        android:drawable="@drawable/ic_php"
         android:maxLevel="4"/>
     <item
-        android:drawable="@drawable/ic_rabbitmq"
+        android:drawable="@drawable/ic_nodejs"
         android:maxLevel="5"/>
+    <item
+        android:drawable="@drawable/ic_java"
+        android:maxLevel="6"/>
     
 </level-list>
