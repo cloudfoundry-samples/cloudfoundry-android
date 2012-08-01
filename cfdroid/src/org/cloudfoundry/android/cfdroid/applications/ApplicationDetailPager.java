@@ -54,6 +54,11 @@ public  class ApplicationDetailPager extends DetailPaneWithViewPager {
 				throw new IllegalStateException();
 			}
 		}
+		
+		@Override
+		public int getItemPosition(Object object) {
+			return PagerAdapter.POSITION_NONE;
+		}
 
 	}
 

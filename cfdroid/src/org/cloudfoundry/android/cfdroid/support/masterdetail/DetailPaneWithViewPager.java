@@ -3,9 +3,9 @@ package org.cloudfoundry.android.cfdroid.support.masterdetail;
 import org.cloudfoundry.android.cfdroid.R;
 
 import roboguice.inject.InjectView;
-import roboguice.util.RoboAsyncTask;
-
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -15,6 +15,17 @@ import android.view.ViewGroup;
 import com.github.rtyley.android.sherlock.roboguice.fragment.RoboSherlockFragment;
 import com.viewpagerindicator.TitlePageIndicator;
 
+/**
+ * Base class for handling having a ViewPager using {@link Fragment}s inside
+ * another Fragment. This is definitely not something you want to let your kids
+ * try at home, as witnessed by numerous posts on StackOverflow.
+ * 
+ * The solution used here is adapted from 
+ * http://stackoverflow.com/questions/6221763/android-can-you-nest-fragments/6222287#9700314
+ * 
+ * @author Eric Bottard
+ * 
+ */
 public abstract class DetailPaneWithViewPager extends RoboSherlockFragment
 		implements DetailPaneEventsCallback {
 
@@ -24,6 +35,10 @@ public abstract class DetailPaneWithViewPager extends RoboSherlockFragment
 	private ViewPager pager;
 	private PagerAdapter adapter;
 
+	private final Handler handler = new Handler();
+	private Runnable runPager;
+	private boolean created = false;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -31,32 +46,40 @@ public abstract class DetailPaneWithViewPager extends RoboSherlockFragment
 	}
 
 	@Override
-	public void onStart() {
-		super.onStart();
-		// see
-		// http://stackoverflow.com/questions/7700226/display-fragment-viewpager-within-a-fragment
-		
-		// Also try http://stackoverflow.com/questions/6221763/android-can-you-nest-fragments/6222287#6222287
-		if (pager.getAdapter() == null) {
-			new RoboAsyncTask<Void>(getActivity()) {
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		if (runPager != null)
+			handler.post(runPager);
+		created = true;
+	}
 
-				@Override
-				public Void call() throws Exception {
-					return null;
-				}
+	@Override
+	public void onPause() {
+		super.onPause();
+		handler.removeCallbacks(runPager);
+	}
 
-				protected void onFinally() throws RuntimeException {
-					adapter = buildPagerAdapter();
-					pager.setAdapter(adapter);
-					pageIndicator.setViewPager(pager);
-				}
-
-			}.execute();
+	protected void setAdapter(PagerAdapter a) {
+		this.adapter = a;
+		runPager = new Runnable() {
+			@Override
+			public void run() {
+				pager.setAdapter(adapter);
+				pageIndicator.setViewPager(pager);
+			}
+		};
+		if (created) {
+			handler.post(runPager);
 		}
 	}
-	
-	protected abstract PagerAdapter buildPagerAdapter();
 
+	@Override
+	public void onStart() {
+		super.onStart();
+		setAdapter(buildPagerAdapter());
+	}
+
+	protected abstract PagerAdapter buildPagerAdapter();
 
 	@Override
 	public void selectionChanged() {

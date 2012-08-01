@@ -12,9 +12,6 @@ import org.cloudfoundry.client.lib.CloudInfo;
 
 import roboguice.inject.InjectView;
 import roboguice.util.Ln;
-import roboguice.util.RoboAsyncTask;
-import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.database.ContentObserver;
 import android.os.Bundle;
 import android.support.v4.content.Loader;
@@ -136,6 +133,7 @@ public class ApplicationControlFragment extends
 		}
 	};
 	
+	@Override
 	public void onStart() {
 		super.onStart();
 		client.listenForApplicationsUpdates(contentObserver);
