@@ -22,10 +22,10 @@ public class DashboardActivity extends RoboSherlockActivity {
 	@InjectView(R.id.db_services_btn)
 	private View services;
 	
-	@InjectView(R.id.db_info_btn)
+	@InjectView(R.id.db_cloud_btn)
 	private View cloud;
 	
-	@InjectView(R.id.db_info_btn)
+	@InjectView(R.id.db_about_btn)
 	private View about;
 	
 	@Override

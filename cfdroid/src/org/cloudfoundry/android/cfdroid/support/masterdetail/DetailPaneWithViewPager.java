@@ -35,6 +35,8 @@ public abstract class DetailPaneWithViewPager extends RoboSherlockFragment
 		super.onStart();
 		// see
 		// http://stackoverflow.com/questions/7700226/display-fragment-viewpager-within-a-fragment
+		
+		// Also try http://stackoverflow.com/questions/6221763/android-can-you-nest-fragments/6222287#6222287
 		if (pager.getAdapter() == null) {
 			new RoboAsyncTask<Void>(getActivity()) {
 

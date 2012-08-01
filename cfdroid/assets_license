@@ -9,3 +9,8 @@ ic_menu_btn_add.png : http://iconmonstr.com/plus-5-icon/
 ic_menu_delete.png : Helveticon
 ic_menu_logout.png : Helveticon
 ic_menu_refresh.png : http://iconmonstr.com/refresh-icon/
+
+db_app : Helveticon
+db_cloud : Helveticon
+db_services : Helveticon
+db_info : Helveticon

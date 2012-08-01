@@ -8,21 +8,25 @@
     <TextView
         android:id="@+id/db_apps_btn"
         style="@style/DashboardButton"
-        android:text="@string/db_apps_text" />
+        android:text="@string/db_apps_text"
+        android:drawableTop="@drawable/db_app" />
 
     <TextView
         android:id="@+id/db_services_btn"
         style="@style/DashboardButton"
-        android:text="@string/db_services_text" />
+        android:text="@string/db_services_text"
+        android:drawableTop="@drawable/db_services" />
 
     <TextView
-        android:id="@+id/db_info_btn"
+        android:id="@+id/db_cloud_btn"
         style="@style/DashboardButton"
-        android:text="@string/db_info_text" />
+        android:text="@string/db_info_text"
+        android:drawableTop="@drawable/db_cloud" />
 
     <TextView
-        android:id="@+id/db_other_btn"
+        android:id="@+id/db_about_btn"
         style="@style/DashboardButton"
-        android:text="@string/db_about_text" />
+        android:text="@string/db_about_text"
+        android:drawableTop="@drawable/db_info" />
 
 </com.google.android.apps.iosched.ui.widget.DashboardLayout>
