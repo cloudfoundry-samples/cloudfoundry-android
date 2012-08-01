@@ -6,18 +6,24 @@ import org.cloudfoundry.android.cfdroid.support.masterdetail.DetailPaneWithViewP
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 
+/**
+ * The main Fragment for managing an app. Embeds other fragments in a
+ * {@link ViewPager}.
+ * 
+ * @author Eric Bottard
+ * 
+ */
+public class ApplicationDetailPager extends DetailPaneWithViewPager {
 
-public  class ApplicationDetailPager extends DetailPaneWithViewPager {
-	
 	@Override
 	protected PagerAdapter buildPagerAdapter() {
 		return new ApplicationPagerAdapter();
 	}
 
-
 	private class ApplicationPagerAdapter extends FragmentPagerAdapter {
-		
+
 		public ApplicationPagerAdapter() {
 			super(getActivity().getSupportFragmentManager());
 		}
@@ -54,7 +60,7 @@ public  class ApplicationDetailPager extends DetailPaneWithViewPager {
 				throw new IllegalStateException();
 			}
 		}
-		
+
 		@Override
 		public int getItemPosition(Object object) {
 			return PagerAdapter.POSITION_NONE;
