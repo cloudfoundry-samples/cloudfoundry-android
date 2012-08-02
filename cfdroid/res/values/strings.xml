@@ -50,5 +50,6 @@
     <string name="application_info">Details</string>
     <string name="frameworks">Frameworks</string>
     <string name="runtimes">Runtimes</string>
+    <string name="empty_selection">Select an Item on le left</string>
 
 </resources>

@@ -42,7 +42,7 @@ public abstract class DetailPaneWithViewPager extends RoboSherlockFragment
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.pager_with_title, container, false);
+		return inflater.inflate(R.layout.pager_or_empty, container, false);
 	}
 
 	@Override
@@ -84,6 +84,9 @@ public abstract class DetailPaneWithViewPager extends RoboSherlockFragment
 	@Override
 	public void selectionChanged() {
 		adapter.notifyDataSetChanged();
+		getView().findViewById(R.id.empty).setVisibility(View.GONE);
+		getView().findViewById(R.id.content).setVisibility(View.VISIBLE);
+		
 	}
 
 }
