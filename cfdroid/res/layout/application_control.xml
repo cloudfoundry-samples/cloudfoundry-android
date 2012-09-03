@@ -34,10 +34,19 @@
 
         <!-- C O N T R O L -->
 
+        <TextView
+            android:id="@+id/status_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/control_status"
+            android:textSize="22sp" />
+
         <Button
             android:id="@+id/start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/status_label"
             android:drawableLeft="@drawable/ic_play_icon"
             android:text="@string/start" />
 
@@ -45,9 +54,19 @@
             android:id="@+id/stop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/start"
             android:layout_toRightOf="@id/start"
-            android:text="@string/stop"
-            android:drawableLeft="@drawable/ic_stop_icon" />
+            android:drawableLeft="@drawable/ic_stop_icon"
+            android:text="@string/stop" />
+
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/stop"
+            android:layout_alignParentRight="true"
+            android:textSize="20sp"
+            android:text="RUNNING" />
 
         <!-- R E S O U R C E S -->
 
@@ -57,7 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/start"
             android:layout_marginTop="16dp"
-            android:text="App resources"
+            android:text="@string/control_app_resources"
             android:textSize="22sp" />
 
         <!-- Instances -->
@@ -67,7 +86,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/resources"
-            android:text="Instances" />
+            android:text="@string/control_instances" />
 
         <TextView
             android:id="@+id/instances"
@@ -92,7 +111,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/instances_seekbar"
-            android:text="Memory (per instance)" />
+            android:text="@string/control_memory_per_instance" />
 
         <TextView
             android:id="@+id/memory"
@@ -118,7 +137,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/memory_seekbar"
             android:layout_marginTop="16dp"
-            android:text="Global memory"
+            android:text="@string/control_global_memory"
             android:textSize="22sp" />
 
         <ProgressBar

@@ -25,8 +25,6 @@
     <string name="cloud_info_user">Logged in as</string>
     <string name="manage">&lt;u&gt;manage&lt;/u&gt;</string>
     <string name="ci_basic_title">Info</string>
-    <string name="ci_info_frameworks">Frameworks</string>
-    <string name="ci_info_runtimes">Runtimes</string>
     <string name="services">Services</string>
     <string name="delete">Delete</string>
     <string name="add">Add</string>
@@ -51,5 +49,10 @@
     <string name="frameworks">Frameworks</string>
     <string name="runtimes">Runtimes</string>
     <string name="empty_selection">Select an Item on le left</string>
+    <string name="control_status">Status</string>
+    <string name="control_app_resources">App resources</string>
+    <string name="control_instances">Instances</string>
+    <string name="control_memory_per_instance">Memory (per instance)</string>
+    <string name="control_global_memory">Global memory</string>
 
 </resources>

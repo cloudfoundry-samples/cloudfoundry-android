@@ -44,7 +44,7 @@ public class CloudInfoActivity extends RoboSherlockFragmentActivity {
 
 			@Override
 			public int getCount() {
-				return 2;
+				return 3;
 			}
 
 			@Override
@@ -54,6 +54,8 @@ public class CloudInfoActivity extends RoboSherlockFragmentActivity {
 					return new RuntimesFragment();
 				case 1:
 					return new FrameworksFragment();
+				case 2:
+					return new BasicInfoFragment();
 				default:
 					throw new IllegalStateException();
 				}
@@ -66,6 +68,8 @@ public class CloudInfoActivity extends RoboSherlockFragmentActivity {
 					return getResources().getText(R.string.runtimes);
 				case 1:
 					return getResources().getText(R.string.frameworks);
+				case 2:
+					return getResources().getText(R.string.ci_basic_title);
 				default:
 					throw new IllegalStateException();
 				}

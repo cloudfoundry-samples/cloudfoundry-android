@@ -12,7 +12,7 @@ import android.view.View;
 import com.github.rtyley.android.sherlock.roboguice.fragment.RoboSherlockFragment;
 
 /**
- * Base class for fragments that rely on data being avalable asynchronously and
+ * Base class for fragments that rely on data being available asynchronously and
  * should show a "Loading..." screen until then.
  * 
  * @author Eric Bottard

@@ -7,6 +7,13 @@ import org.cloudfoundry.client.lib.CloudApplication;
 import roboguice.inject.ContentView;
 import android.os.Bundle;
 
+/**
+ * Master/Detail activity for applications. Shows a list of applications and
+ * details about one on the next/right screen.
+ * 
+ * @author Eric Bottard
+ * 
+ */
 @ContentView(R.layout.applications)
 public class ApplicationsActivity
 		extends
@@ -16,7 +23,7 @@ public class ApplicationsActivity
 		super.onCreate(bundle);
 		getSupportActionBar().setDisplayShowTitleEnabled(false);
 	}
-	
+
 	@Override
 	protected ApplicationsListFragment makeLeftFragment() {
 		return new ApplicationsListFragment();
@@ -25,7 +32,6 @@ public class ApplicationsActivity
 	@Override
 	protected ApplicationDetailPager makeRightFragment() {
 		return new ApplicationDetailPager();
-	}   
+	}
 
-	
 }

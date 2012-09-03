@@ -18,3 +18,19 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+-dontwarn org.springframework.**
+-dontwarn org.cloudfoundry.**
+-dontwarn org.codehaus.jackson.**
+-dontwarn com.viewpagerindicator.**
+-dontwarn com.actionbarsherlock.**
+-dontwarn roboguice.**
+
+-dontobfuscate
+
+-verbose
+-dump ../bin/class_files.txt
+-printseeds ../bin/seeds.txt
+-printusage ../bin/unused.txt
+-printmapping ../bin/mapping.txt 
+
+-keep class org.cloudfoundry.android.cfdroid.**

@@ -5,6 +5,7 @@ import org.cloudfoundry.android.cfdroid.R;
 import roboguice.inject.InjectView;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -35,7 +36,7 @@ public abstract class DetailPaneWithViewPager extends RoboSherlockFragment
 	private ViewPager pager;
 	private PagerAdapter adapter;
 
-	private final Handler handler = new Handler();
+	private final Handler handler = new Handler(Looper.getMainLooper());
 	private Runnable runPager;
 	private boolean created = false;
 

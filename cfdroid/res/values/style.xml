@@ -32,4 +32,9 @@
     <color name="cf_callout">#f77343</color>
     <color name="cf_background">#e8e8e8</color>
     
+    <color name="status_stopped">#B22222</color>
+    <color name="status_started">#008000</color>
+    <color name="status_updating">#808000</color>
+    
+    
 </resources>

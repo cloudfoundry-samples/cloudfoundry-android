@@ -115,6 +115,9 @@ public class ApplicationControlFragment extends
 	@InjectView(R.id.stop)
 	private View stopBtn;
 	
+	@InjectView(R.id.status)
+	private TextView status;
+	
 	private String appName;
 
 	/**
@@ -168,6 +171,8 @@ public class ApplicationControlFragment extends
 		AppState state = cloudApplication.getState();
 		startBtn.setEnabled(state != AppState.STARTED);
 		stopBtn.setEnabled(state == AppState.STARTED);
+		status.setText(state.toString());
+		status.setTextColor(getActivity().getResources().getColor(ApplicationView.COLORS.get(state)));
 
 		int maxTotalMemory = cloudInfo.getLimits().getMaxTotalMemory();
 		int usedByOtherApps = cloudInfo.getUsage().getTotalMemory()
