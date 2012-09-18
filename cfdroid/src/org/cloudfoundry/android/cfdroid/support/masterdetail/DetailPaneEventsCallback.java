@@ -8,6 +8,6 @@ package org.cloudfoundry.android.cfdroid.support.masterdetail;
  */
 public interface DetailPaneEventsCallback {
 	
-	void selectionChanged();
+	void selectionChanged(int position);
 
 }

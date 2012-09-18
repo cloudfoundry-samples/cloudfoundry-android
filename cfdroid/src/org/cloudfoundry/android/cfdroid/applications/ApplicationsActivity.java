@@ -1,5 +1,7 @@
 package org.cloudfoundry.android.cfdroid.applications;
 
+import java.util.List;
+
 import org.cloudfoundry.android.cfdroid.R;
 import org.cloudfoundry.android.cfdroid.support.masterdetail.MasterDetailActivity;
 import org.cloudfoundry.client.lib.CloudApplication;
@@ -25,13 +27,13 @@ public class ApplicationsActivity
 	}
 
 	@Override
-	protected ApplicationsListFragment makeLeftFragment() {
-		return new ApplicationsListFragment();
+	public void onNewData(List<CloudApplication> data) {
+		// TODO: remove
 	}
 
 	@Override
-	protected ApplicationDetailPager makeRightFragment() {
-		return new ApplicationDetailPager();
+	protected int rightPaneLayout() {
+		return R.layout.right_pane_applications;
 	}
 
 }

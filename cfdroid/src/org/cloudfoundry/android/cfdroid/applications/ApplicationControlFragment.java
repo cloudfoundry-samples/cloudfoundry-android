@@ -5,7 +5,7 @@ import org.cloudfoundry.android.cfdroid.R;
 import org.cloudfoundry.android.cfdroid.support.AsyncLoader;
 import org.cloudfoundry.android.cfdroid.support.DeferredContentFragment;
 import org.cloudfoundry.android.cfdroid.support.TaskWithDialog;
-import org.cloudfoundry.android.cfdroid.support.masterdetail.DataHolder;
+import org.cloudfoundry.android.cfdroid.support.masterdetail.DetailPaneEventsCallback;
 import org.cloudfoundry.client.lib.CloudApplication;
 import org.cloudfoundry.client.lib.CloudApplication.AppState;
 import org.cloudfoundry.client.lib.CloudInfo;
@@ -38,7 +38,8 @@ import com.google.inject.Inject;
  * 
  */
 public class ApplicationControlFragment extends
-		DeferredContentFragment<ApplicationControlFragment.AsyncResult> {
+		DeferredContentFragment<ApplicationControlFragment.AsyncResult>
+implements DetailPaneEventsCallback{
 
 	/* default */static class AsyncResult {
 		private CloudInfo cloudInfo;
@@ -51,6 +52,8 @@ public class ApplicationControlFragment extends
 			throw new IllegalArgumentException();
 		return 31 - Integer.numberOfLeadingZeros(n);
 	}
+	
+	private int position;
 
 	private OnSeekBarChangeListener barsListener = new OnSeekBarChangeListener() {
 		@Override
@@ -81,44 +84,7 @@ public class ApplicationControlFragment extends
 	@Inject
 	private CloudFoundry client;
 
-	/**
-	 * This is to enable/diable the save button.
-	 */
-	private int initialInstances, initialMemory;
-
-	/**
-	 * This is the (total) maximum memory that this app could take out of this
-	 * cloud, once other apps have taken their share.
-	 */
-	private int maxWithoutOthers;
-
 	private CloudInfo cloudInfo;
-	
-	@InjectView(R.id.instances_seekbar)
-	private SeekBar instancesSeekBar;
-
-	@InjectView(R.id.instances)
-	private TextView instancestv;
-
-	@InjectView(R.id.memory_seekbar)
-	private SeekBar memorySeekBar;
-
-	@InjectView(R.id.memory)
-	private TextView memorytv;
-
-	@InjectView(R.id.overall_memory_progressbar)
-	private ProgressBar overallMemoryPb;
-
-	@InjectView(R.id.start)
-	private View startBtn;
-
-	@InjectView(R.id.stop)
-	private View stopBtn;
-	
-	@InjectView(R.id.status)
-	private TextView status;
-	
-	private String appName;
 
 	/**
 	 * Used to react to changes to application(s), eg after start/stop.
@@ -135,18 +101,41 @@ public class ApplicationControlFragment extends
 			});
 		}
 	};
+
+	/**
+	 * This is to enable/diable the save button.
+	 */
+	private int initialInstances, initialMemory;
 	
-	@Override
-	public void onStart() {
-		super.onStart();
-		client.listenForApplicationsUpdates(contentObserver);
-	}
+	@InjectView(R.id.instances_seekbar)
+	private SeekBar instancesSeekBar;
+
+	@InjectView(R.id.instances)
+	private TextView instancestv;
+
+	/**
+	 * This is the (total) maximum memory that this app could take out of this
+	 * cloud, once other apps have taken their share.
+	 */
+	private int maxWithoutOthers;
+
+	@InjectView(R.id.memory_seekbar)
+	private SeekBar memorySeekBar;
+
+	@InjectView(R.id.memory)
+	private TextView memorytv;
+
+	@InjectView(R.id.overall_memory_progressbar)
+	private ProgressBar overallMemoryPb;
+
+	@InjectView(R.id.start)
+	private View startBtn;
 	
-	@Override
-	public void onStop() {
-		client.stopListeningForApplicationUpdates(contentObserver);
-		super.onStop();
-	}
+	@InjectView(R.id.status)
+	private TextView status;
+	
+	@InjectView(R.id.stop)
+	private View stopBtn;
 
 	/**
 	 * Prevents the user from sliding the primary progress ahead of the
@@ -162,7 +151,7 @@ public class ApplicationControlFragment extends
 			memorySeekBar.setProgress(memorySeekBar.getSecondaryProgress());
 		}
 	}
-
+	
 	private void fullyRedrawWidgets() {
 		CloudApplication cloudApplication = getCloudApplication();
 		initialInstances = cloudApplication.getInstances();
@@ -192,9 +181,9 @@ public class ApplicationControlFragment extends
 		overallMemoryPb.setProgress(usedByOtherApps);
 		updateData();
 	}
-
+	
 	private CloudApplication getCloudApplication() {
-		return client.getApplication(appName);
+		return client.getApplications(false).get(position);
 	}
 
 	private int instances() {
@@ -244,6 +233,14 @@ public class ApplicationControlFragment extends
 	}
 
 	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		if (savedInstanceState != null) {
+			position = savedInstanceState.getInt("position");
+		}
+	}
+
+	@Override
 	public Loader<AsyncResult> onCreateLoader(int arg0, Bundle arg1) {
 		return new AsyncLoader<AsyncResult>(getActivity()) {
 			@Override
@@ -264,22 +261,7 @@ public class ApplicationControlFragment extends
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		appName = ((DataHolder<CloudApplication>)getActivity()).getSelectedItem().getName();
 		return inflater.inflate(R.layout.application_control, container, false);
-	}
-	
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		if (savedInstanceState != null) {
-			appName = savedInstanceState.getString("appName");
-		}
-	}
-	
-	@Override
-	public void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-		outState.putString("appName", appName);
 	}
 
 	@Override
@@ -300,11 +282,29 @@ public class ApplicationControlFragment extends
 			return super.onOptionsItemSelected(item);
 		}
 	}
-
+	
 	@Override
 	public void onPrepareOptionsMenu(Menu menu) {
 		super.onPrepareOptionsMenu(menu);
 		menu.findItem(R.id.cloud_apply).setEnabled(userChangedSettings());
+	}
+	
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putInt("position", position);
+	}
+
+	@Override
+	public void onStart() {
+		super.onStart();
+		client.listenForApplicationsUpdates(contentObserver);
+	}
+
+	@Override
+	public void onStop() {
+		client.stopListeningForApplicationUpdates(contentObserver);
+		super.onStop();
 	}
 
 	@Override
@@ -350,6 +350,12 @@ public class ApplicationControlFragment extends
 			};
 			
 		}.execute();
+	}
+
+	@Override
+	public void selectionChanged(int position) {
+		this.position = position;
+//		appName = client.getApplications(false).get(position).getName();
 	}
 
 	private void start() {

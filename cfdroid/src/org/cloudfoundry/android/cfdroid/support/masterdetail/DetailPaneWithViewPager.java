@@ -1,5 +1,7 @@
 package org.cloudfoundry.android.cfdroid.support.masterdetail;
 
+import java.util.Map;
+
 import org.cloudfoundry.android.cfdroid.R;
 
 import roboguice.inject.InjectView;
@@ -7,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -21,8 +24,9 @@ import com.viewpagerindicator.TitlePageIndicator;
  * another Fragment. This is definitely not something you want to let your kids
  * try at home, as witnessed by numerous posts on StackOverflow.
  * 
- * The solution used here is adapted from 
- * http://stackoverflow.com/questions/6221763/android-can-you-nest-fragments/6222287#9700314
+ * The solution used here is adapted from
+ * http://stackoverflow.com/questions/6221763
+ * /android-can-you-nest-fragments/6222287#9700314
  * 
  * @author Eric Bottard
  * 
@@ -36,9 +40,7 @@ public abstract class DetailPaneWithViewPager extends RoboSherlockFragment
 	private ViewPager pager;
 	private PagerAdapter adapter;
 
-	private final Handler handler = new Handler(Looper.getMainLooper());
-	private Runnable runPager;
-	private boolean created = false;
+	protected int position;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,47 +49,22 @@ public abstract class DetailPaneWithViewPager extends RoboSherlockFragment
 	}
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-		if (runPager != null)
-			handler.post(runPager);
-		created = true;
-	}
-
-	@Override
-	public void onPause() {
-		super.onPause();
-		handler.removeCallbacks(runPager);
-	}
-
-	protected void setAdapter(PagerAdapter a) {
-		this.adapter = a;
-		runPager = new Runnable() {
-			@Override
-			public void run() {
-				pager.setAdapter(adapter);
-				pageIndicator.setViewPager(pager);
-			}
-		};
-		if (created) {
-			handler.post(runPager);
-		}
-	}
-
-	@Override
-	public void onStart() {
-		super.onStart();
-		setAdapter(buildPagerAdapter());
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		this.adapter = buildPagerAdapter();
+		pager.setAdapter(adapter);
+		pageIndicator.setViewPager(pager);
 	}
 
 	protected abstract PagerAdapter buildPagerAdapter();
 
 	@Override
-	public void selectionChanged() {
+	public void selectionChanged(int position) {
+		this.position = position;
 		adapter.notifyDataSetChanged();
 		getView().findViewById(R.id.empty).setVisibility(View.GONE);
 		getView().findViewById(R.id.content).setVisibility(View.VISIBLE);
-		
+
 	}
 
 }

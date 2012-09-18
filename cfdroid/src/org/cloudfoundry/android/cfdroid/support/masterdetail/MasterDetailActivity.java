@@ -1,17 +1,13 @@
 package org.cloudfoundry.android.cfdroid.support.masterdetail;
 
-import java.util.List;
-
 import javax.annotation.Nullable;
 
 import org.cloudfoundry.android.cfdroid.R;
 
 import roboguice.inject.InjectFragment;
-import roboguice.inject.InjectView;
-import roboguice.util.Ln;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.widget.FrameLayout;
 
 import com.github.rtyley.android.sherlock.roboguice.activity.RoboSherlockFragmentActivity;
@@ -39,19 +35,15 @@ public abstract class MasterDetailActivity<I, M extends Fragment, D extends Frag
 		extends RoboSherlockFragmentActivity implements
 		MasterDetailEventsCallback<I> {
 
+	/*
 	@Nullable
 	@InjectFragment(R.id.left_pane)
-	M leftPane;
-
+	private M leftPane;
+	*/
+	
 	@Nullable
 	@InjectFragment(R.id.right_pane)
-	D rightPane;
-
-	@Nullable
-	@InjectView(R.id.fragment_container)
-	FrameLayout fragmentContainer;
-
-	private List<I> data;
+	private D rightPane;
 
 	private int position = -1;
 
@@ -59,33 +51,14 @@ public abstract class MasterDetailActivity<I, M extends Fragment, D extends Frag
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		data = (List<I>) getLastCustomNonConfigurationInstance();
 		if (savedInstanceState != null) {
 			position = savedInstanceState.getInt(
 					MasterDetailEventsCallback.KEY_SELECTION, -1);
-		}
-
-	}
-
-	@Override
-	protected void onStart() {
-		super.onStart();
-		// If not null, we're in the single pane layout
-		if (fragmentContainer != null) {
-			if (position != -1) {
-				return;
+			if (rightPane != null) {
+				// two-pane layout, direct update
+				rightPane.selectionChanged(this.position);
 			}
-
-			Fragment initialFragment = makeLeftFragment();
-
-			getSupportFragmentManager().beginTransaction()
-					.add(R.id.fragment_container, initialFragment, "left").commit();
 		}
-	}
-
-	@Override
-	public final Object onRetainCustomNonConfigurationInstance() {
-		return data;
 	}
 
 	@Override
@@ -97,39 +70,18 @@ public abstract class MasterDetailActivity<I, M extends Fragment, D extends Frag
 	@Override
 	public void onLeftPaneSelection(int position) {
 		this.position = position;
-		if (fragmentContainer == null) {
+		if (rightPane != null) {
 			// two-pane layout, direct update
-			rightPane.selectionChanged();
+			rightPane.selectionChanged(this.position);
 		} else {
-			Fragment rightFragment = makeRightFragment();
-			FragmentTransaction transaction = getSupportFragmentManager()
-					.beginTransaction();
-			transaction.replace(R.id.fragment_container, rightFragment);
-			transaction.addToBackStack(null);
-			transaction.commit();
+			Intent intent = new Intent(this, RightPaneHoldingActivity.class);
+			intent.putExtra(RIGHT_PANE_LAYOUT_ID, rightPaneLayout());
+			intent.putExtra(KEY_SELECTION, position);
+			
+			startActivity(intent);
 		}
 	}
 
-	@Override
-	public void onNewData(List<I> data) {
-		this.data = data;
-	}
+	protected abstract int rightPaneLayout();
 
-	@Override
-	public I getSelectedItem() {
-		if (data != null && position != -1) {
-			return data.get(position);
-		} else {
-			return null;
-		}
-	}
-
-	@Override
-	public int getSelectedPosition() {
-		return position;
-	}
-
-	protected abstract M makeLeftFragment();
-
-	protected abstract D makeRightFragment();
 }

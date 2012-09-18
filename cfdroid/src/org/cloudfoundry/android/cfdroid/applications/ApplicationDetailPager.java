@@ -1,6 +1,7 @@
 package org.cloudfoundry.android.cfdroid.applications;
 
 import org.cloudfoundry.android.cfdroid.R;
+import org.cloudfoundry.android.cfdroid.support.masterdetail.DetailPaneEventsCallback;
 import org.cloudfoundry.android.cfdroid.support.masterdetail.DetailPaneWithViewPager;
 
 import android.support.v4.app.Fragment;
@@ -29,17 +30,23 @@ public class ApplicationDetailPager extends DetailPaneWithViewPager {
 		}
 
 		@Override
-		public Fragment getItem(int position) {
-			switch (position) {
+		public Fragment getItem(int index) {
+			Fragment f = null;
+			switch (index) {
 			case 0:
-				return new ApplicationControlFragment();
+				f = new ApplicationControlFragment();
+				break;
 			case 1:
-				return new ApplicationServicesFragment();
+				f = new ApplicationServicesFragment();
+				break;
 			case 2:
-				return new ApplicationInstanceStatsFragment();
+				f = new ApplicationInstanceStatsFragment();
+				break;
 			default:
 				throw new IllegalStateException();
 			}
+			((DetailPaneEventsCallback)f).selectionChanged(position);
+			return f;
 		}
 
 		@Override
@@ -48,8 +55,8 @@ public class ApplicationDetailPager extends DetailPaneWithViewPager {
 		}
 
 		@Override
-		public CharSequence getPageTitle(int position) {
-			switch (position) {
+		public CharSequence getPageTitle(int index) {
+			switch (index) {
 			case 0:
 				return getResources().getText(R.string.control);
 			case 1:
@@ -61,10 +68,10 @@ public class ApplicationDetailPager extends DetailPaneWithViewPager {
 			}
 		}
 
-		@Override
-		public int getItemPosition(Object object) {
-			return PagerAdapter.POSITION_NONE;
-		}
+//		@Override
+//		public int getItemPosition(Object object) {
+//			return PagerAdapter.POSITION_NONE;
+//		}
 
 	}
 

@@ -2,10 +2,13 @@ package org.cloudfoundry.android.cfdroid.applications;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
+import org.cloudfoundry.android.cfdroid.CloudFoundry;
 import org.cloudfoundry.android.cfdroid.R;
 import org.cloudfoundry.android.cfdroid.support.BaseViewHolder;
 import org.cloudfoundry.android.cfdroid.support.ItemListAdapter;
-import org.cloudfoundry.android.cfdroid.support.masterdetail.DataHolder;
+import org.cloudfoundry.android.cfdroid.support.masterdetail.DetailPaneEventsCallback;
 import org.cloudfoundry.client.lib.CloudApplication;
 
 import android.os.Bundle;
@@ -15,7 +18,7 @@ import android.widget.TextView;
 
 import com.github.rtyley.android.sherlock.roboguice.fragment.RoboSherlockListFragment;
 
-public class ApplicationInfoFragment extends RoboSherlockListFragment {
+public class ApplicationInfoFragment extends RoboSherlockListFragment implements DetailPaneEventsCallback {
 	
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -31,8 +34,18 @@ public class ApplicationInfoFragment extends RoboSherlockListFragment {
 		});
 	}
 	
+	@Inject
+	private CloudFoundry client;
+	
+	private int position;
+	
+	@Override
+	public void selectionChanged(int position) {
+		this.position = position;
+	}
+	
 	private CloudApplication getCloudApplication() {
-		return ((DataHolder<CloudApplication>)getActivity()).getSelectedItem();
+		return client.getApplications(false).get(position); 
 	}
 	
 	/*default*/static class ApplicationLinkView extends BaseViewHolder<String> {

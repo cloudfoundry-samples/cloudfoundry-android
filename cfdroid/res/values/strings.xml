@@ -54,5 +54,6 @@
     <string name="control_instances">Instances</string>
     <string name="control_memory_per_instance">Memory (per instance)</string>
     <string name="control_global_memory">Global memory</string>
+    <string name="error_title">An error occurred</string>
 
 </resources>

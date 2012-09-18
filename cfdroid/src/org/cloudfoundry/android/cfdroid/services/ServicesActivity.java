@@ -1,5 +1,7 @@
 package org.cloudfoundry.android.cfdroid.services;
 
+import java.util.List;
+
 import org.cloudfoundry.android.cfdroid.R;
 import org.cloudfoundry.android.cfdroid.support.masterdetail.MasterDetailActivity;
 import org.cloudfoundry.client.lib.CloudService;
@@ -26,13 +28,14 @@ public class ServicesActivity
 	}
 
 	@Override
-	protected ServicesListFragment makeLeftFragment() {
-		return new ServicesListFragment();
+	public void onNewData(List<CloudService> data) {
+		// TODO Auto-generated method stub
+		
 	}
-
+	
 	@Override
-	protected ServiceDetailFragment makeRightFragment() {
-		return new ServiceDetailFragment();
+	protected int rightPaneLayout() {
+		return R.layout.right_pane_services;
 	}
 
 }

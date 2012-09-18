@@ -1,10 +1,12 @@
 package org.cloudfoundry.android.cfdroid.support;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.cloudfoundry.android.cfdroid.R;
 
-import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
@@ -21,6 +23,8 @@ import com.github.rtyley.android.sherlock.roboguice.fragment.RoboSherlockListFra
  */
 public abstract class ListLoadingFragment<E> extends RoboSherlockListFragment implements LoaderCallbacks<List<E>> {
 
+	public static List ERROR = new ArrayList();
+	
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -65,6 +69,12 @@ public abstract class ListLoadingFragment<E> extends RoboSherlockListFragment im
     }
 
     public void onLoadFinished(Loader<List<E>> loader, List<E> items) {
+    	if (items == ERROR) {
+    		AlertDialog.Builder builder = new Builder(getActivity()).setTitle(R.string.error_title);
+    		
+    		builder.create().show();
+    	}
+    	
         setList(items);
 
         if (isResumed())

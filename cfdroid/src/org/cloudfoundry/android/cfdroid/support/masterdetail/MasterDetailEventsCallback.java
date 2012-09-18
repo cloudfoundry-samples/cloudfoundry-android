@@ -11,9 +11,11 @@ import java.util.List;
  *
  * @param <I> the kind of domain object we're dealing with
  */
-public interface MasterDetailEventsCallback<I> extends DataHolder<I> {
+public interface MasterDetailEventsCallback<I>  {
 	
 	public static final String KEY_SELECTION = "selection";
+	
+	public static final String RIGHT_PANE_LAYOUT_ID = "layout";
 
 	void onLeftPaneSelection(int position);
 	

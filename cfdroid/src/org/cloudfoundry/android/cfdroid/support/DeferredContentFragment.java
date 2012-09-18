@@ -29,7 +29,12 @@ public abstract class DeferredContentFragment<T> extends RoboSherlockFragment  i
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        getLoaderManager().initLoader(R.id.deferred_content_fragment_loader, null, this);
+    }
+    
+    @Override
+    public void onResume() {
+    	super.onResume();
+    	getLoaderManager().initLoader(R.id.deferred_content_fragment_loader, null, this);
     }
 
 	@Override

@@ -29,6 +29,8 @@
         </activity>
         <activity android:name=".targets.TargetsActivity" >
         </activity>
+        <activity android:name=".support.masterdetail.RightPaneHoldingActivity" >
+        </activity>
         <activity android:name=".targets.TargetEditionActivity_" >
         </activity>
         <activity android:name=".applications.ApplicationsActivity" >

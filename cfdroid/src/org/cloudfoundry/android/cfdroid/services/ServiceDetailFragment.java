@@ -13,7 +13,7 @@ import com.github.rtyley.android.sherlock.roboguice.fragment.RoboSherlockFragmen
 public class ServiceDetailFragment extends RoboSherlockFragment implements DetailPaneEventsCallback{
 
 	@Override
-	public void selectionChanged() {
+	public void selectionChanged(int position) {
 		// TODO Auto-generated method stub
 		
 	}

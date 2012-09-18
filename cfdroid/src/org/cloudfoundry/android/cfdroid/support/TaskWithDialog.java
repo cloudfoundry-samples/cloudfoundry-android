@@ -36,5 +36,11 @@ public abstract class TaskWithDialog<T> extends RoboAsyncTask<T> {
 		super.onFinally();
 		dialog.dismiss();
 	}
+	
+	@Override
+	protected void onException(Exception e) throws RuntimeException {
+		dialog.setTitle("An error has occured");
+		dialog.setMessage(e.getMessage());
+	}
 
 }

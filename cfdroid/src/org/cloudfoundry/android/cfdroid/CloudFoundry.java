@@ -143,12 +143,14 @@ public class CloudFoundry {
 			// our client object holds a stale token.
 			// Throw it away and retry.
 			if (attempt == 0) {
+				Ln.w(e, "Caught exception for the first time. Assuming stale token, will retry.");
 				attempt++;
 				cache.client = null;
 				R result = doWithClient(work);
 				attempt--;
 				return result;
 			} else {
+				Ln.w(e, "Caught exception for the second time. Rethrowing");
 				throw e;
 			}
 		} catch (RuntimeException e) {

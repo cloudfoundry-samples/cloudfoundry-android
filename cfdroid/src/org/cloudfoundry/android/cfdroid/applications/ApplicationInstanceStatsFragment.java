@@ -6,7 +6,7 @@ import org.cloudfoundry.android.cfdroid.CloudFoundry;
 import org.cloudfoundry.android.cfdroid.R;
 import org.cloudfoundry.android.cfdroid.support.ItemListAdapter;
 import org.cloudfoundry.android.cfdroid.support.ListLoadingFragment;
-import org.cloudfoundry.android.cfdroid.support.masterdetail.DataHolder;
+import org.cloudfoundry.android.cfdroid.support.masterdetail.DetailPaneEventsCallback;
 import org.cloudfoundry.client.lib.CloudApplication;
 import org.cloudfoundry.client.lib.InstanceStats;
 
@@ -19,7 +19,7 @@ import android.widget.ListView;
 import com.google.inject.Inject;
 
 public class ApplicationInstanceStatsFragment extends
-		ListLoadingFragment<InstanceStats> {
+		ListLoadingFragment<InstanceStats> implements DetailPaneEventsCallback {
 
 	@Inject
 	private CloudFoundry client;
@@ -27,6 +27,8 @@ public class ApplicationInstanceStatsFragment extends
 	@InjectView(android.R.id.list)
 	private ListView listView;
 
+	private int position;
+	
 	@Override
 	public Loader<List<InstanceStats>> onCreateLoader(int id, Bundle args) {
 		return new InstanceStatsLoader(getActivity(), client,
@@ -42,9 +44,13 @@ public class ApplicationInstanceStatsFragment extends
 //			listView.setHeaderDividersEnabled(true);
 //		}
 //	}
+	
+	public void selectionChanged(int position) {
+		this.position = position;
+	}
 
 	private CloudApplication getCloudApplication() {
-		return ((DataHolder<CloudApplication>) getActivity()).getSelectedItem();
+		return client.getApplications(false).get(position); 
 	}
 
 	@Override
