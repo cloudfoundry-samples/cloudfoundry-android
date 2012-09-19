@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -38,9 +39,24 @@ public abstract class DetailPaneWithViewPager extends RoboSherlockFragment
 	private TitlePageIndicator pageIndicator;
 	@InjectView(R.id.pager)
 	private ViewPager pager;
-	private PagerAdapter adapter;
+	private DetailPanePagerAdapter adapter;
 
 	protected int position;
+
+	/**
+	 * An extension of {@link PagerAdapter} that allows broadcasting the left
+	 * pane selection change event to members of the {@link ViewPager}.
+	 * 
+	 * @author Eric Bottard
+	 * 
+	 */
+	public static abstract class DetailPanePagerAdapter extends FragmentPagerAdapter implements DetailPaneEventsCallback {
+
+		public DetailPanePagerAdapter(FragmentManager supportFragmentManager) {
+			super(supportFragmentManager);
+		}
+
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,12 +72,12 @@ public abstract class DetailPaneWithViewPager extends RoboSherlockFragment
 		pageIndicator.setViewPager(pager);
 	}
 
-	protected abstract PagerAdapter buildPagerAdapter();
+	protected abstract DetailPanePagerAdapter buildPagerAdapter();
 
 	@Override
 	public void selectionChanged(int position) {
 		this.position = position;
-		adapter.notifyDataSetChanged();
+		adapter.selectionChanged(position);
 		getView().findViewById(R.id.empty).setVisibility(View.GONE);
 		getView().findViewById(R.id.content).setVisibility(View.VISIBLE);
 

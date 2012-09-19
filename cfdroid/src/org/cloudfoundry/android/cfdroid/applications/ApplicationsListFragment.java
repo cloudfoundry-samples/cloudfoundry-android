@@ -46,4 +46,10 @@ public class ApplicationsListFragment extends
 			}
 		};
 	}
+
+
+	@Override
+	protected int loaderId() {
+		return R.id.application_list_loader;
+	}
 }

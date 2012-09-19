@@ -56,4 +56,9 @@ public class RuntimesFragment extends
 		};
 	}
 
+	@Override
+	protected int loaderId() {
+		return R.id.runtimes_loader;
+	}
+
 }

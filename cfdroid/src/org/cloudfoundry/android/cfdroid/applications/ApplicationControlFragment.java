@@ -355,6 +355,10 @@ implements DetailPaneEventsCallback{
 	@Override
 	public void selectionChanged(int position) {
 		this.position = position;
+		if (isResumed()) {
+			fullyRedrawWidgets();
+			getActivity().invalidateOptionsMenu();
+		}
 //		appName = client.getApplications(false).get(position).getName();
 	}
 

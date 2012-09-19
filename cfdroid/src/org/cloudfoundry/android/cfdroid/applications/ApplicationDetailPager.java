@@ -5,8 +5,6 @@ import org.cloudfoundry.android.cfdroid.support.masterdetail.DetailPaneEventsCal
 import org.cloudfoundry.android.cfdroid.support.masterdetail.DetailPaneWithViewPager;
 
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 
 /**
@@ -19,59 +17,51 @@ import android.support.v4.view.ViewPager;
 public class ApplicationDetailPager extends DetailPaneWithViewPager {
 
 	@Override
-	protected PagerAdapter buildPagerAdapter() {
+	protected DetailPaneWithViewPager.DetailPanePagerAdapter buildPagerAdapter() {
 		return new ApplicationPagerAdapter();
 	}
 
-	private class ApplicationPagerAdapter extends FragmentPagerAdapter {
+	private class ApplicationPagerAdapter extends
+			DetailPaneWithViewPager.DetailPanePagerAdapter {
 
 		public ApplicationPagerAdapter() {
 			super(getActivity().getSupportFragmentManager());
 		}
 
+		private Fragment[] fragments = new Fragment[] { //
+		new ApplicationControlFragment(), //
+				new ApplicationServicesFragment(), //
+				new ApplicationInstanceStatsFragment() //
+		};
+		private int[] titles = new int[] { //
+		R.string.control, //
+				R.string.services, //
+				R.string.instances //
+		};
+
 		@Override
 		public Fragment getItem(int index) {
-			Fragment f = null;
-			switch (index) {
-			case 0:
-				f = new ApplicationControlFragment();
-				break;
-			case 1:
-				f = new ApplicationServicesFragment();
-				break;
-			case 2:
-				f = new ApplicationInstanceStatsFragment();
-				break;
-			default:
-				throw new IllegalStateException();
-			}
-			((DetailPaneEventsCallback)f).selectionChanged(position);
+			Fragment f = fragments[index];
+			((DetailPaneEventsCallback) f).selectionChanged(position);
 			return f;
 		}
 
 		@Override
 		public int getCount() {
-			return 3;
+			return fragments.length;
 		}
 
 		@Override
 		public CharSequence getPageTitle(int index) {
-			switch (index) {
-			case 0:
-				return getResources().getText(R.string.control);
-			case 1:
-				return getResources().getText(R.string.services);
-			case 2:
-				return getResources().getText(R.string.instances);
-			default:
-				throw new IllegalStateException();
-			}
+			return getResources().getText(titles[index]);
 		}
 
-//		@Override
-//		public int getItemPosition(Object object) {
-//			return PagerAdapter.POSITION_NONE;
-//		}
+		@Override
+		public void selectionChanged(int position) {
+			for (int i = 0 ; i < fragments.length ; i++) {
+				((DetailPaneEventsCallback) fragments[i]).selectionChanged(position);
+			}
+		}
 
 	}
 

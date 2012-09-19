@@ -138,6 +138,9 @@ public class ApplicationServicesFragment extends
 
 	public void selectionChanged(int position) {
 		this.position = position;
+		if (isResumed()) {
+			refresh();
+		}
 	}
 
 	private void toggleService(final String serviceName) {
@@ -159,5 +162,10 @@ public class ApplicationServicesFragment extends
 
 		}.execute();
 
+	}
+
+	@Override
+	protected int loaderId() {
+		return R.id.application_services_loader;
 	}
 }

@@ -71,4 +71,9 @@ public class ServicesListFragment extends AbstractMasterPane<CloudService> {
 		
 	}
 
+	@Override
+	protected int loaderId() {
+		return R.id.services_loader;
+	}
+
 }

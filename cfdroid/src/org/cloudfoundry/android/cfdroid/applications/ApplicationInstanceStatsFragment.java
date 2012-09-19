@@ -35,18 +35,11 @@ public class ApplicationInstanceStatsFragment extends
 				getCloudApplication().getName());
 	}
 
-//	@Override
-//	public void onViewCreated(View view, Bundle savedInstanceState) {
-//		super.onViewCreated(view, savedInstanceState);
-//		if (listView.getHeaderViewsCount() == 0) {
-//			listView.addHeaderView(getActivity().getLayoutInflater().inflate(
-//					R.layout.application_instance_stat_header, null));
-//			listView.setHeaderDividersEnabled(true);
-//		}
-//	}
-	
 	public void selectionChanged(int position) {
 		this.position = position;
+		if (isResumed()) {
+			refresh();
+		}
 	}
 
 	private CloudApplication getCloudApplication() {
@@ -64,6 +57,11 @@ public class ApplicationInstanceStatsFragment extends
 				return new InstanceStatsView(view, R.string.not_available_abbr);
 			}
 		};
+	}
+
+	@Override
+	protected int loaderId() {
+		return R.id.application_stats_loader;
 	}
 
 }

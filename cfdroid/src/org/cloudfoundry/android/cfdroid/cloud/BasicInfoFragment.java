@@ -109,4 +109,9 @@ public class BasicInfoFragment extends
 			}
 		};
 	}
+
+	@Override
+	protected int loaderId() {
+		return R.id.cloud_info_loader;
+	}
 }

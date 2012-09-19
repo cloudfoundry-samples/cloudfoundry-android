@@ -56,4 +56,9 @@ public class FrameworksFragment extends
 		};
 	}
 
+	@Override
+	protected int loaderId() {
+		return R.id.frameworks_loader;
+	}
+
 }
