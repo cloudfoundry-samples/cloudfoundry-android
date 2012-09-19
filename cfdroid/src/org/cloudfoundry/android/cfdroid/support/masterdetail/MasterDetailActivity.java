@@ -31,16 +31,10 @@ import com.github.rtyley.android.sherlock.roboguice.activity.RoboSherlockFragmen
  * @param <D>
  *            the actual type of the "detail" fragment
  */
-public abstract class MasterDetailActivity<I, M extends Fragment, D extends Fragment & DetailPaneEventsCallback>
+public abstract class MasterDetailActivity<D extends Fragment & DetailPaneEventsCallback>
 		extends RoboSherlockFragmentActivity implements
-		MasterDetailEventsCallback<I> {
+		MasterDetailEventsCallback {
 
-	/*
-	@Nullable
-	@InjectFragment(R.id.left_pane)
-	private M leftPane;
-	*/
-	
 	@Nullable
 	@InjectFragment(R.id.right_pane)
 	private D rightPane;

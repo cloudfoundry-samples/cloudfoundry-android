@@ -111,12 +111,6 @@ public class ApplicationServicesFragment extends
 		return new ServicesListLoader(getActivity(), client);
 	}
 
-	public View onCreateView(android.view.LayoutInflater inflater,
-			android.view.ViewGroup container, Bundle savedInstanceState) {
-		Ln.d("F onCreateView %s", this);
-		return super.onCreateView(inflater, container, savedInstanceState);
-	}
-
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);

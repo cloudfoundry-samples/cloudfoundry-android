@@ -88,7 +88,7 @@ public abstract class ListLoadingFragment<E> extends RoboSherlockListFragment im
     /**
      * Allows you to update the list's items without using setListAdapter(), which makes the list jump back to the top.
      */
-    private void setList(List<E> items) {
+    protected void setList(List<E> items) {
         @SuppressWarnings("unchecked")
         ItemListAdapter<E, ?> listAdapter = (ItemListAdapter<E, ?>) getListAdapter();
         if (listAdapter == null) {

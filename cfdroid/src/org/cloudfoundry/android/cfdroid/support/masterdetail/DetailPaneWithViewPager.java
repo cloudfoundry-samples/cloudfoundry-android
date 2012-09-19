@@ -1,13 +1,9 @@
 package org.cloudfoundry.android.cfdroid.support.masterdetail;
 
-import java.util.Map;
-
 import org.cloudfoundry.android.cfdroid.R;
 
 import roboguice.inject.InjectView;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -24,10 +20,6 @@ import com.viewpagerindicator.TitlePageIndicator;
  * Base class for handling having a ViewPager using {@link Fragment}s inside
  * another Fragment. This is definitely not something you want to let your kids
  * try at home, as witnessed by numerous posts on StackOverflow.
- * 
- * The solution used here is adapted from
- * http://stackoverflow.com/questions/6221763
- * /android-can-you-nest-fragments/6222287#9700314
  * 
  * @author Eric Bottard
  * 

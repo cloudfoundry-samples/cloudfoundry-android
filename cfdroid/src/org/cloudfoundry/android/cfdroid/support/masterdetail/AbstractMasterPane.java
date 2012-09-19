@@ -14,21 +14,13 @@ import android.widget.ListView;
  */
 public abstract class AbstractMasterPane<I> extends ListLoadingFragment<I> {
 
-	protected MasterDetailEventsCallback<I> communicationChannel() {
-		return (MasterDetailEventsCallback<I>) getActivity();
+	protected MasterDetailEventsCallback communicationChannel() {
+		return (MasterDetailEventsCallback) getActivity();
 	}
 
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		communicationChannel().onLeftPaneSelection(position);
-		getListView().setItemChecked(position, true);
-	}
-
-	@Override
-	public void onStart() {
-		super.onStart();
-		// TODO: two pane only, but dot not seem to work
-		getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 	}
 
 }

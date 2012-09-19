@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Space between Cloud and Foundry is needed to have 
-    Cloud/Foundry instead of CloudFoundr/y on launch screen-->
+    <!--
+    Space between Cloud and Foundry is needed to have 
+    Cloud/Foundry instead of CloudFoundr/y on launch screen
+    -->
     <string name="app_name">Cloud Foundry</string>
     <string name="login">Login</string>
     <string name="password">Password</string>
@@ -55,5 +57,10 @@
     <string name="control_memory_per_instance">Memory (per instance)</string>
     <string name="control_global_memory">Global memory</string>
     <string name="error_title">An error occurred</string>
+
+    <plurals name="number_of_apps">
+        <item quantity="one">1 application</item>
+        <item quantity="other">%d applications</item>
+    </plurals>
 
 </resources>

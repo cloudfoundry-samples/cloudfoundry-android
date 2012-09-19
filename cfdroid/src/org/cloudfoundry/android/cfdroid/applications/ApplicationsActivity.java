@@ -19,16 +19,11 @@ import android.os.Bundle;
 @ContentView(R.layout.applications)
 public class ApplicationsActivity
 		extends
-		MasterDetailActivity<CloudApplication, ApplicationsListFragment, ApplicationDetailPager> {
+		MasterDetailActivity<ApplicationDetailPager> {
 	@Override
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
 		getSupportActionBar().setDisplayShowTitleEnabled(false);
-	}
-
-	@Override
-	public void onNewData(List<CloudApplication> data) {
-		// TODO: remove
 	}
 
 	@Override

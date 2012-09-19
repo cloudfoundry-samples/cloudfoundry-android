@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/apps_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/cf_secondary"
+        android:gravity="center"
+        android:paddingBottom="8dp"
+        android:paddingTop="10dp"
+        android:textColor="@android:color/white"
+        android:textStyle="bold" />
+
+    <!-- We'd like to just include that standard layout, but unfortunately
+    this doesn't work. See ApplicationsListFragment#onCreateView() -->
+    <!-- <include layout="@android:layout/list_content" /> -->
+
+</LinearLayout>

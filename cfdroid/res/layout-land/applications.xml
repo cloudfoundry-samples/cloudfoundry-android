@@ -1,18 +1,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent"
+    android:orientation="horizontal" >
 
-    <fragment android:name="org.cloudfoundry.android.cfdroid.applications.ApplicationsListFragment"
-              android:id="@+id/left_pane"
-              android:layout_weight="1"
-              android:layout_width="0dp"
-              android:layout_height="match_parent" />
+    <fragment
+        android:id="@+id/left_pane"
+        android:name="org.cloudfoundry.android.cfdroid.applications.ApplicationsListFragment"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
 
-    <fragment android:name="org.cloudfoundry.android.cfdroid.applications.ApplicationDetailPager"
-              android:id="@+id/right_pane"
-              android:layout_weight="2"
-              android:layout_width="0dp"
-              android:layout_height="match_parent" />
+    <View
+        android:layout_height="fill_parent"
+        android:layout_width="1dp"
+        android:background="@android:color/darker_gray" />
+
+    <fragment
+        android:id="@+id/right_pane"
+        android:name="org.cloudfoundry.android.cfdroid.applications.ApplicationDetailPager"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2" />
 
 </LinearLayout>
