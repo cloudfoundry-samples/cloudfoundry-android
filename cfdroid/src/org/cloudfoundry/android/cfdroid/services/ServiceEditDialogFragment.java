@@ -1,0 +1,181 @@
+package org.cloudfoundry.android.cfdroid.services;
+
+import static android.view.inputmethod.EditorInfo.IME_ACTION_DONE;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.cloudfoundry.android.cfdroid.CloudFoundry;
+import org.cloudfoundry.android.cfdroid.R;
+import org.cloudfoundry.android.cfdroid.support.AsyncLoader;
+import org.cloudfoundry.android.cfdroid.support.BaseTextWatcher;
+import org.cloudfoundry.android.cfdroid.support.BaseViewHolder;
+import org.cloudfoundry.android.cfdroid.support.ItemListAdapter;
+import org.cloudfoundry.client.lib.CloudService;
+import org.cloudfoundry.client.lib.ServiceConfiguration;
+
+import roboguice.fragment.RoboDialogFragment;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnShowListener;
+import android.os.Bundle;
+import android.support.v4.app.LoaderManager.LoaderCallbacks;
+import android.support.v4.content.Loader;
+import android.text.Editable;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
+
+/**
+ * A fragment for editing a (to be added) {@link CloudService}.
+ * 
+ * @author Eric Bottard
+ */
+public class ServiceEditDialogFragment extends RoboDialogFragment implements
+		LoaderCallbacks<List<ServiceConfiguration>> {
+
+	@Inject
+	private CloudFoundry client;
+
+	private Spinner choices;
+	
+	private EditText name;
+	
+	private Button okButton;
+
+	@Override
+	public Dialog onCreateDialog(Bundle savedInstanceState) {
+		LayoutInflater inflater = LayoutInflater.from(getActivity());
+		final View v = inflater.inflate(R.layout.service_edit, null);
+		choices = (Spinner) v.findViewById(R.id.type);
+		name = (EditText) v.findViewById(R.id.name);
+		getLoaderManager().initLoader(0, null, this);
+		
+		name.setOnEditorActionListener(new OnEditorActionListener() {
+
+			public boolean onEditorAction(TextView v, int actionId,
+					KeyEvent event) {
+				if (actionId == IME_ACTION_DONE && ready()) {
+					createService();
+					return true;
+				}
+				return false;
+			}
+
+
+		});
+		
+		name.addTextChangedListener(new BaseTextWatcher() {
+			@Override
+			public void afterTextChanged(Editable s) {
+				updateEnablement();
+			}
+		});
+		
+		final AlertDialog dialog = new AlertDialog.Builder(getActivity())
+				.setTitle(R.string.edit_service_dialog_title)
+				.setView(v)
+				.setCancelable(true)
+				.setPositiveButton(R.string.create,
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								// validation code
+							}
+						})
+				.setNegativeButton(R.string.cancel,
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								dialog.cancel();
+							}
+						}).create();
+		// workaround for http://code.google.com/p/android/issues/detail?id=6360 ...
+		dialog.setOnShowListener(new OnShowListener() {
+			@Override
+			public void onShow(DialogInterface di) {
+				okButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+				updateEnablement();
+			}
+		});
+		
+		return dialog;
+	}
+	
+	private boolean ready() {
+		return !name.getText().toString().trim().isEmpty();
+	}
+
+	private void createService() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
+	@Override
+	public Loader<List<ServiceConfiguration>> onCreateLoader(int id, Bundle args) {
+		return new AsyncLoader<List<ServiceConfiguration>>(getActivity()) {
+			@Override
+			public List<ServiceConfiguration> loadInBackground() {
+				return client.getServiceConfigurations();
+			}
+		};
+	}
+
+	@Override
+	public void onLoadFinished(Loader<List<ServiceConfiguration>> loader,
+			List<ServiceConfiguration> data) {
+		choices.setAdapter(new ItemListAdapter<ServiceConfiguration, ServiceConfigurationView>(
+				R.layout.service_list_item, getActivity().getLayoutInflater(),
+				data) {
+			@Override
+			protected ServiceConfigurationView createView(View view) {
+				return new ServiceConfigurationView(view);
+			}
+		});
+	}
+
+	@Override
+	public void onLoaderReset(Loader<List<ServiceConfiguration>> loader) {
+
+	}
+
+	public void updateEnablement() {
+		okButton.setEnabled(ready());
+	}
+
+	private static class ServiceConfigurationView extends
+			BaseViewHolder<ServiceConfiguration> {
+
+		private ImageView logo;
+		private TextView label;
+
+		public ServiceConfigurationView(View container) {
+			logo = (ImageView) container.findViewById(R.id.logo);
+			label = (TextView) container.findViewById(R.id.name);
+		}
+
+		@Override
+		public void bind(ServiceConfiguration serviceConfig) {
+			label.setText(serviceConfig.getVendor());
+			ServiceLogos logoEnum;
+			try {
+				logoEnum = ServiceLogos.valueOf(serviceConfig.getVendor());
+			} catch (IllegalArgumentException notFound) {
+				logoEnum = ServiceLogos.unknown;
+			}
+			logo.setImageLevel(logoEnum.level);
+		}
+
+	}
+}

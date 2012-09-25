@@ -57,10 +57,15 @@
     <string name="control_memory_per_instance">Memory (per instance)</string>
     <string name="control_global_memory">Global memory</string>
     <string name="error_title">An error occurred</string>
+    <string name="edit_service_dialog_title">Add a new service</string>
+    <string name="add_service_name_hint">Choose a service name</string>
+    <string name="cancel">Cancel</string>
+    <string name="create">Create</string>
 
     <plurals name="number_of_apps">
         <item quantity="one">1 application</item>
         <item quantity="other">%d applications</item>
     </plurals>
+
 
 </resources>

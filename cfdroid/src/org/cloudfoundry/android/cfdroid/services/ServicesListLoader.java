@@ -3,13 +3,13 @@ package org.cloudfoundry.android.cfdroid.services;
 import java.util.List;
 
 import org.cloudfoundry.android.cfdroid.CloudFoundry;
-import org.cloudfoundry.android.cfdroid.support.AsyncLoader;
+import org.cloudfoundry.android.cfdroid.support.FailingAsyncLoader;
 import org.cloudfoundry.client.lib.CloudService;
 
 import android.app.Activity;
 import android.database.ContentObserver;
 
-public class ServicesListLoader extends AsyncLoader<List<CloudService>>{
+public class ServicesListLoader extends FailingAsyncLoader<List<CloudService>>{
 
 	private CloudFoundry client;
 	
@@ -29,7 +29,7 @@ public class ServicesListLoader extends AsyncLoader<List<CloudService>>{
 	}
 	
 	@Override
-	public List<CloudService> loadInBackground() {
+	public List<CloudService> doLoadInBackground() {
 		List<CloudService> services = client.getServices(force);
 		if (force) {
 			force = false;

@@ -7,16 +7,18 @@ import javax.inject.Inject;
 import org.cloudfoundry.android.cfdroid.CloudFoundry;
 import org.cloudfoundry.android.cfdroid.R;
 import org.cloudfoundry.android.cfdroid.support.ItemListAdapter;
+import org.cloudfoundry.android.cfdroid.support.Result;
 import org.cloudfoundry.android.cfdroid.support.masterdetail.AbstractMasterPane;
 import org.cloudfoundry.client.lib.CloudService;
+
+import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.content.Loader;
+import android.view.View;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-
-import android.os.Bundle;
-import android.support.v4.content.Loader;
-import android.view.View;
 
 /**
  * A fragment that shows the list of all available services. Also allows
@@ -31,7 +33,7 @@ public class ServicesListFragment extends AbstractMasterPane<CloudService> {
 	private CloudFoundry client;
 
 	@Override
-	public Loader<List<CloudService>> onCreateLoader(int id, Bundle args) {
+	public Loader<Result<List<CloudService>>> onCreateLoader(int id, Bundle args) {
 		return new ServicesListLoader(getActivity(), client);
 	}
 
@@ -67,7 +69,9 @@ public class ServicesListFragment extends AbstractMasterPane<CloudService> {
 	}
 
 	private void provisionService() {
-		// TODO Auto-generated method stub
+		FragmentManager fm = getActivity().getSupportFragmentManager();
+		ServiceEditDialogFragment dialog = new ServiceEditDialogFragment();
+		dialog.show(fm, "fragment_edit_service");
 		
 	}
 

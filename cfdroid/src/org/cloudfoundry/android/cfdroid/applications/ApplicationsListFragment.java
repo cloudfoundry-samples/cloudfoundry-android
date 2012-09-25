@@ -1,11 +1,11 @@
 package org.cloudfoundry.android.cfdroid.applications;
 
-import java.text.MessageFormat;
 import java.util.List;
 
 import org.cloudfoundry.android.cfdroid.CloudFoundry;
 import org.cloudfoundry.android.cfdroid.R;
 import org.cloudfoundry.android.cfdroid.support.ItemListAdapter;
+import org.cloudfoundry.android.cfdroid.support.Result;
 import org.cloudfoundry.android.cfdroid.support.masterdetail.AbstractMasterPane;
 import org.cloudfoundry.client.lib.CloudApplication;
 
@@ -30,15 +30,10 @@ public class ApplicationsListFragment extends
 	private TextView header;
 
 	@Override
-	public Loader<List<CloudApplication>> onCreateLoader(int arg0, Bundle arg1) {
+	public Loader<Result<List<CloudApplication>>> onCreateLoader(int arg0, Bundle arg1) {
 		return new ApplicationsListLoader(getActivity(), client);
-	}
+	} 
 
-	@Override
-	public void onLoadFinished(Loader<List<CloudApplication>> loader,
-			List<CloudApplication> items) {
-		super.onLoadFinished(loader, items);
-	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -19,7 +19,7 @@ import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 
 /**
- * Loader which extends AsyncTaskLoaders and handles caveats as pointed out in
+ * Loader which extends AsyncTaskLoader and handles caveats as pointed out in
  * http://code.google.com/p/android/issues/detail?id=14944.
  * <p/>
  * Based on CursorLoader.java in the Fragment compatibility package

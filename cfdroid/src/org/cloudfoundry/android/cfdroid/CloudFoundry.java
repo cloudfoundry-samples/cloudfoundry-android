@@ -16,6 +16,7 @@ import org.cloudfoundry.client.lib.CloudFoundryClient;
 import org.cloudfoundry.client.lib.CloudInfo;
 import org.cloudfoundry.client.lib.CloudService;
 import org.cloudfoundry.client.lib.InstanceStats;
+import org.cloudfoundry.client.lib.ServiceConfiguration;
 import org.springframework.web.client.RestClientException;
 
 import roboguice.event.ObservesTypeListener.ContextObserverMethodInjector;
@@ -56,6 +57,8 @@ public class CloudFoundry {
 		private Map<String, CloudService> services = new LinkedHashMap<String, CloudService>();
 
 		private ContentObservable servicesObservavle = new ContentObservable();
+
+		private List<ServiceConfiguration> serviceConfigurations = null;
 
 		private void fetchApps() {
 			applications.clear();
@@ -143,7 +146,8 @@ public class CloudFoundry {
 			// our client object holds a stale token.
 			// Throw it away and retry.
 			if (attempt == 0) {
-				Ln.w(e, "Caught exception for the first time. Assuming stale token, will retry.");
+				Ln.w(e,
+						"Caught exception for the first time. Assuming stale token, will retry.");
 				attempt++;
 				cache.client = null;
 				R result = doWithClient(work);
@@ -203,7 +207,8 @@ public class CloudFoundry {
 				if (force) {
 					cache.fetchApps();
 				}
-				return new ArrayList<CloudApplication>(cache.applications.values());
+				return new ArrayList<CloudApplication>(
+						cache.applications.values());
 			}
 		});
 
@@ -239,6 +244,21 @@ public class CloudFoundry {
 				return new ArrayList<CloudService>(cache.services.values());
 			}
 		});
+	}
+
+	public List<ServiceConfiguration> getServiceConfigurations() {
+		if (cache.serviceConfigurations == null) {
+			return doWithClient(new Callable<List<ServiceConfiguration>>() {
+				@Override
+				public List<ServiceConfiguration> call() throws Exception {
+					cache.serviceConfigurations = cache.client.getServiceConfigurations();
+					return cache.serviceConfigurations;
+				}
+
+			});
+		} else {
+			return cache.serviceConfigurations;
+		}
 	}
 
 	public void listenForApplicationsUpdates(ContentObserver observer) {

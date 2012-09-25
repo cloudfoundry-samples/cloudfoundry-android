@@ -9,9 +9,10 @@ import javax.inject.Inject;
 
 import org.cloudfoundry.android.cfdroid.CloudFoundry;
 import org.cloudfoundry.android.cfdroid.R;
-import org.cloudfoundry.android.cfdroid.support.AsyncLoader;
+import org.cloudfoundry.android.cfdroid.support.FailingAsyncLoader;
 import org.cloudfoundry.android.cfdroid.support.ItemListAdapter;
 import org.cloudfoundry.android.cfdroid.support.ListLoadingFragment;
+import org.cloudfoundry.android.cfdroid.support.Result;
 import org.cloudfoundry.client.lib.CloudInfo.Framework;
 
 import android.os.Bundle;
@@ -25,10 +26,10 @@ public class FrameworksFragment extends
 	private CloudFoundry client;
 
 	@Override
-	public Loader<List<Framework>> onCreateLoader(int id, Bundle args) {
-		return new AsyncLoader<List<Framework>>(getActivity()) {
+	public Loader<Result<List<Framework>>> onCreateLoader(int id, Bundle args) {
+		return new FailingAsyncLoader<List<Framework>>(getActivity()) {
 			@Override
-			public List<Framework> loadInBackground() {
+			public List<Framework> doLoadInBackground() {
 				ArrayList<Framework> frameworks = new ArrayList<Framework>(client.getCloudInfo()
 						.getFrameworks());
 				Collections.sort(frameworks, new Comparator<Framework>() {

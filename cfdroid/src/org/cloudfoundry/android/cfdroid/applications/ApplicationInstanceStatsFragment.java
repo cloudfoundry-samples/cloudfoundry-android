@@ -6,6 +6,7 @@ import org.cloudfoundry.android.cfdroid.CloudFoundry;
 import org.cloudfoundry.android.cfdroid.R;
 import org.cloudfoundry.android.cfdroid.support.ItemListAdapter;
 import org.cloudfoundry.android.cfdroid.support.ListLoadingFragment;
+import org.cloudfoundry.android.cfdroid.support.Result;
 import org.cloudfoundry.android.cfdroid.support.masterdetail.DetailPaneEventsCallback;
 import org.cloudfoundry.client.lib.CloudApplication;
 import org.cloudfoundry.client.lib.InstanceStats;
@@ -30,7 +31,7 @@ public class ApplicationInstanceStatsFragment extends
 	private int position;
 	
 	@Override
-	public Loader<List<InstanceStats>> onCreateLoader(int id, Bundle args) {
+	public Loader<Result<List<InstanceStats>>> onCreateLoader(int id, Bundle args) {
 		return new InstanceStatsLoader(getActivity(), client,
 				getCloudApplication().getName());
 	}

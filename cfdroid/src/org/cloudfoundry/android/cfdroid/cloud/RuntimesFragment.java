@@ -9,9 +9,10 @@ import javax.inject.Inject;
 
 import org.cloudfoundry.android.cfdroid.CloudFoundry;
 import org.cloudfoundry.android.cfdroid.R;
-import org.cloudfoundry.android.cfdroid.support.AsyncLoader;
+import org.cloudfoundry.android.cfdroid.support.FailingAsyncLoader;
 import org.cloudfoundry.android.cfdroid.support.ItemListAdapter;
 import org.cloudfoundry.android.cfdroid.support.ListLoadingFragment;
+import org.cloudfoundry.android.cfdroid.support.Result;
 import org.cloudfoundry.client.lib.CloudInfo.Runtime;
 
 import android.os.Bundle;
@@ -25,10 +26,10 @@ public class RuntimesFragment extends
 	private CloudFoundry client;
 
 	@Override
-	public Loader<List<Runtime>> onCreateLoader(int id, Bundle args) {
-		return new AsyncLoader<List<Runtime>>(getActivity()) {
+	public Loader<Result<List<Runtime>>> onCreateLoader(int id, Bundle args) {
+		return new FailingAsyncLoader<List<Runtime>>(getActivity()) {
 			@Override
-			public List<Runtime> loadInBackground() {
+			public List<Runtime> doLoadInBackground() {
 				ArrayList<Runtime> runtimes = new ArrayList<Runtime>(client.getCloudInfo()
 						.getRuntimes());
 				Collections.sort(runtimes, new Comparator<Runtime>() {

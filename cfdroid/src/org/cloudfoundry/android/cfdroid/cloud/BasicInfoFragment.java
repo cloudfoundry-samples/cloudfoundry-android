@@ -7,10 +7,11 @@ import javax.inject.Inject;
 
 import org.cloudfoundry.android.cfdroid.CloudFoundry;
 import org.cloudfoundry.android.cfdroid.R;
-import org.cloudfoundry.android.cfdroid.support.AsyncLoader;
 import org.cloudfoundry.android.cfdroid.support.BaseViewHolder;
+import org.cloudfoundry.android.cfdroid.support.FailingAsyncLoader;
 import org.cloudfoundry.android.cfdroid.support.ItemListAdapter;
 import org.cloudfoundry.android.cfdroid.support.ListLoadingFragment;
+import org.cloudfoundry.android.cfdroid.support.Result;
 import org.cloudfoundry.client.lib.CloudInfo;
 
 import android.os.Bundle;
@@ -62,11 +63,11 @@ public class BasicInfoFragment extends
 	private CloudFoundry client;
 
 	@Override
-	public Loader<List<TitleAndValue>> onCreateLoader(int id, Bundle args) {
-		return new AsyncLoader<List<TitleAndValue>>(getActivity()) {
+	public Loader<Result<List<TitleAndValue>>> onCreateLoader(int id, Bundle args) {
+		return new FailingAsyncLoader<List<TitleAndValue>>(getActivity()) {
 
 			@Override
-			public List<TitleAndValue> loadInBackground() {
+			public List<TitleAndValue> doLoadInBackground() {
 				CloudInfo info = client.getCloudInfo();
 				List<TitleAndValue> result = new ArrayList<BasicInfoFragment.TitleAndValue>();
 				result.add(new TitleAndValue(R.string.cloud_info_description,
