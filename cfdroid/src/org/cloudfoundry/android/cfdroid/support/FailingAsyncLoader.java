@@ -1,5 +1,6 @@
 package org.cloudfoundry.android.cfdroid.support;
 
+import roboguice.util.Ln;
 import android.content.Context;
 
 /**
@@ -20,6 +21,7 @@ public abstract class FailingAsyncLoader<E> extends AsyncLoader<Result<E>> {
 		try {
 			return Result.result(doLoadInBackground());
 		} catch (Throwable t) {
+			Ln.e(t);
 			return Result.error(t);
 		}
 	}

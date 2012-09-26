@@ -337,5 +337,27 @@ public class CloudFoundry {
 			}
 		});
 	}
+	
+	public void createService(final String name, final ServiceConfiguration sc) {
+		// Be safe for now
+		if (sc.getTiers().size() != 1) {
+			throw new IllegalStateException();
+		}
+		doWithClient(new Callable<Void>() {
+			@Override
+			public Void call() throws Exception {
+				CloudService s = new CloudService();
+				s.setName(name);
+				s.setVendor(sc.getVendor());
+				s.setVersion(sc.getVersion());
+				s.setType(sc.getType());
+				s.setTier(sc.getTiers().get(0).getType());
+				cache.client.createService(s);
+				
+				cache.fetchServices();
+				return null;
+			}
+		});
+	}
 
 }

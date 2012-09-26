@@ -29,7 +29,9 @@ public class InstanceStatsLoader extends
 
 	@Override
 	protected void onAbandon() {
-		client.stopListeningForApplicationUpdates(observer);
+		if (!firstTime) {
+			client.stopListeningForApplicationUpdates(observer);
+		}
 		super.onAbandon();
 	}
 

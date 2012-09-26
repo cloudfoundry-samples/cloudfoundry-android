@@ -13,7 +13,7 @@ public class ServicesListLoader extends FailingAsyncLoader<List<CloudService>>{
 
 	private CloudFoundry client;
 	
-	private ContentObserver contentObserver = this.new ForceLoadContentObserver();
+	private ContentObserver contentObserver = this.new ForceLoadContentObserver();;
 	
 	private boolean force = true;
 	
@@ -24,7 +24,9 @@ public class ServicesListLoader extends FailingAsyncLoader<List<CloudService>>{
 	
 	@Override
 	protected void onAbandon() {
-		client.stopListeningForServicesUpdates(contentObserver);
+		if (!force) {
+			client.stopListeningForServicesUpdates(contentObserver);
+		}
 		super.onAbandon();
 	}
 	

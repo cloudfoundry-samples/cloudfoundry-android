@@ -23,7 +23,9 @@ public class ApplicationsListLoader extends
 
 	@Override
 	protected void onAbandon() {
-		client.stopListeningForApplicationUpdates(observer);
+		if (!force) {
+			client.stopListeningForApplicationUpdates(observer);
+		}
 		super.onAbandon();
 	}
 

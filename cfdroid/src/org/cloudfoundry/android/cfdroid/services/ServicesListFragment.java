@@ -70,7 +70,7 @@ public class ServicesListFragment extends AbstractMasterPane<CloudService> {
 
 	private void provisionService() {
 		FragmentManager fm = getActivity().getSupportFragmentManager();
-		ServiceEditDialogFragment dialog = new ServiceEditDialogFragment();
+		ServiceEditDialogFragment dialog = new ServiceEditDialogFragment(this);
 		dialog.show(fm, "fragment_edit_service");
 		
 	}

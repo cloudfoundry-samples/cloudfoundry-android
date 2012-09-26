@@ -12,6 +12,7 @@ import org.cloudfoundry.android.cfdroid.support.AsyncLoader;
 import org.cloudfoundry.android.cfdroid.support.BaseTextWatcher;
 import org.cloudfoundry.android.cfdroid.support.BaseViewHolder;
 import org.cloudfoundry.android.cfdroid.support.ItemListAdapter;
+import org.cloudfoundry.android.cfdroid.support.TaskWithDialog;
 import org.cloudfoundry.client.lib.CloudService;
 import org.cloudfoundry.client.lib.ServiceConfiguration;
 
@@ -50,6 +51,12 @@ public class ServiceEditDialogFragment extends RoboDialogFragment implements
 	private EditText name;
 	
 	private Button okButton;
+	
+	private ServicesListFragment servicesListFragment;
+
+	public ServiceEditDialogFragment(ServicesListFragment servicesListFragment) {
+		this.servicesListFragment = servicesListFragment;
+	}
 
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -89,7 +96,7 @@ public class ServiceEditDialogFragment extends RoboDialogFragment implements
 							@Override
 							public void onClick(DialogInterface dialog,
 									int which) {
-								// validation code
+								createService();
 							}
 						})
 				.setNegativeButton(R.string.cancel,
@@ -117,8 +124,15 @@ public class ServiceEditDialogFragment extends RoboDialogFragment implements
 	}
 
 	private void createService() {
-		// TODO Auto-generated method stub
-		
+		new TaskWithDialog<Void>(getActivity(), R.string.working) {
+			@Override
+			public Void call() throws Exception {
+				ServiceConfiguration sc = (ServiceConfiguration) choices.getSelectedItem();
+				client.createService(name.getText().toString().trim(), sc);
+//				servicesListFragment.refresh();
+				return null;
+			}
+		}.execute();
 	}
 
 	
@@ -151,7 +165,9 @@ public class ServiceEditDialogFragment extends RoboDialogFragment implements
 	}
 
 	public void updateEnablement() {
-		okButton.setEnabled(ready());
+		if (okButton != null) {
+			okButton.setEnabled(ready());
+		}
 	}
 
 	private static class ServiceConfigurationView extends
