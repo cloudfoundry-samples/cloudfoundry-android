@@ -3,6 +3,7 @@ package org.cloudfoundry.android.cfdroid.support.masterdetail;
 import org.cloudfoundry.android.cfdroid.R;
 
 import roboguice.inject.InjectView;
+import roboguice.util.Ln;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -27,13 +28,14 @@ import com.viewpagerindicator.TitlePageIndicator;
 public abstract class DetailPaneWithViewPager extends RoboSherlockFragment
 		implements DetailPaneEventsCallback {
 
+	private static final int POSITION_NONE = -100;
 	@InjectView(R.id.title_page_indicator)
 	private TitlePageIndicator pageIndicator;
 	@InjectView(R.id.pager)
 	private ViewPager pager;
 	private DetailPanePagerAdapter adapter;
 
-	protected int position;
+	protected int position = POSITION_NONE;
 
 	/**
 	 * An extension of {@link PagerAdapter} that allows broadcasting the left
@@ -62,6 +64,9 @@ public abstract class DetailPaneWithViewPager extends RoboSherlockFragment
 		this.adapter = buildPagerAdapter();
 		pager.setAdapter(adapter);
 		pageIndicator.setViewPager(pager);
+		if (position != POSITION_NONE) {
+			adapter.selectionChanged(position);
+		}
 	}
 
 	protected abstract DetailPanePagerAdapter buildPagerAdapter();
@@ -69,9 +74,11 @@ public abstract class DetailPaneWithViewPager extends RoboSherlockFragment
 	@Override
 	public void selectionChanged(int position) {
 		this.position = position;
-		adapter.selectionChanged(position);
-		getView().findViewById(R.id.empty).setVisibility(View.GONE);
-		getView().findViewById(R.id.content).setVisibility(View.VISIBLE);
+		if (adapter != null) {
+			adapter.selectionChanged(position);
+			getView().findViewById(R.id.empty).setVisibility(View.GONE);
+			getView().findViewById(R.id.content).setVisibility(View.VISIBLE);
+		}
 
 	}
 

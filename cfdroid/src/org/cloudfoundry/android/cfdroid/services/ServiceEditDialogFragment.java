@@ -2,6 +2,8 @@ package org.cloudfoundry.android.cfdroid.services;
 
 import static android.view.inputmethod.EditorInfo.IME_ACTION_DONE;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -129,7 +131,6 @@ public class ServiceEditDialogFragment extends RoboDialogFragment implements
 			public Void call() throws Exception {
 				ServiceConfiguration sc = (ServiceConfiguration) choices.getSelectedItem();
 				client.createService(name.getText().toString().trim(), sc);
-//				servicesListFragment.refresh();
 				return null;
 			}
 		}.execute();
@@ -141,7 +142,15 @@ public class ServiceEditDialogFragment extends RoboDialogFragment implements
 		return new AsyncLoader<List<ServiceConfiguration>>(getActivity()) {
 			@Override
 			public List<ServiceConfiguration> loadInBackground() {
-				return client.getServiceConfigurations();
+				List<ServiceConfiguration> serviceConfigurations = client.getServiceConfigurations();
+				Collections.sort(serviceConfigurations, new Comparator<ServiceConfiguration>() {
+					@Override
+					public int compare(ServiceConfiguration lhs,
+							ServiceConfiguration rhs) {
+						return lhs.getVendor().compareTo(rhs.getVendor());
+					}
+				});
+				return serviceConfigurations;
 			}
 		};
 	}
