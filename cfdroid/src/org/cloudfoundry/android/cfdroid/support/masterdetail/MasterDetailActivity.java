@@ -35,11 +35,13 @@ public abstract class MasterDetailActivity<D extends Fragment & DetailPaneEvents
 		extends RoboSherlockFragmentActivity implements
 		MasterDetailEventsCallback {
 
+	private static final int POSITION_NONE = -100;
+
 	@Nullable
 	@InjectFragment(R.id.right_pane)
 	private D rightPane;
 
-	private int position = -1;
+	private int position = POSITION_NONE;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +49,8 @@ public abstract class MasterDetailActivity<D extends Fragment & DetailPaneEvents
 
 		if (savedInstanceState != null) {
 			position = savedInstanceState.getInt(
-					MasterDetailEventsCallback.KEY_SELECTION, -1);
-			if (rightPane != null) {
+					MasterDetailEventsCallback.KEY_SELECTION, POSITION_NONE);
+			if (rightPane != null && position != POSITION_NONE) {
 				// two-pane layout, direct update
 				rightPane.selectionChanged(this.position);
 			}
@@ -71,7 +73,7 @@ public abstract class MasterDetailActivity<D extends Fragment & DetailPaneEvents
 			Intent intent = new Intent(this, RightPaneHoldingActivity.class);
 			intent.putExtra(RIGHT_PANE_LAYOUT_ID, rightPaneLayout());
 			intent.putExtra(KEY_SELECTION, position);
-			
+
 			startActivity(intent);
 		}
 	}
