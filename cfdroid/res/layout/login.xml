@@ -1,81 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
 
-    <RelativeLayout
+    <TextView
+        android:id="@+id/signup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical|center_horizontal"
-        android:paddingLeft="50dp"
-        android:paddingRight="50dp" >
+        android:background="@color/cf_primary"
+        android:gravity="center"
+        android:padding="5dp"
+        android:textColor="@color/cf_text"
+        android:textColorLink="@color/cf_callout"
+        android:textSize="14sp"
+        android:text="@string/signup_text"/>
 
-        <ImageView
-            android:id="@+id/logo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="16dp"
-            android:layout_marginTop="50dp"
-            android:src="@drawable/logo" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
 
-        <EditText
-            android:id="@+id/login"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_below="@id/logo"
-            android:layout_marginBottom="16dp"
-            android:hint="@string/login"
-            android:textSize="@dimen/large"
-            android:inputType="textEmailAddress"
-            android:singleLine="true" />
-
-        <EditText
-            android:id="@+id/password"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_below="@id/login"
-            android:layout_marginBottom="16dp"
-            android:textSize="@dimen/large"
-            android:hint="@string/password"
-            android:inputType="textPassword" />
-
-        <Spinner
-            android:id="@+id/target"
-            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/password"
-            android:layout_marginBottom="16dp"
-            android:textSize="@dimen/large"
-            android:layout_toLeftOf="@+id/manage"
-            android:prompt="@string/target" 
-            />
+            android:gravity="center_vertical|center_horizontal"
+            android:paddingLeft="18dp"
+            android:paddingRight="18dp" >
 
-        <ImageView
-            android:id="@id/manage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/target"
-            android:layout_alignParentRight="true"
-            android:layout_below="@id/password"
-            android:layout_marginLeft="8dp"
-            android:background="@drawable/abs__item_background_holo_light"
-            android:src="@drawable/ic_menu_edit" />
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="50dp"
+                android:src="@drawable/logo" />
 
-        <Button
-            android:id="@+id/connect"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_below="@id/target"
-            android:layout_marginBottom="16dp"
-            android:layout_marginTop="16dp"
-            
-            android:enabled="false"
-            android:text="@string/connect"
-            android:textStyle="bold" 
-            android:layout_centerInParent="true"
-            />
-    </RelativeLayout>
+            <EditText
+                android:id="@+id/login"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_below="@id/logo"
+                android:layout_marginBottom="16dp"
+                android:hint="@string/login"
+                android:inputType="textEmailAddress"
+                android:singleLine="true"
+                android:textSize="@dimen/large" />
 
-</ScrollView>
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_below="@id/login"
+                android:layout_marginBottom="16dp"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:textSize="@dimen/large" />
+
+            <Spinner
+                android:id="@+id/target"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/password"
+                android:layout_marginBottom="16dp"
+                android:layout_toLeftOf="@+id/manage"
+                android:prompt="@string/target"
+                android:textSize="@dimen/large" />
+
+            <ImageView
+                android:id="@id/manage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/target"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/password"
+                android:layout_marginLeft="8dp"
+                android:background="@drawable/abs__item_background_holo_light"
+                android:src="@drawable/ic_menu_edit" />
+
+            <Button
+                android:id="@+id/connect"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_below="@id/target"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="16dp"
+                android:enabled="false"
+                android:text="@string/connect"
+                android:textStyle="bold" />
+        </RelativeLayout>
+    </ScrollView>
+
+</LinearLayout>

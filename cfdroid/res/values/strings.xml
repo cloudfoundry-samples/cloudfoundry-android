@@ -66,6 +66,7 @@
         <item quantity="one">1 application</item>
         <item quantity="other">%d applications</item>
     </plurals>
+    <string name="signup_text">No CloudFoundry account yet? <a href="https://my.cloudfoundry.com/signup?promo=androidapp">Signup here</a></string>
 
 
 </resources>

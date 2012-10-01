@@ -24,6 +24,7 @@ import android.accounts.AccountManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.method.LinkMovementMethod;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -53,6 +54,9 @@ public class LoginActivity extends RoboSherlockAccountAuthenticatorActivity {
 
 	@InjectView(R.id.manage)
 	View manageTargets;
+	
+	@InjectView(R.id.signup)
+	TextView signupLink;
 
 	@Inject
 	TargetsPreferences targetsPreferences;
@@ -84,6 +88,8 @@ public class LoginActivity extends RoboSherlockAccountAuthenticatorActivity {
 		UpdateUiTextWatcher watcher = new UpdateUiTextWatcher();
 		login.addTextChangedListener(watcher);
 		password.addTextChangedListener(watcher);
+		
+		signupLink.setMovementMethod(LinkMovementMethod.getInstance());
 
 		updateEnablement();
 
