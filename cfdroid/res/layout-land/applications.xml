@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="horizontal" >
@@ -8,11 +9,12 @@
         android:name="org.cloudfoundry.android.cfdroid.applications.ApplicationsListFragment"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        tools:layout="@layout/left_pane_applications_list" />
 
     <View
-        android:layout_height="fill_parent"
         android:layout_width="1dp"
+        android:layout_height="fill_parent"
         android:background="@android:color/darker_gray" />
 
     <fragment

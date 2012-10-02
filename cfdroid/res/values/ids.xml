@@ -11,5 +11,7 @@
     <item name="application_list_loader" type="id"/>
     
     <item name="services_loader" type="id"/>
+    <item name="service_applications_loader" type="id"/>
+    <item name="service_configurations_loader" type="id"/>
     
 </resources>

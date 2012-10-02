@@ -8,12 +8,18 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+/**
+ * A view for displaying info about an available service engine.
+ * 
+ * @author Eric Bottard
+ * 
+ */
 public class ServiceView extends BaseViewHolder<CloudService> {
-	
+
 	protected TextView name;
-	
+
 	protected ImageView logo;
-	
+
 	public ServiceView(View container) {
 		super();
 		name = (TextView) container.findViewById(R.id.name);
@@ -25,7 +31,7 @@ public class ServiceView extends BaseViewHolder<CloudService> {
 		name.setText(service.getName());
 		ServiceLogos logoEnum;
 		try {
-			 logoEnum = ServiceLogos.valueOf(service.getVendor());
+			logoEnum = ServiceLogos.valueOf(service.getVendor());
 		} catch (IllegalArgumentException notFound) {
 			logoEnum = ServiceLogos.unknown;
 		}

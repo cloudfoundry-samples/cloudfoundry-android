@@ -12,7 +12,6 @@ import org.cloudfoundry.android.cfdroid.CloudFoundry;
 import org.cloudfoundry.android.cfdroid.R;
 import org.cloudfoundry.android.cfdroid.support.AsyncLoader;
 import org.cloudfoundry.android.cfdroid.support.BaseTextWatcher;
-import org.cloudfoundry.android.cfdroid.support.BaseViewHolder;
 import org.cloudfoundry.android.cfdroid.support.ItemListAdapter;
 import org.cloudfoundry.android.cfdroid.support.TaskWithDialog;
 import org.cloudfoundry.client.lib.CloudService;
@@ -32,7 +31,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
@@ -54,12 +52,6 @@ public class ServiceEditDialogFragment extends RoboDialogFragment implements
 	
 	private Button okButton;
 	
-	private ServicesListFragment servicesListFragment;
-
-	public ServiceEditDialogFragment(ServicesListFragment servicesListFragment) {
-		this.servicesListFragment = servicesListFragment;
-	}
-
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		LayoutInflater inflater = LayoutInflater.from(getActivity());
@@ -177,30 +169,5 @@ public class ServiceEditDialogFragment extends RoboDialogFragment implements
 		if (okButton != null) {
 			okButton.setEnabled(ready());
 		}
-	}
-
-	private static class ServiceConfigurationView extends
-			BaseViewHolder<ServiceConfiguration> {
-
-		private ImageView logo;
-		private TextView label;
-
-		public ServiceConfigurationView(View container) {
-			logo = (ImageView) container.findViewById(R.id.logo);
-			label = (TextView) container.findViewById(R.id.name);
-		}
-
-		@Override
-		public void bind(ServiceConfiguration serviceConfig) {
-			label.setText(serviceConfig.getVendor());
-			ServiceLogos logoEnum;
-			try {
-				logoEnum = ServiceLogos.valueOf(serviceConfig.getVendor());
-			} catch (IllegalArgumentException notFound) {
-				logoEnum = ServiceLogos.unknown;
-			}
-			logo.setImageLevel(logoEnum.level);
-		}
-
 	}
 }

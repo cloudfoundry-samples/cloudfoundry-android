@@ -118,14 +118,12 @@ public class ApplicationServicesFragment extends
 	}
 
 	public void onStart() {
-		Ln.d("F onStart %s", this);
 		super.onStart();
 		client.listenForApplicationsUpdates(contentObserver);
 	}
 
 	@Override
 	public void onStop() {
-		Ln.d("F onStop %s", this);
 		client.stopListeningForApplicationUpdates(contentObserver);
 		super.onStop();
 	}
