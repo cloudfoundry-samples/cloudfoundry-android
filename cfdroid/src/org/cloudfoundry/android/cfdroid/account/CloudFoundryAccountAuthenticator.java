@@ -59,7 +59,6 @@ public class CloudFoundryAccountAuthenticator extends
 	public Bundle getAuthToken(AccountAuthenticatorResponse response,
 			Account account, String authTokenType, Bundle options)
 			throws NetworkErrorException {
-		Ln.d("This is %s", Thread.currentThread());
 		String password = AccountManager.get(context).getPassword(account);
 		String login = Accounts.extractName(account.name);
 		String target = Accounts.extractTarget(account.name);
