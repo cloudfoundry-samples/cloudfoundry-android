@@ -24,15 +24,17 @@ import android.widget.TextView;
 
 import com.google.inject.Inject;
 
-public class ServiceDetailFragment extends ListLoadingFragment<CloudApplication>
-		implements DetailPaneEventsCallback {
+public class ServiceDetailFragment extends
+		ListLoadingFragment<CloudApplication> implements
+		DetailPaneEventsCallback {
 	/**
 	 * A view that shows info about an app as well as toggle button to
 	 * bind/unbind the app to a given service.
 	 * 
 	 * @author Eric Bottard
 	 */
-	private class BindableApplicationView extends BaseViewHolder<CloudApplication> {
+	private class BindableApplicationView extends
+			BaseViewHolder<CloudApplication> {
 
 		private ImageView fwkLogo;
 		private TextView name;
@@ -46,19 +48,20 @@ public class ServiceDetailFragment extends ListLoadingFragment<CloudApplication>
 
 		@Override
 		public void bind(final CloudApplication app) {
-			
+
 			name.setText(app.getName());
 			String fwk = app.getStaging().get("model");
 			FrameworkLogos logo = FrameworkLogos.unknown;
-			
+
 			try {
 				logo = FrameworkLogos.valueOf(fwk);
-			} catch(IllegalArgumentException ignore) {
-				
+			} catch (IllegalArgumentException ignore) {
+
 			}
 			fwkLogo.setImageLevel(logo.level);
 
-			final boolean bound = app.getServices().contains(  getCloudService().getName());
+			final boolean bound = app.getServices().contains(
+					getCloudService().getName());
 			bindButton.setImageLevel(bound ? 0 : 1);
 
 			bindButton.setOnLongClickListener(new View.OnLongClickListener() {
@@ -145,11 +148,11 @@ public class ServiceDetailFragment extends ListLoadingFragment<CloudApplication>
 			@Override
 			public CloudApplication call() throws Exception {
 				if (unbind) {
-					return client.unbindService(
-							getCloudService().getName(), appName);
+					return client.unbindService(appName, getCloudService()
+							.getName());
 				} else {
-					return client.bindService(getCloudService().getName(),
-							appName);
+					return client.bindService(appName, getCloudService()
+							.getName());
 				}
 			}
 

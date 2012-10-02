@@ -22,7 +22,7 @@ import com.actionbarsherlock.view.MenuItem;
 
 /**
  * A fragment that shows the list of all available services. Also allows
- * provisionning a new service.
+ * provisioning a new service.
  * 
  * @author Eric Bottard
  * 
