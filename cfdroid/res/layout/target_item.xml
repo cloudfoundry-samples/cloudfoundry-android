@@ -9,7 +9,7 @@
         android:layout_height="wrap_content" 
         android:textSize="14sp"
         android:textStyle="bold"
-        android:textColor="@color/icsdarkblue"
+        android:textColor="@color/cf_primary"
         />
 
     <TextView

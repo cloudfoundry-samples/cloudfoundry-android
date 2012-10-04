@@ -7,7 +7,7 @@
         <item name="android:gravity">center_horizontal</item>
         <item name="android:drawablePadding">2dp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:background">@null</item>
+        <item name="android:background">@drawable/abs__item_background_holo_light</item>
     </style>
 
     <style name="InfoPrimary">
@@ -24,6 +24,21 @@
         <item name="android:textSize">14sp</item>
         <item name="android:layout_marginBottom">8dp</item>
     </style>
+    
+    <style name="IconInList">
+        <item name="android:layout_width">32dp</item>
+        <item name="android:layout_height">32dp</item>
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:layout_gravity">center_vertical</item>
+    </style>
+    
+    <style name="ListItemPrimary">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">@color/cf_primary</item>
+        <item name="android:textSize">18sp</item>
+    </style>
 
     <color name="cf_primary">#0096d1</color>
     <color name="cf_secondary">#0d3d66</color>
@@ -35,6 +50,8 @@
     <color name="status_stopped">#B22222</color>
     <color name="status_started">#008000</color>
     <color name="status_updating">#808000</color>
+    
+    <color name="divider_color">#aaa</color>
     
     
 </resources>

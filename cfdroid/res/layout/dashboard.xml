@@ -8,28 +8,24 @@
     <TextView
         android:id="@+id/db_apps_btn"
         style="@style/DashboardButton"
-        android:background="@drawable/abs__item_background_holo_light"
         android:drawableTop="@drawable/db_app"
         android:text="@string/db_apps_text" />
 
     <TextView
         android:id="@+id/db_services_btn"
         style="@style/DashboardButton"
-        android:background="@drawable/abs__item_background_holo_light"
         android:drawableTop="@drawable/db_services"
         android:text="@string/db_services_text" />
 
     <TextView
         android:id="@+id/db_cloud_btn"
         style="@style/DashboardButton"
-        android:background="@drawable/abs__item_background_holo_light"
         android:drawableTop="@drawable/db_cloud"
         android:text="@string/db_info_text" />
 
     <TextView
         android:id="@+id/db_about_btn"
         style="@style/DashboardButton"
-        android:background="@drawable/abs__item_background_holo_light"
         android:drawableTop="@drawable/db_info"
         android:text="@string/db_about_text" />
 

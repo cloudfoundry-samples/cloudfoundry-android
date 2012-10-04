@@ -6,25 +6,22 @@
 
     <ImageView
         android:id="@+id/logo"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="16dp"
+        style="@style/IconInList"
         android:src="@drawable/runtime_logos" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         android:layout_marginLeft="8dp"
-        android:orientation="vertical" 
-        android:layout_gravity="center_vertical">
+        android:orientation="vertical" >
 
         <TextView
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:textColor="@color/icsdarkblue"
+            android:textColor="@color/cf_primary"
             android:textSize="14sp"
             android:textStyle="bold" />
 
