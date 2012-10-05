@@ -4,11 +4,18 @@
     android:layout_height="48dp"
     android:orientation="horizontal" >
 
+    <ImageView
+        android:id="@+id/logo"
+        style="@style/IconInList"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/framework_logos" />
+    
     <TextView
         android:id="@+id/name"
         style="@style/ListItemPrimary"
         android:layout_marginLeft="16dp"
-        android:gravity="center_vertical" />
+        android:layout_toRightOf="@id/logo"
+       />
 
     <TextView
         android:id="@+id/status"

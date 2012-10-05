@@ -61,7 +61,7 @@
     <string name="add_service_name_hint">Choose a service name</string>
     <string name="cancel">Cancel</string>
     <string name="create">Create</string>
-    <string name="service_configurations">Available services</string>
+    <string name="service_configurations">Services</string>
     
     <plurals name="number_of_apps">
         <item quantity="one">1 application</item>

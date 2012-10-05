@@ -19,10 +19,12 @@ public class ServiceConfigurationView extends
 
 	private ImageView logo;
 	private TextView label;
+	private TextView version;
 
 	public ServiceConfigurationView(View container) {
 		logo = (ImageView) container.findViewById(R.id.logo);
 		label = (TextView) container.findViewById(R.id.name);
+		version = (TextView) container.findViewById(R.id.version);
 	}
 
 	@Override
@@ -35,6 +37,7 @@ public class ServiceConfigurationView extends
 			logoEnum = ServiceLogos.unknown;
 		}
 		logo.setImageLevel(logoEnum.level);
+		version.setText(serviceConfig.getVersion());
 	}
 
 }
