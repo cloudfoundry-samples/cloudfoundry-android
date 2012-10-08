@@ -14,3 +14,9 @@ db_app : Helveticon
 db_cloud : Helveticon
 db_services : Helveticon
 db_info : Helveticon
+
+ic_ram : Microchip designed by Alexandre Lachèze from The Noun Project (http://thenounproject.com/noun/microchip/#icon-No4066)
+ic_hard_drive : Helveticon
+ic_cpu : Helveticon
+ic_uptime : Helveticon
+

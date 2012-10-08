@@ -11,27 +11,31 @@ import org.cloudfoundry.android.cfdroid.support.masterdetail.DetailPaneEventsCal
 import org.cloudfoundry.client.lib.CloudApplication;
 import org.cloudfoundry.client.lib.InstanceStats;
 
-import roboguice.inject.InjectView;
 import android.os.Bundle;
 import android.support.v4.content.Loader;
 import android.view.View;
 import android.widget.ListView;
 
 import com.google.inject.Inject;
+import com.udinic.expand_animation_example.ExpandAnimation;
 
+/**
+ * A fragment that displays info about server instance state.
+ * 
+ * @author Eric Bottard
+ * 
+ */
 public class ApplicationInstanceStatsFragment extends
 		ListLoadingFragment<InstanceStats> implements DetailPaneEventsCallback {
 
 	@Inject
 	private CloudFoundry client;
 
-	@InjectView(android.R.id.list)
-	private ListView listView;
-
 	private int position;
-	
+
 	@Override
-	public Loader<Result<List<InstanceStats>>> onCreateLoader(int id, Bundle args) {
+	public Loader<Result<List<InstanceStats>>> onCreateLoader(int id,
+			Bundle args) {
 		return new InstanceStatsLoader(getActivity(), client,
 				getCloudApplication().getName());
 	}
@@ -44,7 +48,7 @@ public class ApplicationInstanceStatsFragment extends
 	}
 
 	private CloudApplication getCloudApplication() {
-		return client.getApplications(false).get(position); 
+		return client.getApplications(false).get(position);
 	}
 
 	@Override
@@ -65,4 +69,13 @@ public class ApplicationInstanceStatsFragment extends
 		return R.id.application_stats_loader;
 	}
 
+	@Override
+	public void onListItemClick(ListView l, View v, int position, long id) {
+		InstanceStats stats = (InstanceStats) l.getItemAtPosition(position);
+		
+		View details = v.findViewById(R.id.details);
+		ExpandAnimation animation = new ExpandAnimation(details, 500);
+		details.startAnimation(animation);
+		
+	}
 }

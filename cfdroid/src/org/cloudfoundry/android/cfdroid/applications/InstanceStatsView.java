@@ -5,10 +5,14 @@ import static android.text.format.Formatter.formatShortFileSize;
 
 import org.cloudfoundry.android.cfdroid.R;
 import org.cloudfoundry.android.cfdroid.support.BaseViewHolder;
+import org.cloudfoundry.android.cfdroid.support.Colors;
+import org.cloudfoundry.android.cfdroid.support.view.GradientProgressBar;
 import org.cloudfoundry.client.lib.InstanceStats;
 import org.cloudfoundry.client.lib.InstanceStats.Usage;
 
+import android.graphics.Color;
 import android.view.View;
+import android.widget.Chronometer;
 import android.widget.TextView;
 
 /**
@@ -20,35 +24,58 @@ import android.widget.TextView;
 public class InstanceStatsView extends BaseViewHolder<InstanceStats> {
 
 	private TextView cpu;
-	private TextView memory;
-	private TextView disk;
-	private TextView uptime;
+	private TextView cpu_tv;
+	private TextView ram_tv;
+	private TextView disk_tv;
+	private TextView uptime_tv;
 	private int notAvailableText;
+
+	private GradientProgressBar pbRam;
+	private GradientProgressBar pbDisk;
 
 	public InstanceStatsView(View container, int notAvailableText) {
 		cpu = (TextView) container.findViewById(R.id.cpu);
-		memory = (TextView) container.findViewById(R.id.memory);
-		disk = (TextView) container.findViewById(R.id.disk);
-		uptime = (TextView) container.findViewById(R.id.uptime);
+		pbRam = (GradientProgressBar) container.findViewById(R.id.ram);
+		pbDisk = (GradientProgressBar) container.findViewById(R.id.disk);
+
+		cpu_tv = (TextView) container.findViewById(R.id.cpu_tv);
+		ram_tv = (TextView) container.findViewById(R.id.ram_tv);
+		disk_tv = (TextView) container.findViewById(R.id.disk_tv);
+		uptime_tv = (TextView) container.findViewById(R.id.uptime_tv);
 		this.notAvailableText = notAvailableText;
+
 	}
 
 	@Override
 	public void bind(InstanceStats item) {
 		Usage usage = item.getUsage();
 		if (usage != null) {
-			cpu.setText(String.format("%.1f%% (%d)", usage.getCpu(),
+			cpu.setText(String.format("%.1f%%", usage.getCpu()));
+
+			cpu.setTextColor(//
+			Colors.blend(cpu.getResources().getColor(R.color.status_ok), //
+					cpu.getResources().getColor(R.color.status_bad), //
+					(float) usage.getCpu()));
+
+			pbRam.setProgress((int) (1024 * usage.getMem() / item.getMemQuota() * 100));
+			pbDisk.setProgress((int) (1024 * usage.getDisk()
+					/ item.getDiskQuota() * 100));
+
+			cpu_tv.setText(String.format("%.1f%% (%d)", usage.getCpu(),
 					item.getCores()));
-			memory.setText(pretty(1024 * (long) usage.getMem()) + " ("
+			ram_tv.setText(pretty(1024 * (long) usage.getMem()) + " ("
 					+ prettyShort(item.getMemQuota()) + ")");
-			disk.setText(String.format("%s (%s)", pretty(usage.getDisk()),
+			disk_tv.setText(String.format("%s (%s)", pretty(usage.getDisk()),
 					prettyShort(item.getDiskQuota())));
-			uptime.setText(uptime(item.getUptime()));
+			uptime_tv.setText(uptime(item.getUptime()));
 		} else {
 			cpu.setText(notAvailableText);
-			memory.setText(notAvailableText);
-			disk.setText(notAvailableText);
-			uptime.setText(notAvailableText);
+			cpu.setTextColor(cpu.getResources().getColor(R.color.cf_background));
+			pbRam.setProgress(0);
+			pbDisk.setProgress(0);
+			cpu_tv.setText(notAvailableText);
+			ram_tv.setText(notAvailableText);
+			disk_tv.setText(notAvailableText);
 		}
 	}
 

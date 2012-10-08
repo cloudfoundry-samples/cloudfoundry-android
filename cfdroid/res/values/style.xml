@@ -53,5 +53,8 @@
     
     <color name="divider_color">#aaa</color>
     
+    <color name="status_bad">#B22222</color>
+    <color name="status_ok">#008000</color>
+    <color name="status_warning">#ffff00</color>
     
 </resources>
