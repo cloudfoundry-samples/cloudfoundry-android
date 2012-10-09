@@ -34,8 +34,7 @@ import android.os.Bundle;
 import android.support.v4.content.Loader;
 import android.view.View;
 
-public class FrameworksFragment extends
-		ListLoadingFragment<Framework> {
+public class FrameworksFragment extends ListLoadingFragment<Framework> {
 
 	@Inject
 	private CloudFoundry client;
@@ -45,8 +44,8 @@ public class FrameworksFragment extends
 		return new FailingAsyncLoader<List<Framework>>(getActivity()) {
 			@Override
 			public List<Framework> doLoadInBackground() {
-				ArrayList<Framework> frameworks = new ArrayList<Framework>(client.getCloudInfo()
-						.getFrameworks());
+				ArrayList<Framework> frameworks = new ArrayList<Framework>(
+						client.getCloudInfo().getFrameworks());
 				Collections.sort(frameworks, new Comparator<Framework>() {
 					@Override
 					public int compare(Framework lhs, Framework rhs) {
@@ -62,12 +61,17 @@ public class FrameworksFragment extends
 	@Override
 	protected ItemListAdapter<Framework, ?> adapterFor(List<Framework> items) {
 		return new ItemListAdapter<Framework, FrameworkView>(
-				R.layout.framework_list_item, getActivity().getLayoutInflater(),
-				items) {
+				R.layout.framework_list_item,
+				getActivity().getLayoutInflater(), items) {
 
 			@Override
 			protected FrameworkView createView(View view) {
 				return new FrameworkView(view);
+			}
+
+			@Override
+			public boolean isEnabled(int position) {
+				return false;
 			}
 		};
 	}

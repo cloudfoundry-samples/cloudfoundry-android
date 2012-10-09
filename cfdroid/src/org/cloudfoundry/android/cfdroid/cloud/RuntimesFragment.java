@@ -69,6 +69,12 @@ public class RuntimesFragment extends
 			protected RuntimeView createView(View view) {
 				return new RuntimeView(view);
 			}
+
+			@Override
+			public boolean isEnabled(int position) {
+				return false;
+			}
+
 		};
 	}
 

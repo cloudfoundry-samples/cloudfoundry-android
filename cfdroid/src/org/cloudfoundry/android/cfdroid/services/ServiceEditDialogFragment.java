@@ -166,7 +166,7 @@ public class ServiceEditDialogFragment extends RoboDialogFragment implements
 	public void onLoadFinished(Loader<List<ServiceConfiguration>> loader,
 			List<ServiceConfiguration> data) {
 		choices.setAdapter(new ItemListAdapter<ServiceConfiguration, ServiceConfigurationView>(
-				R.layout.service_list_item, getActivity().getLayoutInflater(),
+				R.layout.service_config_list_item, getActivity().getLayoutInflater(),
 				data) {
 			@Override
 			protected ServiceConfigurationView createView(View view) {

@@ -123,6 +123,13 @@ public class BasicInfoFragment extends
 			protected BaseViewHolder<TitleAndValue> createView(View view) {
 				return new TitleAndValueView(view);
 			}
+			
+
+			@Override
+			public boolean isEnabled(int position) {
+				return false;
+			}
+
 		};
 	}
 

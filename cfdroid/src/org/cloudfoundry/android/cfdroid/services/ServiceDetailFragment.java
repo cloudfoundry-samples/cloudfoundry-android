@@ -121,6 +121,12 @@ public class ServiceDetailFragment extends
 				return ServiceDetailFragment.this.new BindableApplicationView(
 						view);
 			}
+
+			@Override
+			public boolean isEnabled(int position) {
+				return false;
+			}
+
 		};
 	}
 

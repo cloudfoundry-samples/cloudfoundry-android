@@ -79,6 +79,12 @@ public class ServiceConfigurationsFragment extends
 			protected ServiceConfigurationView createView(View view) {
 				return new ServiceConfigurationView(view);
 			}
+
+			@Override
+			public boolean isEnabled(int position) {
+				return false;
+			}
+
 		};
 	}
 }
