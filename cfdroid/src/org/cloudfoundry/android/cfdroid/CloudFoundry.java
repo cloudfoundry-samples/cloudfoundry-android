@@ -28,10 +28,12 @@ import javax.inject.Singleton;
 import org.cloudfoundry.android.cfdroid.account.Accounts;
 import org.cloudfoundry.client.lib.CloudApplication;
 import org.cloudfoundry.client.lib.CloudFoundryClient;
+import org.cloudfoundry.client.lib.CloudFoundryException;
 import org.cloudfoundry.client.lib.CloudInfo;
 import org.cloudfoundry.client.lib.CloudService;
 import org.cloudfoundry.client.lib.InstanceStats;
 import org.cloudfoundry.client.lib.ServiceConfiguration;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.client.RestClientException;
 
 import roboguice.event.ObservesTypeListener.ContextObserverMethodInjector;
@@ -68,6 +70,11 @@ public class CloudFoundry {
 		private ContentObservable applicationsObservable = new ContentObservable();
 
 		private CloudFoundryClient client;
+		
+		/**
+		 * Last known token (may be stale).
+		 */
+		private String token;
 
 		private Map<String, CloudService> services = new LinkedHashMap<String, CloudService>();
 
@@ -156,15 +163,17 @@ public class CloudFoundry {
 		ensureClient();
 		try {
 			return work.call();
-		} catch (RestClientException e) {
+		} catch (CloudFoundryException e) {
 			// Landing here surely means that
 			// our client object holds a stale token.
 			// Throw it away and retry.
-			if (attempt == 0) {
+			if (attempt == 0 && e.getStatusCode() == HttpStatus.FORBIDDEN) {
 				Ln.w(e,
 						"Caught exception for the first time. Assuming stale token, will retry.");
 				attempt++;
 				cache.client = null;
+				accountManager.invalidateAuthToken(Accounts.ACCOUNT_TYPE, cache.token);
+				cache.token = null;
 				R result = doWithClient(work);
 				attempt--;
 				return result;
@@ -179,9 +188,14 @@ public class CloudFoundry {
 		}
 	}
 
+	/**
+	 * Makes sure that we have a reference to a non-null {@link CloudFoundryClient}
+	 * object.
+	 * 
+	 */
 	private void ensureClient() {
 		if (cache.client != null) {
-			return;
+			return ;
 		}
 		try {
 			AccountManagerFuture<Bundle> future = accountManager
@@ -191,9 +205,9 @@ public class CloudFoundry {
 			Bundle bundle = future.getResult();
 			String targetURL = Accounts.extractTarget(bundle
 					.getString(AccountManager.KEY_ACCOUNT_NAME));
-			String token = bundle.getString(AccountManager.KEY_AUTHTOKEN);
+			cache.token = bundle.getString(AccountManager.KEY_AUTHTOKEN);
 
-			cache.client = new CloudFoundryClient(token, targetURL);
+			cache.client = new CloudFoundryClient(cache.token, targetURL);
 		} catch (Exception e) {
 			Ln.e(e, "Logged from here");
 		}
@@ -266,7 +280,8 @@ public class CloudFoundry {
 			return doWithClient(new Callable<List<ServiceConfiguration>>() {
 				@Override
 				public List<ServiceConfiguration> call() throws Exception {
-					cache.serviceConfigurations = cache.client.getServiceConfigurations();
+					cache.serviceConfigurations = cache.client
+							.getServiceConfigurations();
 					return cache.serviceConfigurations;
 				}
 
@@ -352,7 +367,7 @@ public class CloudFoundry {
 			}
 		});
 	}
-	
+
 	public void createService(final String name, final ServiceConfiguration sc) {
 		// Be safe for now
 		if (sc.getTiers().size() != 1) {
@@ -368,7 +383,7 @@ public class CloudFoundry {
 				s.setType(sc.getType());
 				s.setTier(sc.getTiers().get(0).getType());
 				cache.client.createService(s);
-				
+
 				cache.fetchServices();
 				return null;
 			}
