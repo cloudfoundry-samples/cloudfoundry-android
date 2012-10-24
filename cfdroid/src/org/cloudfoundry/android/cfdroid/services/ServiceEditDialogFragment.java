@@ -105,6 +105,7 @@ public class ServiceEditDialogFragment extends RoboDialogFragment implements
 							@Override
 							public void onClick(DialogInterface dialog,
 									int which) {
+								dialog.dismiss();
 								createService();
 							}
 						})

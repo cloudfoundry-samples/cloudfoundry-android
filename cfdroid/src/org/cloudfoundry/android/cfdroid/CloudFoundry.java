@@ -33,6 +33,7 @@ import org.cloudfoundry.client.lib.CloudInfo;
 import org.cloudfoundry.client.lib.CloudService;
 import org.cloudfoundry.client.lib.InstanceStats;
 import org.cloudfoundry.client.lib.ServiceConfiguration;
+import org.cloudfoundry.client.lib.ServiceConfiguration.Tier;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.RestClientException;
 
@@ -370,9 +371,6 @@ public class CloudFoundry {
 
 	public void createService(final String name, final ServiceConfiguration sc) {
 		// Be safe for now
-		if (sc.getTiers().size() != 1) {
-			throw new IllegalStateException();
-		}
 		doWithClient(new Callable<Void>() {
 			@Override
 			public Void call() throws Exception {
@@ -381,7 +379,8 @@ public class CloudFoundry {
 				s.setVendor(sc.getVendor());
 				s.setVersion(sc.getVersion());
 				s.setType(sc.getType());
-				s.setTier(sc.getTiers().get(0).getType());
+				// TODO: allow tier selection in creation screen
+				s.setTier("free");
 				cache.client.createService(s);
 
 				cache.fetchServices();
