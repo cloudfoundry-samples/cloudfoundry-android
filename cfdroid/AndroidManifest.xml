@@ -39,6 +39,8 @@
         </activity>
         <activity android:name=".cloud.CloudInfoActivity">
         </activity>
+        <activity android:name=".about.AboutActivity">
+        </activity>
 
         <service
             android:name=".account.AccountAuthenticatorService"

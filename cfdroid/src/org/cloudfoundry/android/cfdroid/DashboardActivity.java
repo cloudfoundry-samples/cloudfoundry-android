@@ -15,6 +15,7 @@
  */
 package org.cloudfoundry.android.cfdroid;
 
+import org.cloudfoundry.android.cfdroid.about.AboutActivity;
 import org.cloudfoundry.android.cfdroid.applications.ApplicationsActivity;
 import org.cloudfoundry.android.cfdroid.cloud.CloudInfoActivity;
 import org.cloudfoundry.android.cfdroid.services.ServicesActivity;
@@ -57,6 +58,7 @@ public class DashboardActivity extends RoboSherlockActivity {
 		apps.setOnClickListener(launch(ApplicationsActivity.class));
 		services.setOnClickListener(launch(ServicesActivity.class));
 		cloud.setOnClickListener(launch(CloudInfoActivity.class));
+		about.setOnClickListener(launch(AboutActivity.class));
 	}
 
 	private OnClickListener launch(final Class<? extends Activity> klass) {

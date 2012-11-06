@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="about_text">
+<![CDATA[<h1>CloudFoundry Android</h1>
+<p>A CloudFoundry client, licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0.html">ASL v2</a></p>
+
+<p>This app uses<br/>
+&nbsp;&nbsp;&nbsp;<a href="http://actionbarsherlock.com/"><b>Action Bar Sherlock</b></a>, by Jake Wharton<br/>
+&nbsp;&nbsp;&nbsp;<a href="http://viewpagerindicator.com/"><b>View Pager Indicator</b></a>, by Jake Wharton<br/>
+&nbsp;&nbsp;&nbsp;<a href="https://github.com/cloudfoundry/vcap-java-client"><b>the CloudFoundry Java vcap client lib</b></a></p>
+
+<p>Found bugs or want to add new features?
+Check out the code on <a href="https://github.com/cloudfoundry-samples/cloudfoundry-android">GitHub</a>
+</p> 
+]]>
+        </string>
+
+</resources>

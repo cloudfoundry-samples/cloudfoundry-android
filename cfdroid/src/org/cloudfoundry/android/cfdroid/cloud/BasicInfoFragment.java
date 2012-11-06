@@ -69,7 +69,7 @@ public class BasicInfoFragment extends
 		@Override
 		public void bind(TitleAndValue item) {
 			label.setText(item.label);
-			value.setText(item.value.toString());
+			value.setText(item.value == null ? "" : item.value.toString());
 		}
 
 	}
