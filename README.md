@@ -2,6 +2,9 @@
 
 This is an Android application that allows you to monitor and control any CloudFoundry compatible Cloud.
 
+##Using the Application
+Please make sure to read this short app documentation [here](https://github.com/cloudfoundry-samples/cloudfoundry-android/wiki), as it contains important usage guidelines.
+
 ##Building
 
 This project uses some third party Android 'Library' projects and as such, needs special handling.
