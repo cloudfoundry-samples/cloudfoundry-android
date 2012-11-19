@@ -78,7 +78,8 @@ public class BasicInfoFragment extends
 	private CloudFoundry client;
 
 	@Override
-	public Loader<Result<List<TitleAndValue>>> onCreateLoader(int id, Bundle args) {
+	public Loader<Result<List<TitleAndValue>>> onCreateLoader(int id,
+			Bundle args) {
 		return new FailingAsyncLoader<List<TitleAndValue>>(getActivity()) {
 
 			@Override
@@ -123,7 +124,6 @@ public class BasicInfoFragment extends
 			protected BaseViewHolder<TitleAndValue> createView(View view) {
 				return new TitleAndValueView(view);
 			}
-			
 
 			@Override
 			public boolean isEnabled(int position) {

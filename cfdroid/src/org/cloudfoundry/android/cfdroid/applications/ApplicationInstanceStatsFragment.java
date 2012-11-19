@@ -89,6 +89,6 @@ public class ApplicationInstanceStatsFragment extends
 		View details = v.findViewById(R.id.details);
 		ExpandAnimation animation = new ExpandAnimation(details, 500);
 		details.startAnimation(animation);
-		
+
 	}
 }

@@ -18,9 +18,7 @@ package org.cloudfoundry.android.cfdroid.applications;
 import java.util.List;
 
 import org.cloudfoundry.android.cfdroid.CloudFoundry;
-import org.cloudfoundry.android.cfdroid.support.AsyncLoader;
 import org.cloudfoundry.android.cfdroid.support.FailingAsyncLoader;
-import org.cloudfoundry.android.cfdroid.support.Result;
 import org.cloudfoundry.client.lib.InstanceStats;
 
 import android.app.Activity;

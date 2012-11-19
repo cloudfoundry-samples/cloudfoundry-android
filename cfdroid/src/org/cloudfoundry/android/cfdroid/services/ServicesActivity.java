@@ -19,7 +19,6 @@ import org.cloudfoundry.android.cfdroid.R;
 import org.cloudfoundry.android.cfdroid.support.masterdetail.MasterDetailActivity;
 
 import roboguice.inject.ContentView;
-import android.os.Bundle;
 
 /**
  * Master/Detail activity for services. Shows a list of services and details
@@ -29,10 +28,9 @@ import android.os.Bundle;
  * 
  */
 @ContentView(R.layout.services)
-public class ServicesActivity
-		extends
+public class ServicesActivity extends
 		MasterDetailActivity<ServiceDetailFragment> {
-	
+
 	@Override
 	protected int rightPaneLayout() {
 		return R.layout.right_pane_services;

@@ -18,7 +18,6 @@ package org.cloudfoundry.android.cfdroid.support;
 import org.cloudfoundry.android.cfdroid.R;
 
 import roboguice.inject.InjectView;
-
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
@@ -33,24 +32,26 @@ import com.github.rtyley.android.sherlock.roboguice.fragment.RoboSherlockFragmen
  * @author Eric Bottard
  * 
  */
-public abstract class DeferredContentFragment<T> extends RoboSherlockFragment  implements LoaderCallbacks<T>{
-	
+public abstract class DeferredContentFragment<T> extends RoboSherlockFragment
+		implements LoaderCallbacks<T> {
+
 	@InjectView(R.id.progressContainer)
 	private View progressContainer;
-	
+
 	@InjectView(R.id.actual_content)
 	private View actualContent;
-	
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
-    
-    @Override
-    public void onResume() {
-    	super.onResume();
-    	getLoaderManager().initLoader(R.id.deferred_content_fragment_loader, null, this);
-    }
+
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		getLoaderManager().initLoader(R.id.deferred_content_fragment_loader,
+				null, this);
+	}
 
 	@Override
 	public void onLoadFinished(Loader<T> loader, T data) {
@@ -64,9 +65,9 @@ public abstract class DeferredContentFragment<T> extends RoboSherlockFragment  i
 		progressContainer.setVisibility(View.VISIBLE);
 		actualContent.setVisibility(View.GONE);
 	}
-	
+
 	public void onDataAvailable(T data) {
-		
+
 	}
 
 }

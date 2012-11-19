@@ -45,8 +45,8 @@ public class RuntimesFragment extends
 		return new FailingAsyncLoader<List<Runtime>>(getActivity()) {
 			@Override
 			public List<Runtime> doLoadInBackground() {
-				ArrayList<Runtime> runtimes = new ArrayList<Runtime>(client.getCloudInfo()
-						.getRuntimes());
+				ArrayList<Runtime> runtimes = new ArrayList<Runtime>(client
+						.getCloudInfo().getRuntimes());
 				Collections.sort(runtimes, new Comparator<Runtime>() {
 					@Override
 					public int compare(Runtime lhs, Runtime rhs) {

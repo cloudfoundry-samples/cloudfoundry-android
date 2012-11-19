@@ -73,8 +73,9 @@ public class ApplicationDetailPager extends DetailPaneWithViewPager {
 
 		@Override
 		public void selectionChanged(int position) {
-			for (int i = 0 ; i < fragments.length ; i++) {
-				((DetailPaneEventsCallback) fragments[i]).selectionChanged(position);
+			for (int i = 0; i < fragments.length; i++) {
+				((DetailPaneEventsCallback) fragments[i])
+						.selectionChanged(position);
 			}
 		}
 

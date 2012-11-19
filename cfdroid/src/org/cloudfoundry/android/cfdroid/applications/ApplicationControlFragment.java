@@ -54,7 +54,7 @@ import com.google.inject.Inject;
  */
 public class ApplicationControlFragment extends
 		DeferredContentFragment<ApplicationControlFragment.AsyncResult>
-implements DetailPaneEventsCallback{
+		implements DetailPaneEventsCallback {
 
 	/* default */static class AsyncResult {
 		private CloudInfo cloudInfo;
@@ -67,7 +67,7 @@ implements DetailPaneEventsCallback{
 			throw new IllegalArgumentException();
 		return 31 - Integer.numberOfLeadingZeros(n);
 	}
-	
+
 	private int position;
 
 	private OnSeekBarChangeListener barsListener = new OnSeekBarChangeListener() {
@@ -121,7 +121,7 @@ implements DetailPaneEventsCallback{
 	 * This is to enable/diable the save button.
 	 */
 	private int initialInstances, initialMemory;
-	
+
 	@InjectView(R.id.instances_seekbar)
 	private SeekBar instancesSeekBar;
 
@@ -145,10 +145,10 @@ implements DetailPaneEventsCallback{
 
 	@InjectView(R.id.start)
 	private View startBtn;
-	
+
 	@InjectView(R.id.status)
 	private TextView status;
-	
+
 	@InjectView(R.id.stop)
 	private View stopBtn;
 
@@ -166,7 +166,7 @@ implements DetailPaneEventsCallback{
 			memorySeekBar.setProgress(memorySeekBar.getSecondaryProgress());
 		}
 	}
-	
+
 	private void fullyRedrawWidgets() {
 		CloudApplication cloudApplication = getCloudApplication();
 		initialInstances = cloudApplication.getInstances();
@@ -176,7 +176,8 @@ implements DetailPaneEventsCallback{
 		startBtn.setEnabled(state != AppState.STARTED);
 		stopBtn.setEnabled(state == AppState.STARTED);
 		status.setText(state.toString());
-		status.setTextColor(getActivity().getResources().getColor(ApplicationView.COLORS.get(state)));
+		status.setTextColor(getActivity().getResources().getColor(
+				ApplicationView.COLORS.get(state)));
 
 		int maxTotalMemory = cloudInfo.getLimits().getMaxTotalMemory();
 		int usedByOtherApps = cloudInfo.getUsage().getTotalMemory()
@@ -196,7 +197,7 @@ implements DetailPaneEventsCallback{
 		overallMemoryPb.setProgress(usedByOtherApps);
 		updateData();
 	}
-	
+
 	private CloudApplication getCloudApplication() {
 		return client.getApplications(false).get(position);
 	}
@@ -297,13 +298,13 @@ implements DetailPaneEventsCallback{
 			return super.onOptionsItemSelected(item);
 		}
 	}
-	
+
 	@Override
 	public void onPrepareOptionsMenu(Menu menu) {
 		super.onPrepareOptionsMenu(menu);
 		menu.findItem(R.id.cloud_apply).setEnabled(userChangedSettings());
 	}
-	
+
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
@@ -360,10 +361,11 @@ implements DetailPaneEventsCallback{
 				// Need to re-query eg max maxWithoutOthers
 				return latestRemoteState();
 			}
+
 			protected void onSuccess(AsyncResult t) throws Exception {
 				onDataAvailable(t);
 			};
-			
+
 		}.execute();
 	}
 
@@ -374,7 +376,7 @@ implements DetailPaneEventsCallback{
 			fullyRedrawWidgets();
 			getActivity().invalidateOptionsMenu();
 		}
-//		appName = client.getApplications(false).get(position).getName();
+		// appName = client.getApplications(false).get(position).getName();
 	}
 
 	private void start() {

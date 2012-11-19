@@ -69,7 +69,7 @@ public class LoginActivity extends RoboSherlockAccountAuthenticatorActivity {
 
 	@InjectView(R.id.manage)
 	View manageTargets;
-	
+
 	@InjectView(R.id.signup)
 	TextView signupLink;
 
@@ -103,7 +103,7 @@ public class LoginActivity extends RoboSherlockAccountAuthenticatorActivity {
 		UpdateUiTextWatcher watcher = new UpdateUiTextWatcher();
 		login.addTextChangedListener(watcher);
 		password.addTextChangedListener(watcher);
-		
+
 		signupLink.setMovementMethod(LinkMovementMethod.getInstance());
 
 		updateEnablement();

@@ -25,9 +25,7 @@ import org.cloudfoundry.android.cfdroid.support.view.GradientProgressBar;
 import org.cloudfoundry.client.lib.InstanceStats;
 import org.cloudfoundry.client.lib.InstanceStats.Usage;
 
-import android.graphics.Color;
 import android.view.View;
-import android.widget.Chronometer;
 import android.widget.TextView;
 
 /**

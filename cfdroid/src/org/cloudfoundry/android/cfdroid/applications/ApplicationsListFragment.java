@@ -40,22 +40,22 @@ public class ApplicationsListFragment extends
 
 	@Inject
 	private CloudFoundry client;
-	
+
 	@InjectView(R.id.apps_header)
 	private TextView header;
 
 	@Override
-	public Loader<Result<List<CloudApplication>>> onCreateLoader(int arg0, Bundle arg1) {
+	public Loader<Result<List<CloudApplication>>> onCreateLoader(int arg0,
+			Bundle arg1) {
 		return new ApplicationsListLoader(getActivity(), client);
-	} 
-
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		LinearLayout outer = (LinearLayout) inflater.inflate(
 				R.layout.left_pane_applications_list, container);
-		
+
 		// Contrary to what ListFragment#onCreateView() currently
 		// states, just including the standard layout does not work. So
 		// we manually call to super() and add it to our container.
@@ -63,12 +63,13 @@ public class ApplicationsListFragment extends
 		outer.addView(v);
 		return outer;
 	}
-	
+
 	@Override
 	protected void setList(List<CloudApplication> items) {
 		super.setList(items);
 		int count = items.size();
-		header.setText(getActivity().getResources().getQuantityString(R.plurals.number_of_apps, count, count));
+		header.setText(getActivity().getResources().getQuantityString(
+				R.plurals.number_of_apps, count, count));
 	}
 
 	@Override

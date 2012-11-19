@@ -17,7 +17,6 @@ package org.cloudfoundry.android.cfdroid;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,13 +32,9 @@ import org.cloudfoundry.client.lib.CloudInfo;
 import org.cloudfoundry.client.lib.CloudService;
 import org.cloudfoundry.client.lib.InstanceStats;
 import org.cloudfoundry.client.lib.ServiceConfiguration;
-import org.cloudfoundry.client.lib.ServiceConfiguration.Tier;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.client.RestClientException;
 
-import roboguice.event.ObservesTypeListener.ContextObserverMethodInjector;
 import roboguice.util.Ln;
-
 import android.accounts.AccountManager;
 import android.accounts.AccountManagerFuture;
 import android.app.Activity;
@@ -71,7 +66,7 @@ public class CloudFoundry {
 		private ContentObservable applicationsObservable = new ContentObservable();
 
 		private CloudFoundryClient client;
-		
+
 		/**
 		 * Last known token (may be stale).
 		 */
@@ -173,7 +168,8 @@ public class CloudFoundry {
 						"Caught exception for the first time. Assuming stale token, will retry.");
 				attempt++;
 				cache.client = null;
-				accountManager.invalidateAuthToken(Accounts.ACCOUNT_TYPE, cache.token);
+				accountManager.invalidateAuthToken(Accounts.ACCOUNT_TYPE,
+						cache.token);
 				cache.token = null;
 				R result = doWithClient(work);
 				attempt--;
@@ -190,13 +186,13 @@ public class CloudFoundry {
 	}
 
 	/**
-	 * Makes sure that we have a reference to a non-null {@link CloudFoundryClient}
-	 * object.
+	 * Makes sure that we have a reference to a non-null
+	 * {@link CloudFoundryClient} object.
 	 * 
 	 */
 	private void ensureClient() {
 		if (cache.client != null) {
-			return ;
+			return;
 		}
 		try {
 			AccountManagerFuture<Bundle> future = accountManager

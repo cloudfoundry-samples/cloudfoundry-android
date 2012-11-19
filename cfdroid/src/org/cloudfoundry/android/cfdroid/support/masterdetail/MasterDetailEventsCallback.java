@@ -15,21 +15,22 @@
  */
 package org.cloudfoundry.android.cfdroid.support.masterdetail;
 
-
 /**
- * Interface used as a way of communicating from the master fragment back to the activity.
+ * Interface used as a way of communicating from the master fragment back to the
+ * activity.
  * 
- * @see http://developer.android.com/training/basics/fragments/communicating.html
+ * @see http
+ *      ://developer.android.com/training/basics/fragments/communicating.html
  * 
  * @author Eric Bottard
- *
+ * 
  */
-public interface MasterDetailEventsCallback  {
-	
+public interface MasterDetailEventsCallback {
+
 	public static final String KEY_SELECTION = "selection";
-	
+
 	public static final String RIGHT_PANE_LAYOUT_ID = "layout";
 
 	void onLeftPaneSelection(int position);
-	
+
 }

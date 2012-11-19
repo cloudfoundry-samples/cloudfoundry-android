@@ -62,11 +62,11 @@ public class ServiceEditDialogFragment extends RoboDialogFragment implements
 	private CloudFoundry client;
 
 	private Spinner choices;
-	
+
 	private EditText name;
-	
+
 	private Button okButton;
-	
+
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		LayoutInflater inflater = LayoutInflater.from(getActivity());
@@ -74,7 +74,7 @@ public class ServiceEditDialogFragment extends RoboDialogFragment implements
 		choices = (Spinner) v.findViewById(R.id.type);
 		name = (EditText) v.findViewById(R.id.name);
 		getLoaderManager().initLoader(0, null, this);
-		
+
 		name.setOnEditorActionListener(new OnEditorActionListener() {
 
 			public boolean onEditorAction(TextView v, int actionId,
@@ -86,16 +86,15 @@ public class ServiceEditDialogFragment extends RoboDialogFragment implements
 				return false;
 			}
 
-
 		});
-		
+
 		name.addTextChangedListener(new BaseTextWatcher() {
 			@Override
 			public void afterTextChanged(Editable s) {
 				updateEnablement();
 			}
 		});
-		
+
 		final AlertDialog dialog = new AlertDialog.Builder(getActivity())
 				.setTitle(R.string.edit_service_dialog_title)
 				.setView(v)
@@ -117,7 +116,8 @@ public class ServiceEditDialogFragment extends RoboDialogFragment implements
 								dialog.cancel();
 							}
 						}).create();
-		// workaround for http://code.google.com/p/android/issues/detail?id=6360 ...
+		// workaround for http://code.google.com/p/android/issues/detail?id=6360
+		// ...
 		dialog.setOnShowListener(new OnShowListener() {
 			@Override
 			public void onShow(DialogInterface di) {
@@ -125,10 +125,10 @@ public class ServiceEditDialogFragment extends RoboDialogFragment implements
 				updateEnablement();
 			}
 		});
-		
+
 		return dialog;
 	}
-	
+
 	private boolean ready() {
 		return !name.getText().toString().trim().isEmpty();
 	}
@@ -137,27 +137,30 @@ public class ServiceEditDialogFragment extends RoboDialogFragment implements
 		new TaskWithDialog<Void>(getActivity(), R.string.working) {
 			@Override
 			public Void call() throws Exception {
-				ServiceConfiguration sc = (ServiceConfiguration) choices.getSelectedItem();
+				ServiceConfiguration sc = (ServiceConfiguration) choices
+						.getSelectedItem();
 				client.createService(name.getText().toString().trim(), sc);
 				return null;
 			}
 		}.execute();
 	}
 
-	
 	@Override
 	public Loader<List<ServiceConfiguration>> onCreateLoader(int id, Bundle args) {
 		return new AsyncLoader<List<ServiceConfiguration>>(getActivity()) {
 			@Override
 			public List<ServiceConfiguration> loadInBackground() {
-				List<ServiceConfiguration> serviceConfigurations = client.getServiceConfigurations();
-				Collections.sort(serviceConfigurations, new Comparator<ServiceConfiguration>() {
-					@Override
-					public int compare(ServiceConfiguration lhs,
-							ServiceConfiguration rhs) {
-						return lhs.getVendor().compareTo(rhs.getVendor());
-					}
-				});
+				List<ServiceConfiguration> serviceConfigurations = client
+						.getServiceConfigurations();
+				Collections.sort(serviceConfigurations,
+						new Comparator<ServiceConfiguration>() {
+							@Override
+							public int compare(ServiceConfiguration lhs,
+									ServiceConfiguration rhs) {
+								return lhs.getVendor().compareTo(
+										rhs.getVendor());
+							}
+						});
 				return serviceConfigurations;
 			}
 		};
@@ -167,8 +170,8 @@ public class ServiceEditDialogFragment extends RoboDialogFragment implements
 	public void onLoadFinished(Loader<List<ServiceConfiguration>> loader,
 			List<ServiceConfiguration> data) {
 		choices.setAdapter(new ItemListAdapter<ServiceConfiguration, ServiceConfigurationView>(
-				R.layout.service_config_list_item, getActivity().getLayoutInflater(),
-				data) {
+				R.layout.service_config_list_item, getActivity()
+						.getLayoutInflater(), data) {
 			@Override
 			protected ServiceConfigurationView createView(View view) {
 				return new ServiceConfigurationView(view);

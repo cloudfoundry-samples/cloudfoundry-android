@@ -27,7 +27,7 @@ import android.widget.TextView;
  * A view dedicated to information about available services.
  * 
  * @author Eric Bottard
- *
+ * 
  */
 public class ServiceConfigurationView extends
 		BaseViewHolder<ServiceConfiguration> {

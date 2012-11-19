@@ -18,7 +18,6 @@ package org.cloudfoundry.android.cfdroid.support.masterdetail;
 import org.cloudfoundry.android.cfdroid.R;
 
 import roboguice.inject.InjectView;
-import roboguice.util.Ln;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -59,7 +58,8 @@ public abstract class DetailPaneWithViewPager extends RoboSherlockFragment
 	 * @author Eric Bottard
 	 * 
 	 */
-	public static abstract class DetailPanePagerAdapter extends FragmentPagerAdapter implements DetailPaneEventsCallback {
+	public static abstract class DetailPanePagerAdapter extends
+			FragmentPagerAdapter implements DetailPaneEventsCallback {
 
 		public DetailPanePagerAdapter(FragmentManager supportFragmentManager) {
 			super(supportFragmentManager);

@@ -22,7 +22,7 @@ import org.cloudfoundry.android.cfdroid.support.ItemListAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 
-public class TargetAdapter extends ItemListAdapter<CloudTarget, TargetView>{
+public class TargetAdapter extends ItemListAdapter<CloudTarget, TargetView> {
 
 	public TargetAdapter(int viewId, LayoutInflater inflater,
 			List<CloudTarget> elements) {

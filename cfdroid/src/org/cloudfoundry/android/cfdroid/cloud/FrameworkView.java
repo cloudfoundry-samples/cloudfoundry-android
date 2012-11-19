@@ -24,9 +24,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class FrameworkView extends BaseViewHolder<Framework> {
-	
+
 	private ImageView logo;
-	
+
 	private TextView name;
 
 	public FrameworkView(View container) {
@@ -38,7 +38,7 @@ public class FrameworkView extends BaseViewHolder<Framework> {
 	public void bind(Framework item) {
 		FrameworkLogos fl = FrameworkLogos.unknown;
 		try {
-			 fl = FrameworkLogos.valueOf(item.getName());
+			fl = FrameworkLogos.valueOf(item.getName());
 		} catch (IllegalArgumentException ignore) {
 		}
 		logo.setImageLevel(fl.level);

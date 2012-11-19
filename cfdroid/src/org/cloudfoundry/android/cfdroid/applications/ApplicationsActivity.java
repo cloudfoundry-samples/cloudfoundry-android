@@ -19,7 +19,6 @@ import org.cloudfoundry.android.cfdroid.R;
 import org.cloudfoundry.android.cfdroid.support.masterdetail.MasterDetailActivity;
 
 import roboguice.inject.ContentView;
-import android.os.Bundle;
 
 /**
  * Master/Detail activity for applications. Shows a list of applications and
@@ -29,10 +28,9 @@ import android.os.Bundle;
  * 
  */
 @ContentView(R.layout.applications)
-public class ApplicationsActivity
-		extends
+public class ApplicationsActivity extends
 		MasterDetailActivity<ApplicationDetailPager> {
-	
+
 	@Override
 	protected int rightPaneLayout() {
 		return R.layout.right_pane_applications;

@@ -27,16 +27,15 @@ public class RightPaneHoldingActivity extends RoboSherlockFragmentActivity {
 
 	@InjectFragment(R.id.right_pane)
 	private Fragment rightPane;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(getIntent().getExtras().getInt(
 				MasterDetailEventsCallback.RIGHT_PANE_LAYOUT_ID));
 
-
 	}
-	
+
 	@Override
 	protected void onStart() {
 		super.onStart();
@@ -45,8 +44,8 @@ public class RightPaneHoldingActivity extends RoboSherlockFragmentActivity {
 		if (position == -1) {
 			throw new IllegalStateException();
 		}
-		((DetailPaneEventsCallback)rightPane).selectionChanged(position);
-		
+		((DetailPaneEventsCallback) rightPane).selectionChanged(position);
+
 	}
 
 }

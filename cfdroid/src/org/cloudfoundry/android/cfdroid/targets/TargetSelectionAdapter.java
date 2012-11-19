@@ -38,8 +38,8 @@ import com.actionbarsherlock.view.MenuItem;
  * @author ebottard
  * 
  */
-public class TargetSelectionAdapter extends ItemListAdapter<CloudTarget, TargetSelectionView> {
-
+public class TargetSelectionAdapter extends
+		ItemListAdapter<CloudTarget, TargetSelectionView> {
 
 	protected Set<Integer> selectedTargets = new HashSet<Integer>();
 
@@ -62,7 +62,7 @@ public class TargetSelectionAdapter extends ItemListAdapter<CloudTarget, TargetS
 	protected TargetSelectionView createView(View view) {
 		return new TargetSelectionView(view);
 	}
-	
+
 	@Override
 	protected void update(final int position, TargetSelectionView tsv,
 			CloudTarget item) {
@@ -86,10 +86,9 @@ public class TargetSelectionAdapter extends ItemListAdapter<CloudTarget, TargetS
 				}
 			}
 		});
-		
+
 	}
-	
-	
+
 	// TODO : ActionMode state is lost upon conf change
 	private final class SelectionActionModeCallback implements
 			ActionMode.Callback {

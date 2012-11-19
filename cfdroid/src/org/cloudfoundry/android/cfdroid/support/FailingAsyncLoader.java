@@ -23,7 +23,8 @@ import android.content.Context;
  * 
  * @author Eric Bottard
  * 
- * @param <E> the loader result type in case of success
+ * @param <E>
+ *            the loader result type in case of success
  */
 public abstract class FailingAsyncLoader<E> extends AsyncLoader<Result<E>> {
 

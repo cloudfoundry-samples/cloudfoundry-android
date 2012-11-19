@@ -31,11 +31,12 @@ public class AboutActivity extends RoboSherlockActivity {
 
 	@InjectView(R.id.about)
 	private TextView textView;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		textView.setMovementMethod(LinkMovementMethod.getInstance());
-		textView.setText(Html.fromHtml(getResources().getString(R.string.about_text)));
+		textView.setText(Html.fromHtml(getResources().getString(
+				R.string.about_text)));
 	}
 }

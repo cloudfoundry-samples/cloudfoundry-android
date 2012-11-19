@@ -19,7 +19,6 @@ import java.util.EnumMap;
 
 import org.cloudfoundry.android.cfdroid.R;
 import org.cloudfoundry.android.cfdroid.cloud.FrameworkLogos;
-import org.cloudfoundry.android.cfdroid.services.ServiceLogos;
 import org.cloudfoundry.android.cfdroid.support.BaseViewHolder;
 import org.cloudfoundry.client.lib.CloudApplication;
 import org.cloudfoundry.client.lib.CloudApplication.AppState;
@@ -34,7 +33,7 @@ public class ApplicationView extends BaseViewHolder<CloudApplication> {
 	private TextView status;
 	private ImageView logo;
 
-	/*default*/ final static EnumMap<AppState, Integer> COLORS = new EnumMap<CloudApplication.AppState, Integer>(
+	/* default */final static EnumMap<AppState, Integer> COLORS = new EnumMap<CloudApplication.AppState, Integer>(
 			AppState.class);
 	static {
 		COLORS.put(AppState.STARTED, R.color.status_started);
@@ -54,7 +53,7 @@ public class ApplicationView extends BaseViewHolder<CloudApplication> {
 		AppState state = application.getState();
 		status.setText("" + state);
 		status.setTextColor(status.getResources().getColor(COLORS.get(state)));
-		
+
 		FrameworkLogos logoEnum;
 		try {
 			String fwk = (String) application.getStaging().get("model");

@@ -20,8 +20,9 @@ import android.text.TextWatcher;
 
 /**
  * No-op implementation of {@link TextWatcher}.
+ * 
  * @author ebottard
- *
+ * 
  */
 public class BaseTextWatcher implements TextWatcher {
 

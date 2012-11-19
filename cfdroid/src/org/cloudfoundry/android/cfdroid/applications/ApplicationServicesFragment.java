@@ -29,7 +29,6 @@ import org.cloudfoundry.android.cfdroid.support.masterdetail.DetailPaneEventsCal
 import org.cloudfoundry.client.lib.CloudApplication;
 import org.cloudfoundry.client.lib.CloudService;
 
-import roboguice.util.Ln;
 import android.database.ContentObserver;
 import android.os.Bundle;
 import android.support.v4.content.Loader;
@@ -47,8 +46,7 @@ import com.google.inject.Inject;
  * 
  */
 public class ApplicationServicesFragment extends
-		ListLoadingFragment<CloudService> 
-		implements DetailPaneEventsCallback {
+		ListLoadingFragment<CloudService> implements DetailPaneEventsCallback {
 	/**
 	 * A view that shows info about a service as well as toggle button to
 	 * bind/unbind the service to a given app.
@@ -99,8 +97,8 @@ public class ApplicationServicesFragment extends
 				}
 			});
 		}
-	};	
-	
+	};
+
 	@Override
 	protected ItemListAdapter<CloudService, ?> adapterFor(
 			List<CloudService> items) {
@@ -128,7 +126,8 @@ public class ApplicationServicesFragment extends
 	}
 
 	@Override
-	public Loader<Result<List<CloudService>>> onCreateLoader(int arg0, Bundle arg1) {
+	public Loader<Result<List<CloudService>>> onCreateLoader(int arg0,
+			Bundle arg1) {
 		return new ServicesListLoader(getActivity(), client);
 	}
 

@@ -39,7 +39,7 @@ public enum RuntimeLogos {
 		RuntimeLogos best = unknown;
 		int bestLength = 0;
 		for (RuntimeLogos r : RuntimeLogos.values()) {
-			if(raw.startsWith(r.name()) && r.name().length() > bestLength) {
+			if (raw.startsWith(r.name()) && r.name().length() > bestLength) {
 				best = r;
 				bestLength = r.name().length();
 			}

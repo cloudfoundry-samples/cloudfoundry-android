@@ -38,9 +38,9 @@ public abstract class TargetEditDialogFragment extends RoboDialogFragment
 
 	@InjectView(R.id.url)
 	private EditText url;
-	
+
 	private CloudTarget result;
-	
+
 	public TargetEditDialogFragment(CloudTarget target) {
 		this.result = target;
 	}
@@ -53,16 +53,16 @@ public abstract class TargetEditDialogFragment extends RoboDialogFragment
 
 		return view;
 	}
-	
+
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		label.requestFocus();
 		getDialog().getWindow().setSoftInputMode(
 				LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-		
+
 		url.setOnEditorActionListener(this);
-		
+
 	}
 
 	public abstract void onResult(CloudTarget result);

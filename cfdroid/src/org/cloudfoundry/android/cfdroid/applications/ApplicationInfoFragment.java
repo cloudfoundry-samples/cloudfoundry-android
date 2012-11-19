@@ -33,14 +33,17 @@ import android.widget.TextView;
 
 import com.github.rtyley.android.sherlock.roboguice.fragment.RoboSherlockListFragment;
 
-public class ApplicationInfoFragment extends RoboSherlockListFragment implements DetailPaneEventsCallback {
-	
+public class ApplicationInfoFragment extends RoboSherlockListFragment implements
+		DetailPaneEventsCallback {
+
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		
+
 		List<String> urls = getCloudApplication().getUris();
-		setListAdapter(new ItemListAdapter<String, ApplicationLinkView>(R.layout.application_url_item, getActivity().getLayoutInflater(), urls) {
+		setListAdapter(new ItemListAdapter<String, ApplicationLinkView>(
+				R.layout.application_url_item, getActivity()
+						.getLayoutInflater(), urls) {
 
 			@Override
 			protected ApplicationLinkView createView(View view) {
@@ -48,28 +51,30 @@ public class ApplicationInfoFragment extends RoboSherlockListFragment implements
 			}
 		});
 	}
-	
+
 	@Inject
 	private CloudFoundry client;
-	
+
 	private int position;
-	
+
 	@Override
 	public void selectionChanged(int position) {
 		this.position = position;
 	}
-	
+
 	private CloudApplication getCloudApplication() {
-		return client.getApplications(false).get(position); 
+		return client.getApplications(false).get(position);
 	}
-	
-	/*default*/static class ApplicationLinkView extends BaseViewHolder<String> {
+
+	/* default */static class ApplicationLinkView extends
+			BaseViewHolder<String> {
 		private TextView text;
+
 		private ApplicationLinkView(View v) {
 			text = (TextView) v;
 			text.setMovementMethod(LinkMovementMethod.getInstance());
 		}
-		
+
 		@Override
 		public void bind(String item) {
 			text.setText("http://" + item);

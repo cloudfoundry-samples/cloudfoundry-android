@@ -24,11 +24,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class RuntimeView extends BaseViewHolder<Runtime> {
-	
+
 	private TextView name;
-	
+
 	private ImageView logo;
-	
+
 	private TextView version;
 
 	public RuntimeView(View view) {

@@ -15,9 +15,8 @@
  */
 package org.cloudfoundry.android.cfdroid.targets;
 
-
 public class CloudTarget {
-	
+
 	private CloudTarget() {
 	}
 
@@ -27,10 +26,10 @@ public class CloudTarget {
 		URL = uRL;
 	}
 
-	/*default*/ String label;
-	
-	/*default*/ String URL;
-	
+	/* default */String label;
+
+	/* default */String URL;
+
 	public String getLabel() {
 		return label;
 	}
@@ -38,7 +37,7 @@ public class CloudTarget {
 	public String getURL() {
 		return URL;
 	}
-	
+
 	public static CloudTarget parse(String raw) {
 		int pipe = raw.indexOf('|');
 		CloudTarget result = new CloudTarget();
@@ -46,14 +45,14 @@ public class CloudTarget {
 		result.label = raw.substring(pipe + 1, raw.length());
 		return result;
 	}
-	
+
 	public String toPref() {
 		return URL + '|' + label;
 	}
-	
+
 	@Override
 	public String toString() {
 		return label;
 	}
-	
+
 }

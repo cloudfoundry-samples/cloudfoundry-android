@@ -73,8 +73,8 @@ public class ServiceConfigurationsFragment extends
 	protected ItemListAdapter<ServiceConfiguration, ?> adapterFor(
 			List<ServiceConfiguration> items) {
 		return new ItemListAdapter<ServiceConfiguration, ServiceConfigurationView>(
-				R.layout.service_config_list_item, getActivity().getLayoutInflater(),
-				items) {
+				R.layout.service_config_list_item, getActivity()
+						.getLayoutInflater(), items) {
 			@Override
 			protected ServiceConfigurationView createView(View view) {
 				return new ServiceConfigurationView(view);
