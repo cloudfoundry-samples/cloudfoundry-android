@@ -25,8 +25,6 @@
 -dontwarn com.actionbarsherlock.**
 -dontwarn roboguice.**
 
--dontobfuscate
-
 -verbose
 -dump ../bin/class_files.txt
 -printseeds ../bin/seeds.txt
@@ -34,3 +32,29 @@
 -printmapping ../bin/mapping.txt 
 
 -keep class org.cloudfoundry.android.cfdroid.**
+#-keep class com.google.inject.**
+#-keepclasseswithmembers class **
+
+-keep class **.Finalizer
+-keepclassmembers class ** { *** startFinalizer( ... ); }
+-keep public class roboguice.** { *; }
+-keepattributes *Annotation*
+
+-keepclassmembers class * {
+    @com.google.inject.Inject <init>(...);
+}
+
+-target 1.6
+-dontobfuscate
+
+
+
+
+
+-keepattributes *Annotation*,Signature  
+
+-keep class com.google.inject.Binder    
+
+-optimizations !code/simplification/arithmetic,!code/allocation/variable,!field/*,!class/merging/*
+
+
