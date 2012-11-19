@@ -86,8 +86,6 @@ public class ApplicationInstanceStatsFragment extends
 
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
-		InstanceStats stats = (InstanceStats) l.getItemAtPosition(position);
-		
 		View details = v.findViewById(R.id.details);
 		ExpandAnimation animation = new ExpandAnimation(details, 500);
 		details.startAnimation(animation);
