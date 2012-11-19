@@ -32,12 +32,7 @@ import android.os.Bundle;
 public class ServicesActivity
 		extends
 		MasterDetailActivity<ServiceDetailFragment> {
-	@Override
-	public void onCreate(Bundle bundle) {
-		super.onCreate(bundle);
-		getSupportActionBar().setDisplayShowTitleEnabled(false);
-	}
-
+	
 	@Override
 	protected int rightPaneLayout() {
 		return R.layout.right_pane_services;
