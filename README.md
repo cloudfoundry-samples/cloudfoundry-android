@@ -1,6 +1,6 @@
-#CloudFoundry Android
+#Cloud Foundry Android
 
-This is an Android application that allows you to monitor and control any CloudFoundry compatible Cloud.
+This is an Android application that allows you to monitor and control any Cloud Foundry compatible Cloud.
 
 ##Using the Application
 Please make sure to read this short app documentation [here](https://github.com/cloudfoundry-samples/cloudfoundry-android/wiki), as it contains important usage guidelines.
