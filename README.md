@@ -1,4 +1,4 @@
-#Cloud Foundry Android
+#Cloud Foundry for Android™
 
 This is an Android application that allows you to monitor and control any Cloud Foundry compatible Cloud.
 
