@@ -18,10 +18,6 @@
 -->
 <resources>
 
-    <!--
-    Space between Cloud and Foundry is needed to have 
-    Cloud/Foundry instead of CloudFoundr/y on launch screen
-    -->
     <string name="app_name">Cloud Foundry</string>
     <string name="login">Login</string>
     <string name="password">Password</string>
@@ -51,7 +47,7 @@
     <string name="label_hint">Enter a label here</string>
     <string name="url_hint">Controller URL</string>
     <string name="done">Done</string>
-    <string name="cloudfoundry">CloudFoundry</string>
+    <string name="cloudfoundry">Cloud Foundry</string>
     <string name="control">Control</string>
     <string name="cloud_apply">Save changes</string>
     <string name="start">Start</string>
@@ -84,7 +80,7 @@
         <item quantity="one">1 application</item>
         <item quantity="other">%d applications</item>
     </plurals>
-    <string name="signup_text">No CloudFoundry account yet? <a href="https://my.cloudfoundry.com/signup?promo=androidapp">Signup here</a></string>
+    <string name="signup_text">No Cloud Foundry account yet? <a href="https://my.cloudfoundry.com/signup?promo=androidapp">Signup here</a></string>
 
 
 </resources>
