@@ -29,6 +29,7 @@ import roboguice.inject.InjectView;
 import roboguice.util.Ln;
 import android.database.ContentObserver;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -286,7 +287,8 @@ public class ApplicationControlFragment extends
 		cloudInfo = data.cloudInfo;
 		fullyRedrawWidgets();
 		setHasOptionsMenu(true); // first time
-		getActivity().invalidateOptionsMenu(); // subsequent calls
+		// The following while we're targeting api<11
+		ActivityCompat.invalidateOptionsMenu(getActivity()); // subsequent calls
 	}
 
 	@Override
@@ -374,9 +376,9 @@ public class ApplicationControlFragment extends
 		this.position = position;
 		if (isResumed()) {
 			fullyRedrawWidgets();
-			getActivity().invalidateOptionsMenu();
+			// The following while we're targeting api<11
+			ActivityCompat.invalidateOptionsMenu(getActivity()); // subsequent calls
 		}
-		// appName = client.getApplications(false).get(position).getName();
 	}
 
 	private void start() {

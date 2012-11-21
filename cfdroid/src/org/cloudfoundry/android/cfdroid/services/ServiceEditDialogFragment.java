@@ -130,7 +130,7 @@ public class ServiceEditDialogFragment extends RoboDialogFragment implements
 	}
 
 	private boolean ready() {
-		return !name.getText().toString().trim().isEmpty();
+		return name.getText().toString().trim().length() > 0;
 	}
 
 	private void createService() {

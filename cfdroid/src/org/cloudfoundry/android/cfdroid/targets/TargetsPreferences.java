@@ -20,7 +20,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.util.StringUtils;
+
+import android.annotation.TargetApi;
 import android.content.SharedPreferences;
+import android.os.Build;
 
 import com.google.inject.Inject;
 
@@ -43,12 +47,40 @@ public class TargetsPreferences {
 
 	public List<CloudTarget> fromPrefs() {
 		List<CloudTarget> targets = new ArrayList<CloudTarget>();
-		Set<String> raw = sharedPreferences.getStringSet(TARGETS_PREF_KEY,
+		Set<String> raw = safeGetStringSet(TARGETS_PREF_KEY,
 				DEFAULT_TARGETS);
 		for (String r : raw) {
 			targets.add(CloudTarget.parse(r));
 		}
 		return targets;
+	}
+	
+	@TargetApi(11)
+	private Set<String> safeGetStringSet(String key, Set<String> defaultValues) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+			return sharedPreferences.getStringSet(key, defaultValues);
+		} else {
+			String big = sharedPreferences.getString(key + "__", null);
+			if (big == null) {
+				return defaultValues;
+			} else {
+				Set<String> val = new HashSet<String>();
+				for (String s : big.split("\\|\\|")){
+					val.add(s);
+				}
+				return val;
+			}
+		}
+	}
+
+	@TargetApi(11)
+	private void safePutStringSet(String key, Set<String> values) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+			sharedPreferences.edit().putStringSet(key, values).commit();
+		} else {
+			String big = StringUtils.collectionToDelimitedString(values, "||");
+			sharedPreferences.edit().putString(key + "__", big).commit();
+		}
 	}
 
 	public void toPrefs(List<CloudTarget> targets) {
@@ -57,6 +89,6 @@ public class TargetsPreferences {
 		for (CloudTarget target : targets) {
 			raw.add(target.toPref());
 		}
-		sharedPreferences.edit().putStringSet(TARGETS_PREF_KEY, raw).commit();
+		safePutStringSet(TARGETS_PREF_KEY, raw);
 	}
 }
