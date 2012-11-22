@@ -288,7 +288,7 @@ public class ApplicationControlFragment extends
 		fullyRedrawWidgets();
 		setHasOptionsMenu(true); // first time
 		// The following while we're targeting api<11
-		ActivityCompat.invalidateOptionsMenu(getActivity()); // subsequent calls
+		getSherlockActivity().invalidateOptionsMenu();
 	}
 
 	@Override
@@ -377,7 +377,7 @@ public class ApplicationControlFragment extends
 		if (isResumed()) {
 			fullyRedrawWidgets();
 			// The following while we're targeting api<11
-			ActivityCompat.invalidateOptionsMenu(getActivity()); // subsequent calls
+			getSherlockActivity().invalidateOptionsMenu();
 		}
 	}
 
@@ -415,7 +415,7 @@ public class ApplicationControlFragment extends
 		overallMemoryPb.setSecondaryProgress(usedByOtherApps() + memory()
 				* instances());
 		memorytv.setText("" + memory());
-		getActivity().invalidateOptionsMenu();
+		getSherlockActivity().invalidateOptionsMenu();
 
 	}
 
